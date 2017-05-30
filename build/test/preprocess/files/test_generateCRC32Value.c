@@ -2,26 +2,26 @@
 #include "unity.h"
 
 
-void setUp(void)
-
-{
-
-}
 
 
+void setUp(void){}
 
-void tearDown(void)
-
-{
-
-}
+void tearDown(void){}
 
 
 
-void test_module_generator_needs_to_be_implemented(void)
+void test_generate_CRC32Value_from_text_file(void){
 
-{
+ FILE *testFile;
 
- UnityIgnore( (("Implement me!")), (_U_UINT)(14));
+ char buff[255];
+
+ testFile = fopen("D:/Jason/Github/fileDuplicateSearch/test/testFiles","r");
+
+ fscanf(testFile,"%s",buff);
+
+ printf("File: %s\n",buff);
+
+
 
 }
