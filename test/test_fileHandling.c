@@ -34,7 +34,7 @@ void test_checkFile_if_the_parameter_is_Words_file_should_return_TRUE(void){
 }
 
 void test_checkFile_if_the_parameter_is_PowerPoint_file_should_return_TRUE(void){
-	TEST_ASSERT_EQUAL(checkFile("test/testFiles/test p.point.pptx"),TRUE);
+	TEST_ASSERT_EQUAL(checkFile("test/testFiles/test folder/test p.point.pptx"),TRUE);
 }
 
 void test_checkFile_if_the_parameter_is_folder_should_return_FALSE(void){
