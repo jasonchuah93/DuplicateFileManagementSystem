@@ -1,11 +1,17 @@
 #ifndef generateCRC32Value_H
 #define generateCRC32Value_H
 
-# include <stdio.h>
-# include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <malloc.h>
 
-# define CRC_BUFFER_SIZE  8192
+#define POLY 0x82608EDB
 
-int Crc32_ComputeFile(FILE *file, unsigned long *outCrc32);
+int hashCRC(char *fileName);
+int getBytes(FILE* fptr,unsigned int *bytePtr, unsigned long long *tempPtr);
+int shiftXOR(FILE *fptr, unsigned int *bytePtr, unsigned long long *tempPtr);
+int shiftXOR(FILE *fptr, unsigned int *bytePtr, unsigned long long *tempPtr);
+int calCRC32(unsigned long long *tempPtr);
 
 #endif // generateCRC32Value_H

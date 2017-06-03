@@ -34,7 +34,11 @@ char* GlobalOrderError;
 //=======External Functions This Runner Calls=====
 extern void setUp(void);
 extern void tearDown(void);
-extern void test_generate_CRC32Value_from_text_file(void);
+extern void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name(void);
+extern void test_hashCRC_should_not_be_equal_if_file_content_is_different(void);
+extern void test_hashCRC_should_not_be_equal_if_type_of_files_is_different(void);
+extern void test_hashCRC_should_be_equal_if_type_of_file_is_same_but_in_different_folder(void);
+extern void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name_in_excel_format(void);
 
 
 //=======Test Reset Option=====
@@ -50,7 +54,11 @@ void resetTest(void)
 int main(void)
 {
   UnityBegin("test_generateCRC32Value.c");
-  RUN_TEST(test_generate_CRC32Value_from_text_file, 10);
+  RUN_TEST(test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name, 9);
+  RUN_TEST(test_hashCRC_should_not_be_equal_if_file_content_is_different, 16);
+  RUN_TEST(test_hashCRC_should_not_be_equal_if_type_of_files_is_different, 23);
+  RUN_TEST(test_hashCRC_should_be_equal_if_type_of_file_is_same_but_in_different_folder, 30);
+  RUN_TEST(test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name_in_excel_format, 37);
 
   return (UnityEnd());
 }
