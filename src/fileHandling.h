@@ -15,5 +15,6 @@
 bool checkFile(const char* path);
 bool checkFolder(const char* path);
 bool checkFileFolder(const char* path);
+int checkFileSize(const char*path);
 
 #endif // fileHandling_H

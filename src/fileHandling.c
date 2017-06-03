@@ -32,6 +32,7 @@ bool checkFolder(const char* path) {
     return S_ISDIR(buf.st_mode);
 }
 
+//This function on hold 
 bool checkFileFolder(const char* path){
 	DIR *d;
 	if(checkFolder(path) == TRUE){
@@ -49,5 +50,20 @@ bool checkFileFolder(const char* path){
 	}else if(checkFile(path)==TRUE){
 		return 1;
 	}
-	
+}
+
+int checkFileSize(const char* path){
+	FILE *fp;
+    int size = 0;
+ 
+    fp = fopen(path,"r");
+    if (fp == NULL)
+        printf("File unable to open\n");
+    else{ 
+        fseek(fp,0,2);    
+		size = ftell(fp);   
+		//printf("The size of given file is : %d bytes\n", size); //For test check    
+    }
+	fclose(fp);
+	return size;
 }
