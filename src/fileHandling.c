@@ -52,6 +52,15 @@ bool checkFileFolder(const char* path){
 	}
 }
 
+/*************************************************************
+* Check the size of a given file
+*
+*	Input: 	path		the path of the folder we want to check  
+*			
+*	Output: size		size of the file 
+*			
+*	Destroy: none
+**************************************************************/
 int checkFileSize(const char* path){
 	FILE *fp;
     int size = 0;
@@ -66,4 +75,8 @@ int checkFileSize(const char* path){
     }
 	fclose(fp);
 	return size;
+}
+
+int checkFileLatestTime(const char* path){
+	
 }

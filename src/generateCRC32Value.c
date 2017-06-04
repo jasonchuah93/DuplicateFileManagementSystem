@@ -118,6 +118,6 @@ int shiftXOR2(unsigned int *bytePtr,unsigned long long *tempPtr){
 **************************************************************/
 int calCRC32(unsigned long long *tempPtr){
 	int crc=*tempPtr>>32;
-	printf("\nCRC32 : %08X\n\n",crc);
+	//printf("\nCRC32 : %08X\n\n",crc);
 	return crc;
 }
