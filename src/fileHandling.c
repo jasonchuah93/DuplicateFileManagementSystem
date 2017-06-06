@@ -39,10 +39,10 @@ bool checkFileFolder(const char* path){
 		d = opendir(path);
 		if(d){
 			while ((dir = readdir(d)) != NULL){
-				
-				//printf("%s\n", dir->d_name);
+				if(strcmp(dir->d_name,".") == 0 || strcmp(dir->d_name, "..") == 0){
+					printf("%s\n", dir->d_name);
+				}
 			}
-			
 			closedir(d);
 		}
 		
@@ -61,7 +61,7 @@ bool checkFileFolder(const char* path){
 *			
 *	Destroy: none
 **************************************************************/
-int checkFileSize(const char* path){
+int getFileSize(const char* path){
 	FILE *fp;
     int size = 0;
  
@@ -77,6 +77,58 @@ int checkFileSize(const char* path){
 	return size;
 }
 
-int checkFileLatestTime(const char* path){
-	
+char checkLatestModifiedTime(const char* path){
+	char times[60];
+	time_t t = time(NULL);
+	struct tm *tm = localtime(&t);
+	struct stat attr;
+    stat(path, &attr);
+    //printf("Last modified time: %s\n",ctime(&attr.st_mtime));
+}
+
+char *getFileName(char* path){
+	DIR *d;
+	if(checkFolder(path) == TRUE){
+		d = opendir(path);
+		if(d){
+			while ((dir = readdir(d)) != NULL){
+				if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+					printf("sub folder: %s\n",dir->d_name);
+					getFileName(dir->d_name);
+					//return dir->d_name;
+				}else if(dir->d_type == DT_REG){
+					printf("file name: %s\n",dir->d_name);
+					//return dir->d_name;
+				}
+			}
+			closedir(d);
+		}
+	}
+}
+
+int listFileNumber(const char* path){
+	int count = 0;
+	DIR * folder;
+	folder = opendir(path);
+	while((dir=readdir(folder))!=NULL){
+		if(dir->d_type == DT_REG){
+			count++;
+		}
+	}
+	closedir(folder);
+	return count;
+}
+
+int listSubFolderNumber(const char* path){
+	int count = 0;
+	DIR * folder;
+	folder = opendir(path);
+	while((dir=readdir(folder))!=NULL){
+		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+			count++;
+		}
+		//listSubFolderNumber()
+	}
+	closedir(folder);
+	return count;
 }
