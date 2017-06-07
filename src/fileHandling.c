@@ -32,26 +32,6 @@ bool checkFolder(const char* path) {
     return S_ISDIR(buf.st_mode);
 }
 
-//This function on hold 
-bool checkFileFolder(const char* path){
-	DIR *d;
-	if(checkFolder(path) == TRUE){
-		d = opendir(path);
-		if(d){
-			while ((dir = readdir(d)) != NULL){
-				if(strcmp(dir->d_name,".") == 0 || strcmp(dir->d_name, "..") == 0){
-					printf("%s\n", dir->d_name);
-				}
-			}
-			closedir(d);
-		}
-		
-		return 1;		
-	}else if(checkFile(path)==TRUE){
-		return 1;
-	}
-}
-
 /*************************************************************
 * Check the size of a given file
 *
@@ -85,7 +65,7 @@ char checkLatestModifiedTime(const char* path){
     stat(path, &attr);
     //printf("Last modified time: %s\n",ctime(&attr.st_mtime));
 }
-
+/*
 char *getFileName(char* path){
 	DIR *d;
 	if(checkFolder(path) == TRUE){
@@ -94,16 +74,50 @@ char *getFileName(char* path){
 			while ((dir = readdir(d)) != NULL){
 				if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
 					printf("sub folder: %s\n",dir->d_name);
-					getFileName(dir->d_name);
 					//return dir->d_name;
 				}else if(dir->d_type == DT_REG){
-					printf("file name: %s\n",dir->d_name);
+					//printf("file name: %s\n",dir->d_name);
 					//return dir->d_name;
 				}
 			}
 			closedir(d);
 		}
 	}
+}
+*/
+
+char *listAllFiles(const char* path){
+	DIR *d,*sub_d,*sub_sub_d;
+	char filePath[255],subFilePath[255];
+	
+	d = opendir(path);
+	dir = readdir(d);
+	dir = readdir(d);
+	dir = readdir(d);
+	dir = readdir(d);
+	dir = readdir(d);
+	strcpy(filePath,path);
+	strcat(filePath, "/");
+	strcat(filePath, dir->d_name);
+	stat(filePath,&buf);
+	if(S_ISDIR(buf.st_mode)){
+		sub_d=opendir(filePath);
+		dir = readdir(sub_d);
+		dir = readdir(sub_d);
+		dir = readdir(sub_d);
+		strcpy(subFilePath,filePath);
+		strcat(subFilePath, "/");
+		strcat(subFilePath, dir->d_name);
+		stat(subFilePath,&buf);
+		if(S_ISDIR(buf.st_mode)){
+			sub_sub_d = opendir(subFilePath);
+			dir = readdir(sub_sub_d);
+			dir = readdir(sub_sub_d);
+			dir = readdir(sub_sub_d);
+		}
+	}
+	return dir->d_name;
+	closedir(d);
 }
 
 int listFileNumber(const char* path){
@@ -127,8 +141,8 @@ int listSubFolderNumber(const char* path){
 		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
 			count++;
 		}
-		//listSubFolderNumber()
 	}
 	closedir(folder);
 	return count;
 }
+

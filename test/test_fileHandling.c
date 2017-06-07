@@ -117,6 +117,6 @@ void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_fold
 
 void test_getFileName_should_get_file_name_from_folder(void){
 	char *fileName;
-	fileName = getFileName("D:/jason/github/testFiles");
-	printf("the name is: %s",fileName);
+	fileName = listAllFiles("D:/jason/github/testFiles");
+	printf("The file name is: %s\n",fileName);	
 }

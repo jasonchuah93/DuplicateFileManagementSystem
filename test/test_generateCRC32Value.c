@@ -30,7 +30,7 @@ void test_hashCRC_should_not_be_equal_if_type_of_files_is_different(void){
 void test_hashCRC_should_be_equal_if_type_of_file_is_same_but_in_different_folder(void){
 	int checksum1=0,checksum2=0;
 	checksum1=hashCRC("D:/jason/github/testFiles/test p.point.pptx");
-	checksum2=hashCRC("D:/jason/github/testFiles/test folder/test p.point.pptx");
+	checksum2=hashCRC("D:/jason/github/testFiles/test folder/test p.point2.pptx");
 	TEST_ASSERT_EQUAL(checksum1,checksum2);
 }
 

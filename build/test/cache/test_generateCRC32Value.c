@@ -60,7 +60,7 @@ void test_hashCRC_should_be_equal_if_type_of_file_is_same_but_in_different_folde
 
  checksum1=hashCRC("D:/jason/github/testFiles/test p.point.pptx");
 
- checksum2=hashCRC("D:/jason/github/testFiles/test folder/test p.point.pptx");
+ checksum2=hashCRC("D:/jason/github/testFiles/test folder/test p.point2.pptx");
 
  UnityAssertEqualNumber((_U_SINT)((checksum1)), (_U_SINT)((checksum2)), (((void *)0)), (_U_UINT)(34), UNITY_DISPLAY_STYLE_INT);
 
