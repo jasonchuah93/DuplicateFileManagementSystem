@@ -1,4 +1,5 @@
 #include "fileHandling.h"
+#include "Error.h"
 
 struct stat buf;
 struct dirent *dir;
@@ -122,19 +123,24 @@ char *listAllFilesPrototype(const char* path){
 
 char *traverseFolder(const char* path){
 	DIR *d;
-	char newPath[100];
+	char newPath[255];
 	d = opendir(path);
 	if(d!=NULL){
 		while((dir = readdir(d))!= NULL){
 			if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+				printf("sub folder: %s\n",dir->d_name);
 				strcpy(newPath,path);
 				strcat(newPath,"/");
 				strcat(newPath,dir->d_name);
 				traverseFolder(newPath);
 			}else if(dir->d_type == DT_REG){
+				printf("file name: %s\n",dir->d_name);
 				continue;
 			}
 		}
+	}else{
+		errorMessage.message = "Invalide path!";
+		Throw(INVALID_PATH);
 	}
 	closedir(d);
 }

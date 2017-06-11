@@ -1,5 +1,7 @@
 #include "unity.h"
 #include "fileHandling.h"
+#include "Error.h"
+#include "CException.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -116,5 +118,11 @@ void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_fold
 }
 
 void test_traverseFolder_should_scan_through_the_content_of_the__folder(void){
-	traverseFolder("D:/jason/github/testFiles");
+	int e;
+	Try{
+		traverseFolder("D:/jasonchuah");
+	}Catch(e){
+		TEST_ASSERT_EQUAL(INVALID_PATH,e);
+		return;
+	}
 }
