@@ -86,19 +86,19 @@ char *getFileName(char* path){
 }
 */
 
-char *listAllFiles(const char* path){
+char *listAllFilesPrototype(const char* path){
 	DIR *d,*sub_d,*sub_sub_d;
 	char filePath[255],subFilePath[255];
 	
-	d = opendir(path);
-	dir = readdir(d);
-	dir = readdir(d);
-	dir = readdir(d);
-	dir = readdir(d);
-	dir = readdir(d);
-	strcpy(filePath,path);
-	strcat(filePath, "/");
-	strcat(filePath, dir->d_name);
+	d = opendir(path); //Open the folder
+	dir = readdir(d);  //Read 1st file in folder: .	
+	dir = readdir(d);  //Read 2nd file in folder: ..
+	dir = readdir(d);  //Read 3rd file in folder: File1
+	dir = readdir(d);  //Read 4th file in folder: File2
+	dir = readdir(d);  //Read 5th file in folder: Subfolder1
+	strcpy(filePath,path); //Copy the path name to a new location
+	strcat(filePath, "/"); // add / into the end of new location
+	strcat(filePath, dir->d_name); // result: filepath/Subfolder1
 	stat(filePath,&buf);
 	if(S_ISDIR(buf.st_mode)){
 		sub_d=opendir(filePath);
@@ -117,6 +117,25 @@ char *listAllFiles(const char* path){
 		}
 	}
 	return dir->d_name;
+	closedir(d);
+}
+
+char *traverseFolder(const char* path){
+	DIR *d;
+	char newPath[100];
+	d = opendir(path);
+	if(d!=NULL){
+		while((dir = readdir(d))!= NULL){
+			if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+				strcpy(newPath,path);
+				strcat(newPath,"/");
+				strcat(newPath,dir->d_name);
+				traverseFolder(newPath);
+			}else if(dir->d_type == DT_REG){
+				continue;
+			}
+		}
+	}
 	closedir(d);
 }
 

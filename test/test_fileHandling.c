@@ -115,8 +115,6 @@ void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_fold
 	//TEST_ASSERT_EQUAL(fileNumber,15);
 }
 
-void test_getFileName_should_get_file_name_from_folder(void){
-	char *fileName;
-	fileName = listAllFiles("D:/jason/github/testFiles");
-	printf("The file name is: %s\n",fileName);	
+void test_traverseFolder_should_scan_through_the_content_of_the__folder(void){
+	traverseFolder("D:/jason/github/testFiles");
 }
