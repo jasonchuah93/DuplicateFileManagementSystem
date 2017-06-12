@@ -2,7 +2,7 @@
 #define __ERROR_H__
 
 
-typedef enum {INVALID_PATH,INVALID_FILE} Error;
+typedef enum {INVALID_FILE,INVALID_FOLDER} Error;
 
 typedef struct{
 	char *message;

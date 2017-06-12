@@ -71,13 +71,25 @@ void test_checkFolder_should_return_FALSE_if_is_file(void){
 	TEST_ASSERT_EQUAL(checkFolder("D:/jason/github/testFiles/test1.txt"),FALSE);
 }
 
-void test_getFile_should_throw_invalid_file_if_is_invalid_file(void){
+//Test for getFile()
+void test_getFilePtr_should_throw_invalid_file_if_is_invalid_file(void){
 	Error e;
 	Try{
-		getFile("D:/jason/github/testFiles/testJasonChuah.txt"); //File not exist in folder
+		getFilePtr("D:/jason/github/testFiles/testJasonChuah.txt"); //File not exist in folder
 		TEST_FAIL_MESSAGE("Invalid file");
 	}Catch(e){
 		TEST_ASSERT_EQUAL(INVALID_FILE,e);
+	}
+}
+
+//Test for getFolder()
+void test_getFolderPtr_should_throw_invalid_folder_if_is_invalid_folder(void){
+	Error e;
+	Try{
+		getFolderPtr("D:/jason/github/testFilesFilesFolder"); //File not exist in folder
+		TEST_FAIL_MESSAGE("Invalid folder");
+	}Catch(e){
+		TEST_ASSERT_EQUAL(INVALID_FOLDER,e);
 	}
 }
 
@@ -160,31 +172,31 @@ void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_image
 	TEST_ASSERT_EQUAL_STRING(fileTime,"06/03/17 - 12:46AM");
 }
 
-/*
+//Test for listFileNumber
 void test_listFileNumber_should_list_the_total_number_of_file_in_folder(void){
 	int fileNumber=0;
 	fileNumber = listFileNumber("D:/jason/github/testFiles"); //Number of file in this folder is 15
 	TEST_ASSERT_EQUAL(fileNumber,15);
 }
 
+//Test for listSubFolderNumber
 void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_folder(void){
 	int subFolderNumber=0;
 	subFolderNumber = listSubFolderNumber("D:/jason/github/testFiles"); //Number of subfolder in this folder is 3
-	//printf("sub folder in folder: %d",subFolderNumber);
-	//TEST_ASSERT_EQUAL(fileNumber,15);
+	TEST_ASSERT_EQUAL(subFolderNumber,2);
 }
 
-void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
-	traverseFolder("D:/jason/github/testFiles");
-}
-
+//Test for traverseFolder
 void test_traverseFolder_should_throw_error_message_if_content_of_the_folder_is_invalid(void){
 	Error e;
 	Try{
 		traverseFolder("D:/jasonchuah");
 	}Catch(e){
-		TEST_ASSERT_EQUAL(INVALID_PATH,e);
+		TEST_ASSERT_EQUAL(INVALID_FOLDER,e);
 		return;
 	}
 }
-*/
+
+void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
+	traverseFolder("D:/jason/github/testFiles");
+}

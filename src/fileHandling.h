@@ -16,16 +16,16 @@
 #define FALSE 0
 
 
-int checkFile(const char* path);
-int checkFolder(const char* path);
-FILE *getFile(const char* path);
-bool checkFileFolder(const char* path);
-int getFileSize(const char*path);
-char *checkLatestModifiedTime(const char* path);
-char *getFileName(char* path);
-int listFileNumber(const char* path);
-int listSubFolderNumber(const char* path);
-char *listAllFilesPrototype(const char* path);
-char *traverseFolder(const char* path);
+int checkFile(const char *path);
+int checkFolder(const char *path);
+FILE *getFilePtr(const char *path);
+DIR *getFolderPtr(const char *path);
+bool checkFileFolder(const char *path);
+int getFileSize(const char *path);
+char *checkLatestModifiedTime(const char *path);
+int listFileNumber(const char *path);
+int listSubFolderNumber(const char *path);
+char *traverseFolder(const char *path);
+char *subFolder(const char *path);
 
 #endif // fileHandling_H
