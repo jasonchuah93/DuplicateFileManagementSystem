@@ -16,8 +16,9 @@
 #define FALSE 0
 
 
-bool checkFile(const char* path);
-bool checkFolder(const char* path);
+int checkFile(const char* path);
+int checkFolder(const char* path);
+FILE *getFile(const char* path);
 bool checkFileFolder(const char* path);
 int getFileSize(const char*path);
 char checkLatestModifiedTime(const char* path);
