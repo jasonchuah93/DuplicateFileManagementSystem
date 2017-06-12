@@ -21,7 +21,7 @@ int checkFolder(const char* path);
 FILE *getFile(const char* path);
 bool checkFileFolder(const char* path);
 int getFileSize(const char*path);
-char checkLatestModifiedTime(const char* path);
+char *checkLatestModifiedTime(const char* path);
 char *getFileName(char* path);
 int listFileNumber(const char* path);
 int listSubFolderNumber(const char* path);

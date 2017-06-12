@@ -88,7 +88,7 @@ void test_getFileSize_should_get_the_size_of_text_file(void){
 	fileSize=getFileSize("D:/jason/github/testFiles/test1.txt");
 	TEST_ASSERT_EQUAL(fileSize,33);
 }
-/*
+
 void test_checkFileSize_should_get_the_size_of_mp3(void){
 	//Song file size is 3965661 bytes.
 	int fileSize=0;
@@ -118,7 +118,7 @@ void test_checkFileSize_should_get_the_size_of_words_file(void){
 }
 
 void test_checkFileSize_should_get_the_size_of_video_file(void){
-	//Microsoft Words file size is 20065907 bytes.
+	//Video file size is 20065907 bytes.
 	int fileSize=0;
 	fileSize=getFileSize("D:/jason/github/testFiles/test Video.mp4");
 	TEST_ASSERT_EQUAL(fileSize,20065907);
@@ -126,11 +126,41 @@ void test_checkFileSize_should_get_the_size_of_video_file(void){
 
 //Test for checking the file last modified time
 void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_text_file(void){
-	int fileTime=0;
+	//text 1 last modified time is 06/05/17 - 10:48PM
+	char *fileTime;
 	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/test1.txt");
-	//TEST_ASSERT_EQUAL(fileTime,)
+	TEST_ASSERT_EQUAL_STRING(fileTime,"06/05/17 - 10:48PM");
 }
 
+void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_video_file(void){
+	//video file last modified time is 06/03/17 - 01:36PM
+	char *fileTime;
+	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/test Video.mp4");
+	TEST_ASSERT_EQUAL_STRING(fileTime,"06/03/17 - 01:36PM");
+}
+
+void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_PDF_file(void){
+	//PDF file last modified time is 12/22/12 - 10:51AM
+	char *fileTime;
+	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/testPDF.pdf");
+	TEST_ASSERT_EQUAL_STRING(fileTime,"12/22/12 - 10:51AM");
+}
+
+void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_word_file(void){
+	//Words file last modified time is 04/08/16 - 05:38PM
+	char *fileTime;
+	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/TEST Words.docx");
+	TEST_ASSERT_EQUAL_STRING(fileTime,"04/08/16 - 05:38PM");
+}
+
+void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_image_file(void){
+	//Image file last modified time is 06/03/17 - 12:46AM
+	char *fileTime;
+	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/testPicture2.jpg");
+	TEST_ASSERT_EQUAL_STRING(fileTime,"06/03/17 - 12:46AM");
+}
+
+/*
 void test_listFileNumber_should_list_the_total_number_of_file_in_folder(void){
 	int fileNumber=0;
 	fileNumber = listFileNumber("D:/jason/github/testFiles"); //Number of file in this folder is 15

@@ -87,17 +87,17 @@ int getFileSize(const char* path){
 *
 *	Input: 	path		the path of the file we want to check  
 *			
-*	Output: size		size of the file 
+*	Output: times		date and time of the file 
 *			
 *	Destroy: none
 **************************************************************/
-char checkLatestModifiedTime(const char* path){
-	char times[60];
+char *checkLatestModifiedTime(const char* path){
+	static char times[100];
 	time_t t = time(NULL);
-	struct tm *tm = localtime(&t);
 	struct stat attr;
-    stat(path, &attr);
-    //printf("Last modified time: %s\n",ctime(&attr.st_mtime));
+	stat(path, &attr);
+	strftime(times,20,"%x - %I:%M%p",localtime(&(attr.st_mtime)));
+	return times;
 }
 
 /*************************************************************
