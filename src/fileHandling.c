@@ -1,5 +1,5 @@
+#include "jansson.h"
 #include "fileHandling.h"
-#include "Error.h"
 
 struct stat attr;
 struct dirent *dir;
@@ -39,7 +39,7 @@ FILE *getFilePtr(const char *path){
 		FILE *f = fopen(path,"r");
 		return f;
 	}else if(c == 0){
-		Throw(INVALID_FILE);
+		
 	}
 }
 
@@ -73,12 +73,13 @@ int checkFolder(const char *path) {
 **************************************************************/
 DIR *getFolderPtr(const char *path){
 	int c = 0;
+	
 	c = checkFolder(path);
 	if(c == 1){
 		DIR *d = opendir(path);
 		return d;
 	}else if(c == 0){
-		Throw(INVALID_FOLDER);
+		
 	}
 }
 
@@ -92,28 +93,12 @@ DIR *getFolderPtr(const char *path){
 *	Destroy: none
 **************************************************************/
 int getFileSize(const char *path){
+	json_object();
 	int size = 0;
 	FILE *f = getFilePtr(path);
 	fseek(f,0,SEEK_END);    
 	size = ftell(f);   
     return size;
-}
-
-/*************************************************************
-* Check the last modified date & time of the file 
-*
-*	Input: 	path		the path of the file we want to check  
-*			
-*	Output: times		date and time of the file 
-*			
-*	Destroy: none
-**************************************************************/
-char *checkLatestModifiedTime(const char *path){
-	static char times[100];
-	time_t t = time(NULL);
-	stat(path, &attr);
-	strftime(times,20,"%x - %I:%M%p",localtime(&(attr.st_mtime)));
-	return times;
 }
 
 /*************************************************************
@@ -156,29 +141,6 @@ int listSubFolderNumber(const char *path){
 	return count;
 }
 
-/*************************************************************
-*   Scan the folder, traverse all content inside
-*
-*	Input: 	path		the path of the folder we want to scan  
-*			
-*	Output: size		size of the file 
-*			
-*	Destroy: none
-**************************************************************/
-char *traverseFolder(const char *path){
-	DIR *d = getFolderPtr(path);
-	while((dir = readdir(d))!= NULL){
-		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
-			printf("sub folder: %s\n",dir->d_name);
-			char *sub = subFolder(path);
-			traverseFolder(sub);//Recursive call the function to traverse file in sub folder
-		}else if(dir->d_type == DT_REG){
-			printf("file name: %s\n",dir->d_name);
-		}
-	}
-	closedir(d);
-}
-
 /****************************************************************************
 *   This function add subfolder path name into existing folder path name
 *
@@ -195,3 +157,84 @@ char *subFolder(const char *path){
 	strcat(newPath,dir->d_name);//Add the sub folder path name right after the main folder path name		
 	return newPath;
 }
+
+/*************************************************************
+*   Scan the folder, traverse all content inside
+*
+*	Input: 	path		the path of the folder we want to scan  
+*			
+*	Output: size		size of the file 
+*			
+*	Destroy: none
+**************************************************************/
+char *traverseFolder(const char *path){
+	DIR *d = getFolderPtr(path);
+	while((dir = readdir(d))!= NULL){
+		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+			//printf("sub folder: %s\n",dir->d_name);
+			char *sub = subFolder(path);
+			traverseFolder(sub);//Recursivly call the function to traverse file in sub folder
+		}else if(dir->d_type == DT_REG){
+			//printf("file name: %s\n",dir->d_name);
+		}
+	}
+	closedir(d);
+}
+
+/*************************************************************
+* Check the last modified date & time of the file 
+*
+*	Input: 	path		the path of the file we want to check  
+*			
+*	Output: times		date and time of the file 
+*			
+*	Destroy: none
+**************************************************************/
+char *checkLatestModifiedTime(const char *path){
+	/*
+	static char times[100];
+	time_t t = time(NULL);
+	stat(path, &attr);
+	strftime(times,20,"%x - %I:%M%p",localtime(&(attr.st_mtime)));
+	return times;
+	*/
+}
+
+/*************************************************************
+* Check the last modified date & time of the file 
+*
+*	Input: 	path		the path of the file we want to check  
+*			
+*	Output: times		date and time of the file 
+*			
+*	Destroy: none
+**************************************************************/
+
+int getDateTime(char *dateTime,const char *path){
+	int val,valArray[20];
+	char buf[100];
+	struct tm info;
+	time_t t = time(NULL);
+	stat(path,&attr);
+	info = *(localtime(&(attr.st_mtime)));
+	strftime(buf,sizeof(buf),"%y%m%d%H%M",&info);
+	val = atoi(buf);
+	info.tm_year = val; 
+	printf("%d\n",info.tm_year);
+	
+}
+/*
+int compareDateTime(char *JSONDateTime, const char *path){
+	int compare = 0;
+	char *fileDateTime;
+	fileDateTime = getDateTime(path);
+	
+	if(compare < 0)
+		return -1;
+	else if(compare > 0)
+		return 1;
+	else 
+		return 0;
+}
+*/
+

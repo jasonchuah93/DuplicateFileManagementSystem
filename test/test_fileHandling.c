@@ -1,7 +1,6 @@
 #include "unity.h"
+#include "jansson.h"
 #include "fileHandling.h"
-#include "Error.h"
-#include "CException.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -9,6 +8,7 @@ void tearDown(void){}
 //TRUE is 1
 //FALSE is 0
 
+/*
 //Test for checking if is file
 void test_checkFile_should_return_FALSE_if_file_is_not_exist_in_folder(void){
 	int check;
@@ -71,27 +71,6 @@ void test_checkFolder_should_return_FALSE_if_is_file(void){
 	TEST_ASSERT_EQUAL(checkFolder("D:/jason/github/testFiles/test1.txt"),FALSE);
 }
 
-//Test for getFile()
-void test_getFilePtr_should_throw_invalid_file_if_is_invalid_file(void){
-	Error e;
-	Try{
-		getFilePtr("D:/jason/github/testFiles/testJasonChuah.txt"); //File not exist in folder
-		TEST_FAIL_MESSAGE("Invalid file");
-	}Catch(e){
-		TEST_ASSERT_EQUAL(INVALID_FILE,e);
-	}
-}
-
-//Test for getFolder()
-void test_getFolderPtr_should_throw_invalid_folder_if_is_invalid_folder(void){
-	Error e;
-	Try{
-		getFolderPtr("D:/jason/github/testFilesFilesFolder"); //File not exist in folder
-		TEST_FAIL_MESSAGE("Invalid folder");
-	}Catch(e){
-		TEST_ASSERT_EQUAL(INVALID_FOLDER,e);
-	}
-}
 
 //Test for getting file size
 void test_getFileSize_should_get_the_size_of_text_file(void){
@@ -135,40 +114,40 @@ void test_checkFileSize_should_get_the_size_of_video_file(void){
 	fileSize=getFileSize("D:/jason/github/testFiles/test Video.mp4");
 	TEST_ASSERT_EQUAL(fileSize,20065907);
 }
-
+/*
 //Test for checking the file last modified time
-void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_text_file(void){
+void test_getDateTime_should_check_the_latest_modified_time_of_text_file(void){
 	//text 1 last modified time is 06/05/17 - 10:48PM
 	char *fileTime;
 	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/test1.txt");
 	TEST_ASSERT_EQUAL_STRING(fileTime,"06/05/17 - 10:48PM");
 }
 
-void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_video_file(void){
+void test_getDateTime_should_check_the_latest_modified_time_of_video_file(void){
 	//video file last modified time is 06/03/17 - 01:36PM
 	char *fileTime;
-	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/test Video.mp4");
+	fileTime = getDateTime("D:/jason/github/testFiles/test Video.mp4");
 	TEST_ASSERT_EQUAL_STRING(fileTime,"06/03/17 - 01:36PM");
 }
 
-void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_PDF_file(void){
+void test_getDateTime_should_check_the_latest_modified_time_of_PDF_file(void){
 	//PDF file last modified time is 12/22/12 - 10:51AM
 	char *fileTime;
-	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/testPDF.pdf");
+	fileTime = getDateTime("D:/jason/github/testFiles/testPDF.pdf");
 	TEST_ASSERT_EQUAL_STRING(fileTime,"12/22/12 - 10:51AM");
 }
 
-void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_word_file(void){
+void test_getDateTime_should_check_the_latest_modified_time_of_word_file(void){
 	//Words file last modified time is 04/08/16 - 05:38PM
 	char *fileTime;
-	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/TEST Words.docx");
+	fileTime = getDateTime("D:/jason/github/testFiles/TEST Words.docx");
 	TEST_ASSERT_EQUAL_STRING(fileTime,"04/08/16 - 05:38PM");
 }
 
-void test_checkLatestModifiedTime_should_check_the_latest_modified_time_of_image_file(void){
+void test_getDateTime_should_check_the_latest_modified_time_of_image_file(void){
 	//Image file last modified time is 06/03/17 - 12:46AM
 	char *fileTime;
-	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/testPicture2.jpg");
+	fileTime = getDateTime("D:/jason/github/testFiles/testPicture2.jpg");
 	TEST_ASSERT_EQUAL_STRING(fileTime,"06/03/17 - 12:46AM");
 }
 
@@ -186,17 +165,23 @@ void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_fold
 	TEST_ASSERT_EQUAL(subFolderNumber,2);
 }
 
-//Test for traverseFolder
-void test_traverseFolder_should_throw_error_message_if_content_of_the_folder_is_invalid(void){
-	Error e;
-	Try{
-		traverseFolder("D:/jasonchuah");
-	}Catch(e){
-		TEST_ASSERT_EQUAL(INVALID_FOLDER,e);
-		return;
-	}
-}
 
 void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
 	traverseFolder("D:/jason/github/testFiles");
 }
+
+void test_getDateTime_should_get_the_date_and_time_of_a_file_in_seconds(void){
+	int seconds;
+	char *dateTime = NULL;
+	seconds = getDateTime(dateTime,"D:/jason/github/testFiles/TEST Words.docx");
+	//TEST_ASSERT_EQUAL(seconds,);
+}
+
+
+void test_compareDateTime_should_return_1_if_JSON_dateTime_is_latest_than_file(void){
+	int compare = 0;
+	char *JSONDateTime = "04/08/17 - 05:38PM";
+	compare = compareDateTime(JSONDateTime,"D:/jason/github/testFiles/TEST Words.docx");
+	TEST_ASSERT_EQUAL(0,compare);
+}
+*/

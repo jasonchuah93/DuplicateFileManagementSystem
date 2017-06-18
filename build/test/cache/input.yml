@@ -17,9 +17,11 @@
 :paths:
   :test:
   - "+:test/**"
+  - "+:test/jansson-2.7/**"
   - "-:test/support"
   :source:
   - src/**
+  - src/jansson-2.7/**
   :support:
   - test/support
   :include: []
@@ -56,10 +58,10 @@
   :testfail: ".fail"
   :dependencies: ".d"
 :unity:
-  :vendor_path: D:/Jason/Github/fileDuplicateSearch/vendor/ceedling/vendor
+  :vendor_path: D:/jason/github/fileduplicatesearch/vendor/ceedling/vendor
   :defines: []
 :cmock:
-  :vendor_path: D:/Jason/Github/fileDuplicateSearch/vendor/ceedling/vendor
+  :vendor_path: D:/jason/github/fileduplicatesearch/vendor/ceedling/vendor
   :defines: []
   :mock_prefix: mock_
   :when_no_prototypes: :warn
@@ -78,26 +80,67 @@
   :verbosity: 3
   :unity_helper: false
 :cexception:
-  :vendor_path: D:/Jason/Github/fileDuplicateSearch/vendor/ceedling/vendor
+  :vendor_path: D:/jason/github/fileduplicatesearch/vendor/ceedling/vendor
   :defines: []
 :test_runner:
   :includes: []
   :file_suffix: _runner
 :tools:
-  :test_compiler:
-    :executable: gcc.exe
-    :name: default_test_compiler
+  :release_compiler:
+    :executable: gcc
+    :name: gcc compiler
+    :arguments:
+    - "-c ${1}"
+    - "-o ${2}"
+    - "-I src/jansson-2.7"
+    - "-I src/jansson-2.7/src"
+    - "-I src/jansson-2.7/src/.libs/value.o"
+    - "-I src"
     :stderr_redirect: :none
     :background_exec: :none
     :optional: false
+  :release_linker:
+    :executable: gcc
+    :name: gcc linker
     :arguments:
-    - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
-    - -I"$": COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE
-    - "-D$": COLLECTION_DEFINES_TEST_AND_VENDOR
-    - "-DGNU_COMPILER"
-    - "-g"
-    - -c "${1}"
-    - -o "${2}"
+    - "${1}"
+    - "-llibjansson"
+    - "-Lsrc/.libs/value.o"
+    - "-o ${2}"
+    :stderr_redirect: :none
+    :background_exec: :none
+    :optional: false
+  :test_compiler:
+    :executable: gcc
+    :name: gcc compiler
+    :arguments:
+    - "-c ${1}"
+    - "-o ${2}"
+    - "-I test"
+    - "-g2"
+    - "-I vendor/ceedling/vendor/unity/src"
+    - "-I vendor/ceedling/vendor/cmock/src"
+    - "-I build/test/mocks"
+    - "-I test/support"
+    - "-I src/jansson-2.7"
+    - "-I src/jansson-2.7/src"
+    - "-I src/jansson-2.7/.libs/value.o"
+    - "-I src"
+    - "-D TEST="
+    :stderr_redirect: :none
+    :background_exec: :none
+    :optional: false
+  :test_linker:
+    :executable: gcc
+    :name: gcc linker
+    :arguments:
+    - "-llibjansson"
+    - "-Lsrc/.libs/value.o"
+    - "${1}"
+    - "-o ${2}"
+    :stderr_redirect: :none
+    :background_exec: :none
+    :optional: false
   :test_fixture:
     :executable: "${1}"
     :name: default_test_fixture
@@ -105,15 +148,6 @@
     :background_exec: :none
     :optional: false
     :arguments: []
-  :test_linker:
-    :executable: gcc.exe
-    :name: default_test_linker
-    :stderr_redirect: :none
-    :background_exec: :none
-    :optional: false
-    :arguments:
-    - '"${1}"'
-    - -o "${2}"
   :test_file_preprocessor:
     :executable: gcc.exe
     :name: default_test_file_preprocessor
