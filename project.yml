@@ -31,7 +31,7 @@
     - src/**
     - src/jansson-2.7/**
   :support:
-    - test/support
+    - +:test/support
 
 :defines:
   # in order to add common defines:
@@ -41,6 +41,7 @@
   :test:
     - *common_defines
     - TEST=
+    #- CEXCEPTION_USE_CONFIG_FILE
   :test_preprocess:
     - *common_defines
     - TEST=
@@ -68,7 +69,7 @@
       - -o ${2}                       #object file output (Ruby method call param list sub)
       - -I src/jansson-2.7
       - -I src/jansson-2.7/src
-      - -I src/jansson-2.7/src/.libs/value.o
+      - -I src/jansson-2.7/src/.libs
       - -I src
 
   :release_linker:
@@ -76,8 +77,7 @@
     :name: 'gcc linker'
     :arguments:
       - ${1}                          #list of object files to link (Ruby method call param list sub)
-      - -llibjansson 
-      - -Lsrc/.libs/value.o
+      - -llibjansson-4
       - -o ${2}                       #executable file output (Ruby method call param list sub)
 
   :test_compiler:
@@ -94,7 +94,7 @@
       - -I test/support
       - -I src/jansson-2.7
       - -I src/jansson-2.7/src
-      - -I src/jansson-2.7/.libs/value.o
+      - -I src/jansson-2.7/.libs
       - -I src
       - -D TEST=
       - -g2
@@ -103,8 +103,7 @@
     :executable: gcc                  #absolute file path
     :name: 'gcc linker'
     :arguments:
-      - -llibjansson 
-      - -Lsrc/.libs/value.o
+      - -llibjansson-4
       - ${1}                          #list of object files to link (Ruby method call param list sub)
       - -o ${2}                       #executable file output (Ruby method call param list sub)      
       

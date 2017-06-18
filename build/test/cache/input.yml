@@ -23,7 +23,7 @@
   - src/**
   - src/jansson-2.7/**
   :support:
-  - test/support
+  - "+:test/support"
   :include: []
   :test_toolchain_include: []
   :release_toolchain_include: []
@@ -58,10 +58,10 @@
   :testfail: ".fail"
   :dependencies: ".d"
 :unity:
-  :vendor_path: D:/jason/github/fileduplicatesearch/vendor/ceedling/vendor
+  :vendor_path: D:/Jason/Github/fileDuplicateSearch/vendor/ceedling/vendor
   :defines: []
 :cmock:
-  :vendor_path: D:/jason/github/fileduplicatesearch/vendor/ceedling/vendor
+  :vendor_path: D:/Jason/Github/fileDuplicateSearch/vendor/ceedling/vendor
   :defines: []
   :mock_prefix: mock_
   :when_no_prototypes: :warn
@@ -80,7 +80,7 @@
   :verbosity: 3
   :unity_helper: false
 :cexception:
-  :vendor_path: D:/jason/github/fileduplicatesearch/vendor/ceedling/vendor
+  :vendor_path: D:/Jason/Github/fileDuplicateSearch/vendor/ceedling/vendor
   :defines: []
 :test_runner:
   :includes: []
@@ -94,7 +94,7 @@
     - "-o ${2}"
     - "-I src/jansson-2.7"
     - "-I src/jansson-2.7/src"
-    - "-I src/jansson-2.7/src/.libs/value.o"
+    - "-I src/jansson-2.7/src/.libs"
     - "-I src"
     :stderr_redirect: :none
     :background_exec: :none
@@ -104,8 +104,7 @@
     :name: gcc linker
     :arguments:
     - "${1}"
-    - "-llibjansson"
-    - "-Lsrc/.libs/value.o"
+    - "-llibjansson-4"
     - "-o ${2}"
     :stderr_redirect: :none
     :background_exec: :none
@@ -124,7 +123,7 @@
     - "-I test/support"
     - "-I src/jansson-2.7"
     - "-I src/jansson-2.7/src"
-    - "-I src/jansson-2.7/.libs/value.o"
+    - "-I src/jansson-2.7/.libs"
     - "-I src"
     - "-D TEST="
     :stderr_redirect: :none
@@ -134,8 +133,7 @@
     :executable: gcc
     :name: gcc linker
     :arguments:
-    - "-llibjansson"
-    - "-Lsrc/.libs/value.o"
+    - "-llibjansson-4"
     - "${1}"
     - "-o ${2}"
     :stderr_redirect: :none
