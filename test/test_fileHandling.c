@@ -1,5 +1,4 @@
 #include "unity.h"
-#include "jansson.h"
 #include "fileHandling.h"
 
 void setUp(void){}
@@ -8,7 +7,7 @@ void tearDown(void){}
 //TRUE is 1
 //FALSE is 0
 
-/*
+
 //Test for checking if is file
 void test_checkFile_should_return_FALSE_if_file_is_not_exist_in_folder(void){
 	int check;

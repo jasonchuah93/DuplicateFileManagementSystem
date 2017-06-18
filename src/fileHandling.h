@@ -10,6 +10,7 @@
 #include <dirent.h>
 #include <time.h>
 #include <malloc.h>
+#include "jansson.h"
 
 #define TRUE 1
 #define FALSE 0

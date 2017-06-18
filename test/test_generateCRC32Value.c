@@ -5,7 +5,7 @@ void setUp(void){}
 void tearDown(void){}
 
 //Test for checking CRC32 Value
-/*
+
 void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name(void){
 	int checksum1=0,checksum2=0;
 	checksum1=hashCRC("D:/jason/github/testFiles/test1.txt");
@@ -40,4 +40,3 @@ void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_n
 	checksum2=hashCRC("D:/jason/github/testFiles/test Exel2.xlsx");
 	TEST_ASSERT_EQUAL(checksum1,checksum2);
 }
-*/
