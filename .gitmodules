@@ -1,0 +1,6 @@
+[submodule "src/jansson-2/7"]
+	path = src/jansson-2/7
+	url = https://github.com/chaosAD/jansson-2.7
+[submodule "src/jansson"]
+	path = src/jansson
+	url = https://github.com/chaosAD/jansson-2.7
