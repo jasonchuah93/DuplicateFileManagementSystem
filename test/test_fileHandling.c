@@ -164,11 +164,6 @@ void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_fold
 	TEST_ASSERT_EQUAL(subFolderNumber,2);
 }
 
-
-void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
-	traverseFolder("D:/jason/github/testFiles");
-}
-
 void test_getDateTime_should_get_the_date_and_time_of_a_file_in_seconds(void){
 	int seconds;
 	char *dateTime = NULL;
@@ -184,3 +179,6 @@ void test_compareDateTime_should_return_1_if_JSON_dateTime_is_latest_than_file(v
 	TEST_ASSERT_EQUAL(0,compare);
 }
 */
+void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
+	traverseFolder("D:/jason/github/testFiles");
+}
