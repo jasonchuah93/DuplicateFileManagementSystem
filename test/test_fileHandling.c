@@ -161,12 +161,36 @@ void test_convertEpoch_should_return_convert_the_file_dateTime_to_Epoch_format(v
 
 void test_compareDateTime_should_return_1_if_the_file_dateTime_is_latest_than_input_path(void){
 	//Image file last modified time is 2017/06/03 00:46:57
+	//Image file epoch seconds is 1496422017
 	//MP3 file last modified time is 2016/12/15 01:33:38
+	//MP3 file epoch seconds is 1481736818
 	int check = 0;
 	char imageFile[20]={0};
-	//fileDateTime(imageFile,"D:/jason/github/testFiles/testPicture2.jpg");
-	//check = compareDateTime(imageFile,"D:/jason/github/testFiles/Alan Walker - Alone.mp3");
-	//TEST_ASSERT_EQUAL(check,1);
+	fileDateTime(imageFile,"D:/jason/github/testFiles/testPicture2.jpg");
+	check = compareDateTime(imageFile,"D:/jason/github/testFiles/Alan Walker - Alone.mp3");
+	TEST_ASSERT_EQUAL(check,1);
+}
+
+void test_compareDateTime_should_return_negative_1_if_the_file_dateTime_is_latest_than_input_path(void){
+	//Image file last modified time is 2017/06/03 00:46:57
+	//Image file epoch seconds is 1496422017
+	//MP3 file last modified time is 2016/12/15 01:33:38
+	//MP3 file epoch seconds is 1481736818
+	int check = 0;
+	char mp3File[20]={0};
+	fileDateTime(mp3File,"D:/jason/github/testFiles/Alan Walker - Alone.mp3");
+	check = compareDateTime(mp3File,"D:/jason/github/testFiles/testPicture2.jpg");
+	TEST_ASSERT_EQUAL(check,-1);
+}
+
+void test_compareDateTime_should_return_0_if_the_file_dateTime_is_latest_than_input_path(void){
+	//MP3 file last modified time is 2016/12/15 01:33:38
+	//MP3 file epoch seconds is 1481736818
+	int check = 0;
+	char mp3File[20]={0};
+	fileDateTime(mp3File,"D:/jason/github/testFiles/Alan Walker - Alone.mp3");
+	check = compareDateTime(mp3File,"D:/jason/github/testFiles/Alan Walker - Alone.mp3");
+	TEST_ASSERT_EQUAL(check,0);
 }
 
 //Test for listFileNumber
