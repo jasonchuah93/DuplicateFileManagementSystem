@@ -224,6 +224,15 @@ int fileDateTime(char *dateTime,const char *path){
 	strcpy(dateTime,times);
 }
 
+/*************************************************************
+* Convert date and time of given file to epoch format
+*
+*	Input: 	 dateTime       Initially is NULL
+*
+*	Output:  epochSecs		date and time of the file in epoch format
+*			
+*	Destroy: none
+**************************************************************/
 int convertEpoch(char *fileDateTime){
 	unsigned long int epochSecs = 0;
 	time_t epoch = 0;

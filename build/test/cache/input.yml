@@ -17,7 +17,6 @@
 :paths:
   :test:
   - "+:test/**"
-  - "+:test/jansson/**"
   - "-:test/support"
   :source:
   - src/**
