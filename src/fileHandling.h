@@ -26,7 +26,8 @@ int listSubFolderNumber(const char *path);
 char *traverseFolder(const char *path);
 char *subFolder(const char *path);
 char *checkLatestModifiedTime(const char *path);
-int compareDateTime(char *JSONDateTime, const char *path);
-int getDateTime(char *dateTime,const char *path);
+int compareDateTime(char *dateTime, const char *path);
+int fileDateTime(char *dateTime,char *path);
+int convertEpoch(char *fileDateTime);
 
 #endif // fileHandling_H

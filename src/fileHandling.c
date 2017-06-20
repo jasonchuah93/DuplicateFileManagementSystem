@@ -2,6 +2,7 @@
 
 struct stat attr;
 struct dirent *dir;
+struct tm t;
 
 /*************************************************************
 * 	Check if the parameter is any type of file 
@@ -92,7 +93,6 @@ DIR *getFolderPtr(const char *path){
 *	Destroy: none
 **************************************************************/
 int getFileSize(const char *path){
-	json_object();
 	int size = 0;
 	FILE *f = getFilePtr(path);
 	fseek(f,0,SEEK_END);    
@@ -181,59 +181,80 @@ char *traverseFolder(const char *path){
 }
 
 /*************************************************************
-* Check the last modified date & time of the file 
+* Compare the last modified date & time between 2 files 
 *
-*	Input: 	path		the path of the file we want to check  
-*			
-*	Output: times		date and time of the file 
-*			
+*	Input:   dateTime       the file date time for compare 	 
+*			 path			the path of the file to compare
+
+*	Output:  1				if dateTime is latest than path 
+*			 0 				if path is latest than dateTime
+ 
 *	Destroy: none
 **************************************************************/
-char *checkLatestModifiedTime(const char *path){
+int compareDateTime(char *dateTime, const char *path){
 	/*
-	static char times[100];
-	time_t t = time(NULL);
-	stat(path, &attr);
-	strftime(times,20,"%x - %I:%M%p",localtime(&(attr.st_mtime)));
-	return times;
+	char year[5] = {0},month[5] = {0},day[5] = {0};
+	char hr[5] = {0},min[5] = {0},sec[5] = {0};
+	int yearVal = 0,monthVal = 0,dayVal = 0;
+	int hrVal = 0,minVal = 0,secVal = 0;
+	time_t t_of_day;
+	strncpy(year,dateTime,4);strncpy(month,dateTime+5,2);strncpy(day,dateTime+8,2);
+	strncpy(hr,dateTime+11,2);strncpy(min,dateTime+14,2);strncpy(sec,dateTime+17,2);
+	yearVal = atoi(year);monthVal = atoi(month);dayVal = atoi(day);
+	hrVal = atoi(hr);minVal = atoi(min);secVal = atoi(sec);
+	t.tm_year  = yearVal-1900;
+	t.tm_mon   = monthVal-1;           
+    t.tm_mday  = dayVal;
+    t.tm_hour  = hrVal;
+    t.tm_min   = minVal;
+    t.tm_sec   = secVal;
+    t.tm_isdst = -1; 
+	t_of_day = mktime(&t);
+	printf("seconds since the Epoch: %ld\n", (long) t_of_day);
 	*/
+}
+
+int convertEpoch(char *fileDateTime){
+	unsigned long int epochSecs = 0;
+	time_t epoch = 0;
+	char year[5] = {0},month[5] = {0},day[5] = {0};
+	char hr[5] = {0},min[5] = {0},sec[5] = {0};
+	int yearVal = 0,monthVal = 0,dayVal = 0;
+	int hrVal = 0,minVal = 0,secVal = 0;
+	strncpy(year,fileDateTime,4);strncpy(month,fileDateTime+5,2);strncpy(day,fileDateTime+8,2);
+	strncpy(hr,fileDateTime+11,2);strncpy(min,fileDateTime+14,2);strncpy(sec,fileDateTime+17,2);
+	yearVal = atoi(year);monthVal = atoi(month);dayVal = atoi(day);
+	hrVal = atoi(hr);minVal = atoi(min);secVal = atoi(sec);
+	t.tm_year  = yearVal-1900;
+	t.tm_mon   = monthVal-1;           
+    t.tm_mday  = dayVal;
+    t.tm_hour  = hrVal;
+    t.tm_min   = minVal;
+    t.tm_sec   = secVal;
+    t.tm_isdst = -1; 
+	epoch = mktime(&t);
+	epochSecs = (unsigned long int)epoch;
+	return epochSecs;
 }
 
 /*************************************************************
 * Check the last modified date & time of the file 
 *
-*	Input: 	path		the path of the file we want to check  
-*			
-*	Output: times		date and time of the file 
+*	Input: 	 dateTime       Initially is NULL
+*			 path			the path of the file we want to check  
+
+*	Output:  dateTimes		date and time of the file 
 *			
 *	Destroy: none
 **************************************************************/
-
-int getDateTime(char *dateTime,const char *path){
-	int val,valArray[20];
-	char buf[100];
-	struct tm info;
+int fileDateTime(char *dateTime,char *path){
+	char times[50]={0};
 	time_t t = time(NULL);
-	stat(path,&attr);
-	info = *(localtime(&(attr.st_mtime)));
-	strftime(buf,sizeof(buf),"%y%m%d%H%M",&info);
-	val = atoi(buf);
-	info.tm_year = val; 
-	printf("%d\n",info.tm_year);
-	
+	stat(path, &attr);
+	strftime(times,20,"%Y/%m/%d %H:%M:%S",localtime(&(attr.st_mtime)));
+	strcpy(dateTime,times);
 }
-/*
-int compareDateTime(char *JSONDateTime, const char *path){
-	int compare = 0;
-	char *fileDateTime;
-	fileDateTime = getDateTime(path);
-	
-	if(compare < 0)
-		return -1;
-	else if(compare > 0)
-		return 1;
-	else 
-		return 0;
-}
-*/
+
+
+
 

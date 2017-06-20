@@ -7,7 +7,6 @@ void tearDown(void){}
 //TRUE is 1
 //FALSE is 0
 
-
 //Test for checking if is file
 void test_checkFile_should_return_FALSE_if_file_is_not_exist_in_folder(void){
 	int check;
@@ -113,41 +112,61 @@ void test_checkFileSize_should_get_the_size_of_video_file(void){
 	fileSize=getFileSize("D:/jason/github/testFiles/test Video.mp4");
 	TEST_ASSERT_EQUAL(fileSize,20065907);
 }
-/*
+
 //Test for checking the file last modified time
-void test_getDateTime_should_check_the_latest_modified_time_of_text_file(void){
-	//text 1 last modified time is 06/05/17 - 10:48PM
-	char *fileTime;
-	fileTime = checkLatestModifiedTime("D:/jason/github/testFiles/test1.txt");
-	TEST_ASSERT_EQUAL_STRING(fileTime,"06/05/17 - 10:48PM");
+void test_fileDateTime_should_check_the_latest_modified_time_of_text_file(void){
+	//Text 1 last modified time is 2017/06/05 22:48:10
+	char textFile[20]={0};
+	fileDateTime(textFile,"D:/jason/github/testFiles/test1.txt");
+	TEST_ASSERT_EQUAL_STRING(textFile,"2017/06/05 22:48:10");
 }
 
-void test_getDateTime_should_check_the_latest_modified_time_of_video_file(void){
-	//video file last modified time is 06/03/17 - 01:36PM
-	char *fileTime;
-	fileTime = getDateTime("D:/jason/github/testFiles/test Video.mp4");
-	TEST_ASSERT_EQUAL_STRING(fileTime,"06/03/17 - 01:36PM");
+void test_fileDateTime_should_check_the_latest_modified_time_of_video_file(void){
+	//Video file last modified time is 2017/06/03 13:36:23
+	char videoFile[20]={0};
+	fileDateTime(videoFile,"D:/jason/github/testFiles/test Video.mp4");
+	TEST_ASSERT_EQUAL_STRING(videoFile,"2017/06/03 13:36:23");
 }
 
-void test_getDateTime_should_check_the_latest_modified_time_of_PDF_file(void){
-	//PDF file last modified time is 12/22/12 - 10:51AM
-	char *fileTime;
-	fileTime = getDateTime("D:/jason/github/testFiles/testPDF.pdf");
-	TEST_ASSERT_EQUAL_STRING(fileTime,"12/22/12 - 10:51AM");
+void test_fileDateTime_should_check_the_latest_modified_time_of_PDF_file(void){
+	//PDF file last modified time is 2012/12/22 10:51:56
+	char pdfFile[20]={0};
+	fileDateTime(pdfFile,"D:/jason/github/testFiles/testPDF.pdf");
+	TEST_ASSERT_EQUAL_STRING(pdfFile,"2012/12/22 10:51:56");
 }
 
-void test_getDateTime_should_check_the_latest_modified_time_of_word_file(void){
-	//Words file last modified time is 04/08/16 - 05:38PM
-	char *fileTime;
-	fileTime = getDateTime("D:/jason/github/testFiles/TEST Words.docx");
-	TEST_ASSERT_EQUAL_STRING(fileTime,"04/08/16 - 05:38PM");
+void test_fileDateTime_should_check_the_latest_modified_time_of_Words_file(void){
+	//Words file last modified time is 2016/04/08 17:38:03
+	char wordsFile[20]={0};
+	fileDateTime(wordsFile,"D:/jason/github/testFiles/TEST Words.docx");
+	TEST_ASSERT_EQUAL_STRING(wordsFile,"2016/04/08 17:38:03");
 }
 
-void test_getDateTime_should_check_the_latest_modified_time_of_image_file(void){
-	//Image file last modified time is 06/03/17 - 12:46AM
-	char *fileTime;
-	fileTime = getDateTime("D:/jason/github/testFiles/testPicture2.jpg");
-	TEST_ASSERT_EQUAL_STRING(fileTime,"06/03/17 - 12:46AM");
+void test_fileDateTime_should_check_the_latest_modified_time_of_image_file(void){
+	//Image file last modified time is 2017/06/03 00:46:57
+	char imageFile[20]={0};
+	fileDateTime(imageFile,"D:/jason/github/testFiles/testPicture2.jpg");
+	TEST_ASSERT_EQUAL_STRING(imageFile,"2017/06/03 00:46:57");
+}
+
+void test_convertEpoch_should_return_convert_the_file_dateTime_to_Epoch_format(void){
+	//Words file last modified time is 2016/04/08 17:38:03
+	//Words file epoch seconds is 1460108283
+	unsigned long int epochSecs = 0;
+	char wordsFile[20]={0};
+	fileDateTime(wordsFile,"D:/jason/github/testFiles/TEST Words.docx");
+	epochSecs = convertEpoch(wordsFile);
+	TEST_ASSERT_EQUAL(epochSecs,1460108283);
+}
+
+void test_compareDateTime_should_return_1_if_the_file_dateTime_is_latest_than_input_path(void){
+	//Image file last modified time is 2017/06/03 00:46:57
+	//MP3 file last modified time is 2016/12/15 01:33:38
+	int check = 0;
+	char imageFile[20]={0};
+	//fileDateTime(imageFile,"D:/jason/github/testFiles/testPicture2.jpg");
+	//check = compareDateTime(imageFile,"D:/jason/github/testFiles/Alan Walker - Alone.mp3");
+	//TEST_ASSERT_EQUAL(check,1);
 }
 
 //Test for listFileNumber
@@ -164,21 +183,7 @@ void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_fold
 	TEST_ASSERT_EQUAL(subFolderNumber,2);
 }
 
-void test_getDateTime_should_get_the_date_and_time_of_a_file_in_seconds(void){
-	int seconds;
-	char *dateTime = NULL;
-	seconds = getDateTime(dateTime,"D:/jason/github/testFiles/TEST Words.docx");
-	//TEST_ASSERT_EQUAL(seconds,);
-}
-
-
-void test_compareDateTime_should_return_1_if_JSON_dateTime_is_latest_than_file(void){
-	int compare = 0;
-	char *JSONDateTime = "04/08/17 - 05:38PM";
-	compare = compareDateTime(JSONDateTime,"D:/jason/github/testFiles/TEST Words.docx");
-	TEST_ASSERT_EQUAL(0,compare);
-}
-*/
 void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
 	traverseFolder("D:/jason/github/testFiles");
 }
+
