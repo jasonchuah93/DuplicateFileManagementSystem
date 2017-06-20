@@ -44,10 +44,6 @@ void test_checkFile_should_return_TRUE_if_is_PowerPoint_file(void){
 	TEST_ASSERT_EQUAL(checkFile("D:/jason/github/testFiles/test folder/test p.point2.pptx"),TRUE);
 }
 
-void test_checkFile_should_return_TRUE_if_is_JSON_file(void){
-	TEST_ASSERT_EQUAL(checkFile("D:/jason/github/testFiles/test.json"),TRUE);
-}
-
 void test_checkFile_should_return_FALSE_if_is_folder(void){
 	TEST_ASSERT_EQUAL(checkFile("D:/jason/github/testFiles"),FALSE);
 }

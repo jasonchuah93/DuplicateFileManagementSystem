@@ -73,7 +73,6 @@ int checkFolder(const char *path) {
 **************************************************************/
 DIR *getFolderPtr(const char *path){
 	int c = 0;
-	
 	c = checkFolder(path);
 	if(c == 1){
 		DIR *d = opendir(path);
