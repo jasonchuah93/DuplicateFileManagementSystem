@@ -14,7 +14,7 @@ unsigned long long msb;
 *			
 *	Destroy: none
 **************************************************************/
-int hashCRC(char *fileName){
+int hashCRC(const char *fileName){
     int crcValue=0,i=0;
 	unsigned long long rem=0;
 	unsigned int c;

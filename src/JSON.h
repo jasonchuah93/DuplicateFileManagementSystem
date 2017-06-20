@@ -10,7 +10,9 @@
 #include <time.h>
 #include "jansson.h"
 
+
+void dump_json_error(json_error_t *error);
 int checkJSON(const char* path);
-int createJSON(const char* path);
+int createJSON(const char* JSONpath,const char* filePath);
 
 #endif // JSON_H

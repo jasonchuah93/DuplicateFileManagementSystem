@@ -8,7 +8,7 @@
 
 #define POLY 0x82608EDB
 
-int hashCRC(char *fileName);
+int hashCRC(const char *fileName);
 int getBytes(FILE* fptr,unsigned int *bytePtr, unsigned long long *tempPtr);
 int shiftXOR(FILE *fptr, unsigned int *bytePtr, unsigned long long *tempPtr);
 int shiftXOR2(unsigned int *bytePtr,unsigned long long *tempPtr);
