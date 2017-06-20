@@ -1,0 +1,18 @@
+{
+  "courses": [
+    "course": {
+      "name": "Algorithms and Data Structure",
+      "code": "BAMExxxx",
+      "lectureHours": 3.5,
+      "praticalHours": 6.5,
+      "tutorialHours": 7.5
+    },
+    "course": {
+      "name": "Algorithms and Data Structure zsdfsg",
+      "code": "BAMExxxx asfsf",
+      "lectureHours": 3.5,
+      "praticalHours": 6.5,
+      "tutorialHours": 7.5
+    }
+  ]
+}

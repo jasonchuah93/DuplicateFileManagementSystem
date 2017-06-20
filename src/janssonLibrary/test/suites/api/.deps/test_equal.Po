@@ -1,0 +1,32 @@
+test_equal.o: test_equal.c ../../../src/jansson.h \
+ c:\mingw\include\stdio.h c:\mingw\include\_mingw.h \
+ c:\mingw\include\sdkddkver.h \
+ c:\mingw\lib\gcc\mingw32\4.8.1\include\stddef.h \
+ c:\mingw\lib\gcc\mingw32\4.8.1\include\stdarg.h \
+ c:\mingw\include\sys\types.h c:\mingw\include\stdlib.h \
+ ../../../src/jansson_config.h util.h ../../../jansson_private_config.h \
+ c:\mingw\include\locale.h
+
+../../../src/jansson.h:
+
+c:\mingw\include\stdio.h:
+
+c:\mingw\include\_mingw.h:
+
+c:\mingw\include\sdkddkver.h:
+
+c:\mingw\lib\gcc\mingw32\4.8.1\include\stddef.h:
+
+c:\mingw\lib\gcc\mingw32\4.8.1\include\stdarg.h:
+
+c:\mingw\include\sys\types.h:
+
+c:\mingw\include\stdlib.h:
+
+../../../src/jansson_config.h:
+
+util.h:
+
+../../../jansson_private_config.h:
+
+c:\mingw\include\locale.h:

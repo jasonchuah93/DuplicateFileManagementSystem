@@ -1,0 +1,33 @@
+memory.lo: memory.c c:\mingw\include\stdlib.h c:\mingw\include\_mingw.h \
+ c:\mingw\include\sdkddkver.h \
+ c:\mingw\lib\gcc\mingw32\4.8.1\include\stddef.h \
+ c:\mingw\include\string.h jansson.h c:\mingw\include\stdio.h \
+ c:\mingw\lib\gcc\mingw32\4.8.1\include\stdarg.h \
+ c:\mingw\include\sys\types.h jansson_config.h jansson_private.h \
+ hashtable.h strbuffer.h
+
+c:\mingw\include\stdlib.h:
+
+c:\mingw\include\_mingw.h:
+
+c:\mingw\include\sdkddkver.h:
+
+c:\mingw\lib\gcc\mingw32\4.8.1\include\stddef.h:
+
+c:\mingw\include\string.h:
+
+jansson.h:
+
+c:\mingw\include\stdio.h:
+
+c:\mingw\lib\gcc\mingw32\4.8.1\include\stdarg.h:
+
+c:\mingw\include\sys\types.h:
+
+jansson_config.h:
+
+jansson_private.h:
+
+hashtable.h:
+
+strbuffer.h:

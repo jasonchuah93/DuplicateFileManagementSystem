@@ -1,0 +1,4 @@
+#! /bin/sh
+echo Attempt to copy libjansson-4.dll to /C/WINDOWS/Systems32/
+cp ./src/.libs/libjansson-4.dll /c/WINDOWS/system32/
+echo Ok.

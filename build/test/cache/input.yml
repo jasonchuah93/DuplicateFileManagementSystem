@@ -20,7 +20,7 @@
   - "-:test/support"
   :source:
   - src/**
-  - src/jansson/**
+  - src/janssonLibrary/**
   :support:
   - "+:test/support"
   :include: []
@@ -90,9 +90,9 @@
     :arguments:
     - "-c ${1}"
     - "-o ${2}"
-    - "-I src/jansson"
-    - "-I src/jansson/src"
-    - "-I src/jansson/src/.libs"
+    - "-I src/janssonLibrary"
+    - "-I src/janssonLibrary/src"
+    - "-I src/janssonLibrary/src/.libs"
     - "-I src"
     :stderr_redirect: :none
     :background_exec: :none
@@ -119,9 +119,9 @@
     - "-I vendor/ceedling/vendor/cmock/src"
     - "-I build/test/mocks"
     - "-I test/support"
-    - "-I src/jansson"
-    - "-I src/jansson/src"
-    - "-I src/jansson/.libs"
+    - "-I src/janssonLibrary"
+    - "-I src/janssonLibrary/src"
+    - "-I src/janssonLibrary/.libs"
     - "-I src"
     - "-D TEST="
     :stderr_redirect: :none
