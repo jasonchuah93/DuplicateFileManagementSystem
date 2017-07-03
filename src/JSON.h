@@ -13,6 +13,6 @@
 
 void dump_json_error(json_error_t *error);
 int checkJSON(const char* path);
-int createJSON(const char* JSONpath,const char* filePath);
+int createJSON(const char* JSONpath,const char* filePath,int fileCount);
 
 #endif // JSON_H

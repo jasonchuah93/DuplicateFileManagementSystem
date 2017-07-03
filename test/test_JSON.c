@@ -20,5 +20,5 @@ void test_checkJSON_should_return_0_if_the_file_type_is_not_json(void){
 }
 
 void test_createJSON_should_create_file_in_JSON_format(void){
-	createJSON("forTesting/JSONTest1.json","forTesting/testPicture.jpg");
+	createJSON("forTesting/JSONTest1.json","forTesting/testPicture.jpg",1);
 }
