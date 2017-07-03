@@ -6,6 +6,11 @@ void tearDown(void){}
 
 //Test for checking CRC32 Value
 
+void test_hashCRC_should_return_0_if_input_is_not_a_file_type(void){
+	int checksum1=0;
+	checksum1=hashCRC("forTesting");
+	TEST_ASSERT_EQUAL(checksum1,0);
+}
 void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name(void){
 	int checksum1=0,checksum2=0;
 	checksum1=hashCRC("forTesting/test1.txt");

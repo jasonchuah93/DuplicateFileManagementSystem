@@ -6,12 +6,6 @@
 #include <string.h>
 #include <malloc.h>
 
-#define POLY 0x82608EDB
-
-int hashCRC(const char *fileName);
-int getBytes(FILE* fptr,unsigned int *bytePtr, unsigned long long *tempPtr);
-int shiftXOR(FILE *fptr, unsigned int *bytePtr, unsigned long long *tempPtr);
-int shiftXOR2(unsigned int *bytePtr,unsigned long long *tempPtr);
-int calCRC32(unsigned long long *tempPtr);
+unsigned int hashCRC(const char* fileName);
 
 #endif // generateCRC32Value_H

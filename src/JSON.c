@@ -3,10 +3,9 @@
 #include "generateCRC32Value.h"
 
 int checkJSON(const char* path){
-	//FILE *JSONF = fopen(path,"r");
 	int cmp = 0;
+	char *jsonExt = NULL;
 	const char ext = '.';
-	char *jsonExt;
 	jsonExt = strrchr(path,ext);
 	cmp = strcmp(jsonExt,".json");
 	if(cmp == 0)
@@ -17,9 +16,10 @@ int checkJSON(const char* path){
 
 int createJSON(const char* JSONpath,const char* filePath){
 	FILE *fp = NULL ;
-	int fileSize = 0,crc32Val = 0;
+	int fileSize = 0, crc32Val = 0, i = 0;
 	unsigned long int epochSec = 0;
-	char *cp = NULL, fileName[100];
+	char *cp = NULL, fileName[100]={0};
+	const char *newFilePath = NULL;
 	fp = fopen(JSONpath,"w");
 	if(fp == NULL){
 		printf("Error!");
