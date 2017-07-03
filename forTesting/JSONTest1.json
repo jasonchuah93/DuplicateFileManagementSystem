@@ -1,6 +1,12 @@
 {
-    "name":"forTesting/testPicture.jpg",
-    "size":1563175,
-    "crc32 value":1939964308,
-    "Epoch Sec":1496125170
+    "File":[
+        {
+            "File Info":{
+                "name":"forTesting/testPicture.jpg",
+                "size":1563175,
+                "crc32 value":2618875302,
+                "Epoch Sec":1499083135
+            }
+        }
+    ]
 }

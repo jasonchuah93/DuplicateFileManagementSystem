@@ -16,7 +16,8 @@ int checkJSON(const char* path){
 
 int createJSON(const char* JSONpath,const char* filePath){
 	FILE *fp = NULL ;
-	int fileSize = 0, crc32Val = 0, i = 0;
+	int fileSize = 0, i = 0;
+	unsigned int crc32Val = 0;
 	unsigned long int epochSec = 0;
 	char *cp = NULL, fileName[100]={0};
 	const char *newFilePath = NULL;
@@ -25,9 +26,13 @@ int createJSON(const char* JSONpath,const char* filePath){
 		printf("Error!");
 		exit(1);
 	}
-	json_t *jObject = json_object();
-	json_t *jArray = json_array();
 	
+	json_t *jArray = json_array();
+	json_t *fileTitle = json_object();
+	json_t *fileInfo = json_object();
+	json_t *jObject = json_object();
+	//Set file title
+	json_object_set_new(fileInfo,"File Info",jObject);
 	//Get file name
 	json_object_set_new(jObject,"name",json_string(filePath));
 	//Get file size
@@ -41,10 +46,12 @@ int createJSON(const char* JSONpath,const char* filePath){
 	epochSec = convertEpoch(fileName);
 	json_object_set_new(jObject,"Epoch Sec",json_integer(epochSec));
 	
-	cp = json_dumps(jObject,0);
-	json_dumpf(jObject,fp,100);
+	json_array_append(jArray,fileInfo);
+	json_object_set_new(fileTitle,"File",jArray);
+	cp = json_dumps(fileTitle,0);
+	json_dumpf(fileTitle,fp,100);
 	puts(cp);
-	json_decref(jObject);
+	json_decref(fileTitle);
 	fclose(fp);
 	return 0;
 }
