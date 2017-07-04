@@ -71,7 +71,7 @@ unsigned int hashCRC(const char* fileName){
 	int fileByte = 0;
 	unsigned int c = 0xFFFFFFFF;
 	if(fptr == NULL){
-		printf("Invalid File!!!");
+		printf("Invalid File!!!\n");
 		return 0;
 	}else{
 		fseek(fptr,0,SEEK_END);

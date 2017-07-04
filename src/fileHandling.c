@@ -1,9 +1,50 @@
 #include "fileHandling.h"
 #include "JSON.h"
+#include "generateCRC32Value.h"
 
+#define MaxFile 10000
 struct stat attr;
 struct dirent *dir;
 struct tm t;
+static char* lastFile[MaxFile] = {0};
+static int lastFileCount = 0;
+
+/*************************************************************
+*   Scan the folder, traverse all content inside
+*
+*	Input: 	path		the path of the folder we want to scan  
+*			
+*	Output: size		size of the file 
+*			
+*	Destroy: none
+**************************************************************/
+char *traverseFolder(char *folderPath){
+	DIR *d = getFolderPtr(folderPath);
+	int countFileNumber = 0,fileLen = 0;
+	char *subFolderPath = NULL, *jsonFileName = "/jsonInfo.json";
+	char *jsonPath = (char*)malloc(1+strlen(folderPath)+strlen(jsonFileName));
+	while((dir = readdir(d))!= NULL){
+		if(dir->d_type == DT_REG){
+			//printf("file name: %s\n",dir->d_name);
+			fileLen = strlen(dir->d_name)+1;
+			lastFile[countFileNumber] = malloc(fileLen);
+			strcpy(lastFile[countFileNumber],dir->d_name);
+			countFileNumber++;
+		}else if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+			//printf("folder name: %s\n",dir->d_name);
+			subFolderPath = subFolder(folderPath);
+			traverseFolder(subFolderPath);
+		}
+	}
+	strcpy(jsonPath,folderPath);
+	strcat(jsonPath,jsonFileName);
+	lastFileCount = countFileNumber;
+	if(lastFileCount > 0){
+		createJSON(jsonPath,folderPath,lastFile,lastFileCount);
+	}
+	closedir(d);
+	return 0;
+}
 
 /*************************************************************
 * 	Check if the parameter is any type of file 
@@ -39,8 +80,6 @@ FILE *getFilePtr(const char *path){
 	if(c == 1){
 		FILE *f = fopen(path,"r");
 		return f;
-	}else if(c == 0){
-		
 	}
 }
 
@@ -150,36 +189,11 @@ int listSubFolderNumber(const char *path){
 *	Destroy: none
 ****************************************************************************/
 char *subFolder(const char *path){
-	static char newPath[255];
+	static char newPath[500];
 	strcpy(newPath,path);//Copy the path to a new path 
 	strcat(newPath,"/");//Add / right after the path name
 	strcat(newPath,dir->d_name);//Add the sub folder path name right after the main folder path name		
 	return newPath;
-}
-
-/*************************************************************
-*   Scan the folder, traverse all content inside
-*
-*	Input: 	path		the path of the folder we want to scan  
-*			
-*	Output: size		size of the file 
-*			
-*	Destroy: none
-**************************************************************/
-char *traverseFolder(const char *path){
-	DIR *d = getFolderPtr(path);
-	int i = 0;
-	
-	while((dir = readdir(d))!= NULL){
-		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
-			//printf("sub folder: %s\n",dir->d_name);
-			char *sub = subFolder(path);
-			traverseFolder(sub);//Recursivly call the function to traverse file in sub folder
-		}else if(dir->d_type == DT_REG){
-			//printf("file name: %s\n",dir->d_name);
-		}
-	}
-	closedir(d);
 }
 
 /*************************************************************

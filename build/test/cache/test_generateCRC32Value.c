@@ -48,7 +48,7 @@ void test_hashCRC_should_not_be_equal_if_file_content_is_different(void){
 
  int checksum1=0,checksum2=0;
 
- checksum1=hashCRC("forTesting/testPicture.jpg");
+ checksum1=hashCRC("forTesting/Alan Walker - Alone.mp3");
 
  checksum2=hashCRC("forTesting/testPicture2.jpg");
 

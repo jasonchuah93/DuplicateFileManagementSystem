@@ -1,12 +1,14 @@
 #include "unity.h"
 #include "fileHandling.h"
+#include "JSON.h"
+#include "generateCRC32Value.h"
 
 void setUp(void){}
 void tearDown(void){}
 
 //TRUE is 1
 //FALSE is 0
-
+/*
 //Test for checking if is file
 void test_checkFile_should_return_FALSE_if_file_is_not_exist_in_folder(void){
 	int check;
@@ -185,7 +187,7 @@ void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_fold
 	subFolderNumber = listSubFolderNumber("forTesting"); //Number of subfolder in this folder is 3
 	TEST_ASSERT_EQUAL(subFolderNumber,2);
 }
-
+*/
 void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
 	traverseFolder("forTesting");
 }

@@ -1,0 +1,100 @@
+{
+    "File":[
+        {
+            "File Info":{
+                "name":"forTesting/jsonInfo.json",
+                "size":0,
+                "crc32 value":0,
+                "Epoch Sec":1499170772
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/test p.point2.pptx",
+                "size":-1,
+                "crc32 value":0,
+                "Epoch Sec":1499170772
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/test Exel.xlsx",
+                "size":10026,
+                "crc32 value":1029855498,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/test Exel2.xlsx",
+                "size":10026,
+                "crc32 value":1029855498,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/test p.point.pptx",
+                "size":82858,
+                "crc32 value":3403213022,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/TEST Words.docx",
+                "size":15400,
+                "crc32 value":2015438943,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/test1.txt",
+                "size":33,
+                "crc32 value":3775936421,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/test2.txt",
+                "size":33,
+                "crc32 value":3775936421,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/testPDF.pdf",
+                "size":249159,
+                "crc32 value":289821883,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/testPDF2.pdf",
+                "size":249159,
+                "crc32 value":289821883,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/testPicture.jpg",
+                "size":1563175,
+                "crc32 value":2618875302,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/testPicture2.jpg",
+                "size":3270784,
+                "crc32 value":1012057614,
+                "Epoch Sec":1499083135
+            }
+        }
+    ]
+}
