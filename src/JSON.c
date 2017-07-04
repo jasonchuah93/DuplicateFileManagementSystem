@@ -35,6 +35,8 @@ int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int
 	while(i < fileCount){
 		json_t *fileInfo = json_object();
 		json_t *fileObject = json_object();
+		json_t *fileObjectSize = json_integer(fileSize);
+		json_t *fileObjectCRC = json_integer(crc32Val);
 		//Set file info
 		json_object_set_new(fileInfo,"File Info",fileObject);
 		sprintf(fileNamePath,"%s/%s",filePath,filePathPtr[i]);
@@ -43,8 +45,7 @@ int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int
 		//Get file size
 		fileSize = getFileSize(fileNamePath);
 		json_object_set_new(fileObject,"size",json_integer(fileSize));
-		json_t *fileObjectSize = json_integer(fileSize);
-		printf("file size in json: %d\n",json_integer_value(fileObjectSize));
+		//printf("file size in json: %d\n",json_integer_value(fileObjectSize));
 		//Get file crc32
 		crc32Val = hashCRC(fileNamePath);
 		json_object_set_new(fileObject,"crc32 value",json_integer(crc32Val));
