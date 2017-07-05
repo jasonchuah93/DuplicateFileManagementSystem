@@ -10,8 +10,8 @@ void test_compareFileSize_should_compare_2_files_size_and_return_1(void){
 	int compare = 0;
 	unsigned long long int size1 = 5555555555;
 	unsigned long long int size2 = 3333333333;
-	unsigned long long int crc1 = 123123456789;
-	unsigned long long int crc2 = 233123456789;
+	unsigned long int crc1 = 1231234567;
+	unsigned long int crc2 = 2331234567;
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
 	json_t *fileObjectSize2 = json_integer(size2);
@@ -29,8 +29,8 @@ void test_compareFileSize_should_compare_2_files_size_and_return_negative_1(void
 	int compare = 0;
 	unsigned long long int size1 = 2345678945;
 	unsigned long long int size2 = 3333333333;
-	unsigned long long int crc1 = 123123456789;
-	unsigned long long int crc2 = 233123456789;
+	unsigned long int crc1 = 1231234567;
+	unsigned long int crc2 = 2331234567;
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
 	json_t *fileObjectSize2 = json_integer(size2);
@@ -48,8 +48,8 @@ void test_compareFileSize_should_compare_2_files_size_and_call_compareFileCRC_to
 	int compare = 0;
 	unsigned long long int size1 = 2345678945;
 	unsigned long long int size2 = 2345678945;
-	unsigned long long int crc1 = 523123456789;
-	unsigned long long int crc2 = 233123456789;
+	unsigned long int crc1 = 4294967291;
+	unsigned long int crc2 = 2331234567;
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
 	json_t *fileObjectSize2 = json_integer(size2);
@@ -67,8 +67,8 @@ void test_compareFileSize_should_compare_2_files_size_and_call_compareFileCRC_to
 	int compare = 0;
 	unsigned long long int size1 = 2345678945;
 	unsigned long long int size2 = 2345678945;
-	unsigned long long int crc1 = 123123456789;
-	unsigned long long int crc2 = 233123456789;
+	unsigned long int crc1 = 1231234567;
+	unsigned long int crc2 = 2331234567;
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
 	json_t *fileObjectSize2 = json_integer(size2);
@@ -86,8 +86,8 @@ void test_compareFileSize_should_compare_2_files_size_and_call_compareFileCRC_to
 	int compare = 0;
 	unsigned long long int size1 = 2345678945;
 	unsigned long long int size2 = 2345678945;
-	unsigned long long int crc1 = 233123456789;
-	unsigned long long int crc2 = 233123456789;
+	unsigned long int crc1 = 2331234567;
+	unsigned long int crc2 = 2331234567;
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
 	json_t *fileObjectSize2 = json_integer(size2);
@@ -105,8 +105,8 @@ void test_compareFileCRC_should_compare_2_files_size_and_return_1(void){
 	int compare = 0;
 	unsigned long long int size1 = 5555555555;
 	unsigned long long int size2 = 3333333333;
-	unsigned long long int crc1 = 233123456789;
-	unsigned long long int crc2 = 123123456789;
+	unsigned long int crc1 = 2331234567;
+	unsigned long int crc2 = 1231234567;
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
 	json_t *fileObjectSize2 = json_integer(size2);
@@ -124,8 +124,8 @@ void test_compareFileCRC_should_compare_2_files_size_and_return_negative_1(void)
 	int compare = 0;
 	unsigned long long int size1 = 5555555555;
 	unsigned long long int size2 = 3333333333;
-	unsigned long long int crc1 = 123123456789;
-	unsigned long long int crc2 = 233123456789;
+	unsigned long int crc1 = 1231234567;
+	unsigned long int crc2 = 2331234567;
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
 	json_t *fileObjectSize2 = json_integer(size2);
@@ -143,8 +143,8 @@ void test_compareFileCRC_should_compare_2_files_size_and_return_0(void){
 	int compare = 0;
 	unsigned long long int size1 = 5555555555;
 	unsigned long long int size2 = 3333333333;
-	unsigned long long int crc1 = 233123456789;
-	unsigned long long int crc2 = 233123456789;
+	unsigned long int crc1 = 2331234567;
+	unsigned long int crc2 = 2331234567;
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
 	json_t *fileObjectSize2 = json_integer(size2);

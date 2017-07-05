@@ -5,7 +5,7 @@
                 "name":"forTesting/subfolder/subfolder2/jsonInfo.json",
                 "size":0,
                 "crc32 value":0,
-                "Epoch Sec":1499275311
+                "Epoch Sec":1499275553
             }
         },
         {
@@ -13,7 +13,7 @@
                 "name":"forTesting/subfolder/subfolder2/TEST Words.docx",
                 "size":15400,
                 "crc32 value":2015438943,
-                "Epoch Sec":1499083135
+                "Epoch Sec":1499275521
             }
         }
     ]

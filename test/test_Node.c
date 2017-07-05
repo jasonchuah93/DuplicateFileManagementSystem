@@ -1,12 +1,13 @@
 #include "unity.h"
 #include <stdlib.h>
 #include <string.h>
+#include <malloc.h>
 #include "CustomAssertions.h"
 #include "Node.h"
 #include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
-#include <malloc.h>
+
 
 void setUp(void){}
 void tearDown(void){}

@@ -13,8 +13,8 @@ int compareFileSize(Node **sizeFromRBT,Node *sizeToCompare){
 }
 
 int compareFileCRC(Node **crcFromRBT,Node *crcToCompare){
-	unsigned long long int rootCrc = getFileCrc(*crcFromRBT);
-	unsigned long long int targetCrc = getFileCrc(crcToCompare);
+	unsigned long int rootCrc = getFileCrc(*crcFromRBT);
+	unsigned long int targetCrc = getFileCrc(crcToCompare);
 	
 	if(rootCrc > targetCrc){
 		return 1;

@@ -12,7 +12,7 @@ struct Node {
  Node *right;
  char color; // 'b' or 'r'(black or red)
  unsigned long long int fileSize;
- unsigned long long int crc32Value;
+ unsigned long int crc32Value;
 };
 
 Node *createNode(json_t *fileObjectSize,json_t *fileObjectCRC);
