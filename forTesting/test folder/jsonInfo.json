@@ -2,18 +2,26 @@
     "File":[
         {
             "File Info":{
+                "name":"forTesting/test folder/Assignment #1.docx",
+                "size":13244,
+                "crc32 value":1313464042,
+                "Epoch Sec":1498986954
+            }
+        },
+        {
+            "File Info":{
                 "name":"forTesting/test folder/jsonInfo.json",
-                "Epoch Sec":1499177915,
+                "size":0,
                 "crc32 value":0,
-                "size":0
+                "Epoch Sec":1499275311
             }
         },
         {
             "File Info":{
                 "name":"forTesting/test folder/test p.point2.pptx",
-                "Epoch Sec":1499083135,
+                "size":82858,
                 "crc32 value":3403213022,
-                "size":82858
+                "Epoch Sec":1499083135
             }
         }
     ]

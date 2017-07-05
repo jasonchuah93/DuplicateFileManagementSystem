@@ -3,17 +3,17 @@
         {
             "File Info":{
                 "name":"forTesting/subfolder/subfolder2/jsonInfo.json",
-                "Epoch Sec":1499177915,
+                "size":0,
                 "crc32 value":0,
-                "size":0
+                "Epoch Sec":1499275311
             }
         },
         {
             "File Info":{
                 "name":"forTesting/subfolder/subfolder2/TEST Words.docx",
-                "Epoch Sec":1499083135,
+                "size":15400,
                 "crc32 value":2015438943,
-                "size":15400
+                "Epoch Sec":1499083135
             }
         }
     ]

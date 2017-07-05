@@ -3,12 +3,13 @@
 
 #include "Node.h"
 
+//Use for add node function
 void leftRotate(Node **nodePtr); //pivot point
 void rightRotate(Node **nodePtr);
 void leftRightRotate(Node **nodePtr);
 void rightLeftRotate(Node **nodePtr);
 
-//Improved version
+//Use for delete node function
 void leftRotateVer2(Node **nodePtr); //pivot point
 void rightRotateVer2(Node **nodePtr);
 void leftRightRotateVer2(Node **nodePtr);

@@ -2,98 +2,98 @@
     "File":[
         {
             "File Info":{
-                "name":"forTesting/jsonInfo.json",
-                "Epoch Sec":1499177915,
+                "name":"forTesting/Assignment #1.docx",
+                "size":-1,
                 "crc32 value":0,
-                "size":0
+                "Epoch Sec":1499083135
             }
         },
         {
             "File Info":{
-                "name":"forTesting/test p.point2.pptx",
-                "Epoch Sec":1499177915,
-                "crc32 value":0,
-                "size":-1
+                "name":"forTesting/Testing 1.mp3",
+                "size":3965661,
+                "crc32 value":2580887755,
+                "Epoch Sec":1499083135
             }
         },
         {
             "File Info":{
-                "name":"forTesting/test Exel.xlsx",
-                "Epoch Sec":1499083135,
-                "crc32 value":1029855498,
-                "size":10026
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/test Exel2.xlsx",
-                "Epoch Sec":1499083135,
-                "crc32 value":1029855498,
-                "size":10026
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/test p.point.pptx",
-                "Epoch Sec":1499083135,
-                "crc32 value":3403213022,
-                "size":82858
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/TEST Words.docx",
-                "Epoch Sec":1499083135,
-                "crc32 value":2015438943,
-                "size":15400
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/test1.txt",
-                "Epoch Sec":1499083135,
-                "crc32 value":3775936421,
-                "size":33
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/test2.txt",
-                "Epoch Sec":1499083135,
-                "crc32 value":3775936421,
-                "size":33
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/testPDF.pdf",
-                "Epoch Sec":1499083135,
-                "crc32 value":289821883,
-                "size":249159
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/testPDF2.pdf",
-                "Epoch Sec":1499083135,
-                "crc32 value":289821883,
-                "size":249159
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/testPicture.jpg",
-                "Epoch Sec":1499083135,
-                "crc32 value":2618875302,
-                "size":1563175
-            }
-        },
-        {
-            "File Info":{
-                "name":"forTesting/testPicture2.jpg",
-                "Epoch Sec":1499083135,
+                "name":"forTesting/Testing 10.jpg",
+                "size":3270784,
                 "crc32 value":1012057614,
-                "size":3270784
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 11.pptx",
+                "size":82858,
+                "crc32 value":3403213022,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 2.xlsx",
+                "size":10026,
+                "crc32 value":1029855498,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 3.xlsx",
+                "size":10026,
+                "crc32 value":1029855498,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 4.docx",
+                "size":15400,
+                "crc32 value":2015438943,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 5.txt",
+                "size":33,
+                "crc32 value":3775936421,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 6.txt",
+                "size":33,
+                "crc32 value":3775936421,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 7.pdf",
+                "size":249159,
+                "crc32 value":289821883,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 8.pdf",
+                "size":249159,
+                "crc32 value":289821883,
+                "Epoch Sec":1499083135
+            }
+        },
+        {
+            "File Info":{
+                "name":"forTesting/Testing 9.jpg",
+                "size":1563175,
+                "crc32 value":2618875302,
+                "Epoch Sec":1499083135
             }
         }
     ]

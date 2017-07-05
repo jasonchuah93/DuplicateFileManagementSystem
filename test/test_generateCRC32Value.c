@@ -13,35 +13,35 @@ void test_hashCRC_should_return_0_if_input_is_not_a_file_type(void){
 }
 void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name(void){
 	int checksum1=0,checksum2=0;
-	checksum1=hashCRC("forTesting/test1.txt");
-	checksum2=hashCRC("forTesting/test2.txt");
+	checksum1=hashCRC("forTesting/Testing 5.txt");
+	checksum2=hashCRC("forTesting/Testing 6.txt");
 	TEST_ASSERT_EQUAL(checksum1,checksum2);
 }
 
 void test_hashCRC_should_not_be_equal_if_file_content_is_different(void){
 	int checksum1=0,checksum2=0;
-	checksum1=hashCRC("forTesting/Alan Walker - Alone.mp3");
-	checksum2=hashCRC("forTesting/testPicture2.jpg");
+	checksum1=hashCRC("forTesting/Testing 1.mp3");
+	checksum2=hashCRC("forTesting/Testing 10.jpg");
 	TEST_ASSERT_NOT_EQUAL(checksum1,checksum2);
 }
 
 void test_hashCRC_should_not_be_equal_if_type_of_files_is_different(void){
 	int checksum1=0,checksum2=0;
-	checksum1=hashCRC("forTesting/testPDF.pdf");
-	checksum2=hashCRC("forTesting/TEST Words.docx");
+	checksum1=hashCRC("forTesting/Testing 7.pdf");
+	checksum2=hashCRC("forTesting/Testing 4.docx");
 	TEST_ASSERT_NOT_EQUAL(checksum1,checksum2);
 }
 
 void test_hashCRC_should_be_equal_if_type_of_file_is_same_but_in_different_folder(void){
 	int checksum1=0,checksum2=0;
-	checksum1=hashCRC("forTesting/test p.point.pptx");
+	checksum1=hashCRC("forTesting/Testing 11.pptx");
 	checksum2=hashCRC("forTesting/test folder/test p.point2.pptx");
 	TEST_ASSERT_EQUAL(checksum1,checksum2);
 }
 
 void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name_in_excel_format(void){
 	int checksum1=0,checksum2=0;
-	checksum1=hashCRC("forTesting/test Exel.xlsx");
-	checksum2=hashCRC("forTesting/test Exel2.xlsx");
+	checksum1=hashCRC("forTesting/Testing 2.xlsx");
+	checksum2=hashCRC("forTesting/Testing 3.xlsx");
 	TEST_ASSERT_EQUAL(checksum1,checksum2);
 }

@@ -1,133 +1,223 @@
 #include <stdio.h>
 #include "Node.h"
-#include "InitNode.h"
 #include "Rotation.h"
+#include "compareJSON.h"
+#include "redBlackTree.h"
 #include "RestructureNode.h"
-#include "RedBlackTree.h"
 #include "ErrorCode.h"
 #include "CException.h"
 
-#define leftChild (*rootPtr)->left
-#define rightChild (*rootPtr)->right
-#define leftGrandChild (*rootPtr)->left->left
-#define rightGrandChild (*rootPtr)->right->right
-#define leftRightGrandChild (*rootPtr)->left->right
-#define rightLeftGrandChild (*rootPtr)->right->left
-
-void _addRedBlackTree(Node **rootPtr,Node *deleteNode);
-Node *_delRedBlackTree(Node **rootPtr,Node *deleteNode);
-Node *_delRedBlackTreeVer2(Node **rootPtr,Node *deleteNode);
-
-/**************************
-    Sub function to deal
-    with nodes color 
-**************************/
+/*******************************************
+    This function use handle the color
+    of node in the RedBlackTree
+*********************************************/
 
 void handleColor(Node **rootPtr,Node *deleteNode){
-  Node *root = *rootPtr;
-  if(root->left->color == 'r' && root->right->color == 'r'){
-        root->left->color ='b';
-        root->right->color ='b';
-        root->color ='r';
-      }
-}
-/***********************************
-    This function use to add node 
-    into the RedBlackTree
-***********************************/
-void addRedBlackTree(Node **rootPtr,Node *deleteNode){
-	_addRedBlackTree(rootPtr,deleteNode);
-	(*rootPtr)->color='b';
-}
-
-void _addRedBlackTree(Node **rootPtr,Node *deleteNode){
-  Node *root = *rootPtr;
-  if(root == NULL){
-	*rootPtr = deleteNode;
-    return;
-  }
-  if (root->left!=NULL && root->right!=NULL){
-    handleColor(rootPtr,deleteNode); 
-  }
-  if(root->data > deleteNode->data){
-	_addRedBlackTree(&root->left,deleteNode);
-  }else if(root->data < deleteNode->data){
-	_addRedBlackTree(&root->right,deleteNode);
-  }else{
-	Throw(ERR_EQUIVALENT_NODE);
-  }
-  if(root->left!=NULL && root->right==NULL){
-	if(root->left->left !=NULL){
-		if(root->left->color == 'r' && root->left->left->color == 'r'){
-			rightRotate(rootPtr);
-		}
-	}else if(root->left->right !=NULL){
-		if(root->left->color == 'r' && root->left->right->color == 'r'){
-			leftRightRotate(rootPtr);
-		}
+if((*rootPtr)->left->color == 'r' && (*rootPtr)->right->color == 'r'){
+		(*rootPtr)->color ='r';
+		(*rootPtr)->left->color ='b';
+		(*rootPtr)->right->color ='b';
 	}
-  }else if(root->left==NULL && root->right!=NULL){
-	if(root->right->right !=NULL){
-		if(root->right->color == 'r' && root->right->right->color == 'r'){
-			leftRotate(rootPtr);
-		}
-	}else if(root->right->left !=NULL){
-		if(root->right->color == 'r' && root->right->left->color == 'r'){
-			rightLeftRotate(rootPtr);
-		}
-	}
-  }
 }
 
-/***********************************
-    This function use to delete node 
-    into the RedBlackTree
-***********************************/
+/*********************************************************************
+* This function will add a new record into the red black tree
+*
+*	Input: 	rootPtr			the root of the tree
+*			newNode			the new member of the tree
+			compare			pointer to a function to decide the rules to add record
+*
+*	Destroy: none
+*	
+**********************************************************************/
 
-Node *delRedBlackTree(Node **rootPtr,Node *deleteNode){
-  Node *node =_delRedBlackTree(rootPtr,deleteNode);
-  if(*rootPtr!=NULL)
+void genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*addRecordCompare)(Node **rootPtr,Node *newNode)){
+    _genericAddRedBlackTree(rootPtr,newNode,addRecordCompare);    
     (*rootPtr)->color='b';
-  return node;
 }
 
-Node *_delRedBlackTree(Node **rootPtr,Node *deleteNode){
-  char tempColor;
-  Node *node , *tempRoot ,*tempLeftChild, *tempRightChild, *root = *rootPtr;
-  if(root==deleteNode){
-    if(rightChild){
-        tempRoot = removeNextLargerSuccessor(&rightChild);
-        tempLeftChild = leftChild ; tempRightChild = rightChild;
-        tempColor = (*rootPtr)->color; 
-        *rootPtr = tempRoot;
-        leftChild=tempLeftChild; rightChild = tempRightChild;
-        (*rootPtr)->color=tempColor;
-        restructureRedBlackTree(rootPtr,deleteNode);
-    }else if(leftChild){
-        rightRotate(rootPtr);
-        node = removeNextLargerSuccessor(&rightChild);
-        (*rootPtr)->color = 'b';
-    }else{
-        *rootPtr=NULL;
-    }
-    return node;
-  }else{
-	if(leftChild == NULL && rightChild == NULL){
-		 Throw(ERR_NODE_UNAVAILABLE);
-    }else if((*rootPtr)->data > deleteNode->data){
-        node= _delRedBlackTree(&leftChild,deleteNode);
-    }else if((*rootPtr)->data < deleteNode->data){
-		node= _delRedBlackTree(&rightChild,deleteNode);
-    }
-  }
-  restructureRedBlackTree(rootPtr,deleteNode);
-  return node;
+void _genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareRecord)(Node **rootPtr,Node *newNode)){
+	int compare=0;
+    if(*rootPtr == NULL){
+		*rootPtr = newNode;
+        (*rootPtr)->color='r';
+	}else{
+		if ((*rootPtr)->left!=NULL && (*rootPtr)->right!=NULL){
+			handleColor(rootPtr,newNode);
+		}
+		compare = compareRecord(rootPtr,newNode);
+		if(compare == 1)
+			_genericAddRedBlackTree(&(*rootPtr)->left,newNode,compareRecord);
+		else if(compare == -1)
+			_genericAddRedBlackTree(&(*rootPtr)->right,newNode,compareRecord);
+		else if(compare == 0)
+			Throw(ERR_EQUIVALENT_RECORD);
+		
+		if(((*rootPtr)->left!=NULL) && (*rootPtr)->left->left !=NULL){
+			if((*rootPtr)->left->color == 'r' && (*rootPtr)->left->left->color == 'r'){
+				rightRotate(rootPtr);
+				(*rootPtr)->right->color = 'r';
+			}
+		}else if(((*rootPtr)->left!=NULL) && (*rootPtr)->left->right !=NULL){
+			if((*rootPtr)->left->color == 'r' && (*rootPtr)->left->right->color == 'r'){
+				leftRightRotate(rootPtr);
+				(*rootPtr)->right->color = 'r';
+			}
+		}else if(((*rootPtr)->right!=NULL) && (*rootPtr)->right->right != NULL){
+			if((*rootPtr)->right->color == 'r' && (*rootPtr)->right->right->color == 'r'){
+				leftRotate(rootPtr);
+				(*rootPtr)->left->color = 'r';
+			}
+		}else if(((*rootPtr)->right!=NULL) && (*rootPtr)->right->left !=NULL){
+			if((*rootPtr)->right->color == 'r' && (*rootPtr)->right->left->color == 'r'){
+				rightLeftRotate(rootPtr);
+				(*rootPtr)->left->color = 'r';
+			}
+		}
+		if((*rootPtr)->right !=NULL && (*rootPtr)->right->left !=NULL){
+			if((*rootPtr)->right->color == 'r' && (*rootPtr)->right->left->color == 'r'){
+				(*rootPtr)->right->color = 'b';
+				(*rootPtr)->right->left->color = 'r';
+				(*rootPtr)->right->right->color = 'r';
+			}
+		}
+		
+	}
 }
+
+/*********************************************************************
+* This function will delete record in the red black tree
+*
+*	Input: 	rootPtr			the root of the tree
+*			deleteNode		the record that will delete
+			compare			pointer to a function to decide the rules to delete record
+*	
+*	Output: targerRoot		the deleted record
+*
+*	Destroy: none
+*	
+**********************************************************************/
+Node *genericDelRedBlackTree(Node **rootPtr,Node *delNode, int(*addRecordCompare)(Node **rootPtr,Node *delNode)){
+    Node *node = _genericDelRedBlackTree(rootPtr,delNode,addRecordCompare);
+    if(*rootPtr!=NULL)
+        (*rootPtr)->color='b';
+    return node;
+}
+
+Node *_genericDelRedBlackTree(Node **rootPtr,Node *delNode, int(*compareRecord)(Node **rootPtr,Node *delNode)){
+    int compare ; char tempColor; 
+    Node *node , *tempRoot ,*tempLeftChild, *tempRightChild,*removeSuccessor,tempSuccessor;
+	compare = compareRecord(rootPtr,delNode);
+	if(compare == 0){
+		if(rightChild != NULL){
+			node = *rootPtr;
+			removeSuccessor = removeNextLargerSuccessor(&rightChild);
+			tempSuccessor = *removeSuccessor;
+			tempLeftChild = leftChild ; 
+			tempRightChild = rightChild;
+			tempColor = (*rootPtr)->color; 
+			*rootPtr = removeSuccessor;
+			leftChild = tempLeftChild; 
+			rightChild = tempRightChild;
+			(*rootPtr)->color = tempColor;
+			node->left = NULL;
+			node->right = NULL;
+			restructureRedBlackTree(rootPtr,&tempSuccessor);
+			return node;
+		}else if(leftChild != NULL){
+			rightRotate(rootPtr);
+			node = removeNextLargerSuccessor(&rightChild);
+			(*rootPtr)->color = 'b';
+		}else{
+			node = *rootPtr;
+			*rootPtr=NULL;
+			return node;
+		}
+	}else if(compare == 1){
+		node = _genericDelRedBlackTree(&leftChild,delNode,compareRecord);
+	}else if(compare == -1){
+		node = _genericDelRedBlackTree(&rightChild,delNode,compareRecord);
+	}
+	restructureRedBlackTree(rootPtr,delNode);
+	return node;
+}
+
+/*********************************************************************
+ * This function will find record in the red black tree
+ *
+ *	Input: 	rootPtr			the root of the tree
+ *			targerMemory	the memory user want to look for in tree
+ 			compare			pointer to a function to decide the rules to find record
+ *	
+ *	Output: foundNode       the node found in the tree will be returned 
+ *			                as output
+ *
+ *	Destroy: none
+ *	
+**********************************************************************/
+
+Node *genericFindRedBlackTree(Node **rootPtr,void *targetMemory,int(*findRecordCompare)(Node **rootPtr,void *targetMemory)){
+    int compare ;
+	Node *foundNode;
+	compare = findRecordCompare(rootPtr,targetMemory);
+    if(compare == 0){
+		foundNode = *rootPtr;
+	}else if(compare == 1){
+        foundNode = genericFindRedBlackTree(&leftChild,targetMemory,findRecordCompare);
+	}else if(compare == -1){
+		foundNode = genericFindRedBlackTree(&rightChild,targetMemory,findRecordCompare);
+	}
+	
+	return foundNode;
+}
+
+/*********************************************************************
+ * This function will find record in the red black tree
+ *
+ *	Input: 	rootPtr			the root of the tree
+ *			targerMemory	the memory user want to look for in tree
+ 			compare			pointer to a function to decide the rules to find record
+ *	
+ *	Output: found return 1
+ *			Not found return 0
+ *
+ *	Destroy: none
+ *	
+**********************************************************************/
+int findRedBlackTree(Node **rootPtr,void *targetMemory,int(*findRecordCompare)(Node **rootPtr,void *targetMemory)){
+    int compare ;
+	
+	if((char*)targetMemory > memoryAddr(*rootPtr)){
+		if(rightChild == NULL){
+			return 0;
+		}else if(rightChild->left == NULL && rightChild->right == NULL){
+			if((char*)targetMemory != memoryAddr(rightChild)){
+				return 0;
+			}
+		}
+	}else if((char*)targetMemory < memoryAddr(*rootPtr)){
+		if(leftChild == NULL){
+			return 0;
+		}else if(leftChild->left == NULL && leftChild->right == NULL){
+			if((char*)targetMemory != memoryAddr(leftChild)){
+				return 0;
+			}
+		}
+	}
+	compare = findRecordCompare(rootPtr,targetMemory);
+    if(compare == 0){
+		return 1;
+    }else if(compare == 1){
+		findRedBlackTree(&leftChild,targetMemory,findRecordCompare);
+	}else if(compare == -1){
+		findRedBlackTree(&rightChild,targetMemory,findRecordCompare);
+	}
+}
+
 /*******************************************
     This function use to remove the most 
     left node in the RedBlackTree
 *********************************************/
-
 Node *removeNextLargerSuccessor(Node **rootPtr){
 	Node *removeNode;
 	
@@ -147,52 +237,3 @@ Node *removeNextLargerSuccessor(Node **rootPtr){
     return removeNode;
 }
 
-/******************************************************]
-	********************
-		Old function 
-	********************
-Node *_delRedBlackTree(Node **rootPtr,Node *deleteNode){
-  Node *node;
-  Node *root = *rootPtr;
-  if(root==deleteNode){
-    *rootPtr=NULL;
-    return;
-  }else{
-	if(root->left == NULL && root->right == NULL){
-        Throw(ERR_NODE_UNAVAILABLE);
-    }else if(root->data > deleteNode->data){
-		if(root->left->left!=NULL || root->left->right!=NULL){
-			root->left->color='b';
-			root->left->left->color='r';
-			root->left->right->color='r';
-		}
-		node=_delRedBlackTree(&root->left,deleteNode);
-		if(root->left==NULL && root->right!=NULL){
-			if(root->right->right!=NULL){
-				if(root->right->left->color=='b' && root->right->right->color=='b'){
-					leftRotate(rootPtr);
-					(*rootPtr)->left->right->color='r';
-				}
-			}
-		}
-	}else if(root->data < deleteNode->data){
-		if(root->right->left!=NULL || root->right->right!=NULL){
-			root->right->color='b';
-			root->right->left->color='r';
-			root->right->right->color='r';
-		}
-		node=_delRedBlackTree(&root->right,deleteNode);
-		if(root->left!=NULL && root->right==NULL){
-			if(root->left->left!=NULL){
-				if(root->left->left->color=='b' && root->left->right->color=='b'){
-					rightRotate(rootPtr);
-					(*rootPtr)->right->left->color='r';
-				}
-			}
-		}
-	}
-  }
-  
-  return node;
-}
-*********************************************************************/

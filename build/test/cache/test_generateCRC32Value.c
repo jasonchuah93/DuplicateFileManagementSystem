@@ -30,9 +30,9 @@ void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_n
 
  int checksum1=0,checksum2=0;
 
- checksum1=hashCRC("forTesting/test1.txt");
+ checksum1=hashCRC("forTesting/Testing 5.txt");
 
- checksum2=hashCRC("forTesting/test2.txt");
+ checksum2=hashCRC("forTesting/Testing 6.txt");
 
  UnityAssertEqualNumber((_U_SINT)((checksum1)), (_U_SINT)((checksum2)), (
 
@@ -48,9 +48,9 @@ void test_hashCRC_should_not_be_equal_if_file_content_is_different(void){
 
  int checksum1=0,checksum2=0;
 
- checksum1=hashCRC("forTesting/Alan Walker - Alone.mp3");
+ checksum1=hashCRC("forTesting/Testing 1.mp3");
 
- checksum2=hashCRC("forTesting/testPicture2.jpg");
+ checksum2=hashCRC("forTesting/Testing 10.jpg");
 
  if (((checksum1) != (checksum2))) {} else {UnityFail( ((" Expected Not-Equal")), (_U_UINT)((_U_UINT)(25)));};
 
@@ -62,9 +62,9 @@ void test_hashCRC_should_not_be_equal_if_type_of_files_is_different(void){
 
  int checksum1=0,checksum2=0;
 
- checksum1=hashCRC("forTesting/testPDF.pdf");
+ checksum1=hashCRC("forTesting/Testing 7.pdf");
 
- checksum2=hashCRC("forTesting/TEST Words.docx");
+ checksum2=hashCRC("forTesting/Testing 4.docx");
 
  if (((checksum1) != (checksum2))) {} else {UnityFail( ((" Expected Not-Equal")), (_U_UINT)((_U_UINT)(32)));};
 
@@ -76,7 +76,7 @@ void test_hashCRC_should_be_equal_if_type_of_file_is_same_but_in_different_folde
 
  int checksum1=0,checksum2=0;
 
- checksum1=hashCRC("forTesting/test p.point.pptx");
+ checksum1=hashCRC("forTesting/Testing 11.pptx");
 
  checksum2=hashCRC("forTesting/test folder/test p.point2.pptx");
 
@@ -94,9 +94,9 @@ void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_n
 
  int checksum1=0,checksum2=0;
 
- checksum1=hashCRC("forTesting/test Exel.xlsx");
+ checksum1=hashCRC("forTesting/Testing 2.xlsx");
 
- checksum2=hashCRC("forTesting/test Exel2.xlsx");
+ checksum2=hashCRC("forTesting/Testing 3.xlsx");
 
  UnityAssertEqualNumber((_U_SINT)((checksum1)), (_U_SINT)((checksum2)), (
 
