@@ -7,7 +7,7 @@
 #include "ErrorCode.h"
 
 /*********************************************************************
-* This function will add a new record into the red black tree
+* This function will add a new file info into the red black tree
 *
 *	Input: 	rootPtr			the root of the tree
 *			newNode			the new member of the tree
@@ -69,6 +69,63 @@ void _genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareFile)(Nod
 		}
 		
 	}
+}
+
+/*********************************************************************
+* This function will delete file info in the red black tree
+*
+*	Input: 	rootPtr			the root of the tree
+*			deleteNode		the record that will delete
+			compare			pointer to a function to decide the rules to delete record
+*	
+*	Output: targerRoot		the deleted record
+*
+*	Destroy: none
+*	
+**********************************************************************/
+Node *genericDelRedBlackTree(Node **rootPtr,Node *delNode, int(*compareFileSize)(Node **rootPtr,Node *delNode)){
+    Node *node = _genericDelRedBlackTree(rootPtr,delNode,compareFileSize);
+    if(*rootPtr!=NULL)
+        (*rootPtr)->color='b';
+    return node;
+}
+
+Node *_genericDelRedBlackTree(Node **rootPtr,Node *delNode, int(*compareRecord)(Node **rootPtr,Node *delNode)){
+    int compare ; char tempColor; 
+    Node *node , *tempRoot ,*tempLeftChild, *tempRightChild,*removeSuccessor,tempSuccessor;
+	compare = compareRecord(rootPtr,delNode);
+	if(compare == 0){
+		if(rightChild != NULL){
+			node = *rootPtr;
+			removeSuccessor = removeNextLargerSuccessor(&rightChild);
+			tempSuccessor = *removeSuccessor;
+			tempLeftChild = leftChild ; 
+			tempRightChild = rightChild;
+			tempColor = (*rootPtr)->color; 
+			*rootPtr = removeSuccessor;
+			leftChild = tempLeftChild; 
+			rightChild = tempRightChild;
+			(*rootPtr)->color = tempColor;
+			node->left = NULL;
+			node->right = NULL;
+			restructureRedBlackTree(rootPtr,&tempSuccessor);
+			return node;
+		}else if(leftChild != NULL){
+			rightRotate(rootPtr);
+			node = removeNextLargerSuccessor(&rightChild);
+			(*rootPtr)->color = 'b';
+		}else{
+			node = *rootPtr;
+			*rootPtr=NULL;
+			return node;
+		}
+	}else if(compare == 1){
+		node = _genericDelRedBlackTree(&leftChild,delNode,compareRecord);
+	}else if(compare == -1){
+		node = _genericDelRedBlackTree(&rightChild,delNode,compareRecord);
+	}
+	restructureRedBlackTree(rootPtr,delNode);
+	return node;
 }
 
 /*******************************************
