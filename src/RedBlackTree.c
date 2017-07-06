@@ -2,7 +2,7 @@
 #include "Node.h"
 #include "Rotation.h"
 #include "compareJSON.h"
-#include "redBlackTree.h"
+#include "RedBlackTree.h"
 #include "RestructureNode.h"
 #include "ErrorCode.h"
 
