@@ -3,6 +3,8 @@
 
 #include "Node.h"
 
+#define duplicatedPathName (((Node*)((Error*)(errPtr))->data)->pathName)
+
 typedef enum{
 	ERR_NO_ERROR,
 	ERR_EQUIVALENT_NODE,
@@ -17,6 +19,6 @@ struct Error{
 	char *errorMsg;
 };
 
-Error *createErrNode(Node *duplicateNode);
+Error *createErrNode(Node *duplicatedNode);
 
 #endif // errorNode_H
