@@ -24,3 +24,10 @@ int compareFileCRC(Node **crcFromRBT,Node *crcToCompare){
 		return 0;
 	}
 }
+
+int compareFilePath(Error *pathFromRBT,Error *pathToCompare){
+	const char *rootLoc = getFilePathLocation(pathFromRBT);
+	const char *targetLoc = getFilePathLocation(pathToCompare);
+	
+	
+}

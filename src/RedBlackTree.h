@@ -2,7 +2,12 @@
 #define redBlackTree_H
 
 #include "Node.h"
+#include "errorNode.h"
 #include "compareJSON.h"
+#include "Rotation.h"
+#include "compareJSON.h"
+#include "RedBlackTree.h"
+#include "RestructureNode.h"
 
 //Make these define for easy programming
 #define addFile(rootPtr,newNode) genericAddRedBlackTree(rootPtr,newNode,compareFileSize)

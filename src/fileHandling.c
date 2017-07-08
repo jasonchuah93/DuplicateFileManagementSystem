@@ -1,6 +1,4 @@
 #include "fileHandling.h"
-#include "JSON.h"
-#include "generateCRC32Value.h"
 
 #define MaxFile 10000
 struct stat attr;

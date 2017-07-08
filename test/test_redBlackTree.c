@@ -7,6 +7,7 @@
 #include "RedBlackTree.h"
 #include "RestructureNode.h"
 #include "CustomAssertions.h"
+#include "CException.h"
 
 void setUp(void){}
 void tearDown(void){}

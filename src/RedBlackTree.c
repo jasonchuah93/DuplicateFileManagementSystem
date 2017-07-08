@@ -1,9 +1,6 @@
 #include <stdio.h>
-#include "Node.h"
-#include "Rotation.h"
-#include "compareJSON.h"
 #include "RedBlackTree.h"
-#include "RestructureNode.h"
+#include "CException.h"
 
 /*********************************************************************
 * This function will add a new file info into the red black tree
@@ -22,8 +19,9 @@ void genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareFileSize)(
 }
 
 void _genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareFile)(Node **rootPtr,Node *newNode)){
-	int compare=0;
-    if(*rootPtr == NULL){
+	int compare = 0;
+	Error *duplicatedNode = NULL;
+	if(*rootPtr == NULL){
 		*rootPtr = newNode;
         (*rootPtr)->color='r';
 	}else{
@@ -35,9 +33,10 @@ void _genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareFile)(Nod
 			_genericAddRedBlackTree(&(*rootPtr)->left,newNode,compareFile);
 		else if(compare == -1)
 			_genericAddRedBlackTree(&(*rootPtr)->right,newNode,compareFile);
-		else if(compare == 0)
-			printf("Both files are equal\n");
-		
+		else if(compare == 0){
+			duplicatedNode = createErr(*rootPtr);
+			Throw(duplicatedNode);
+		}
 		if(((*rootPtr)->left!=NULL) && (*rootPtr)->left->left !=NULL){
 			if((*rootPtr)->left->color == 'r' && (*rootPtr)->left->left->color == 'r'){
 				rightRotate(rootPtr);

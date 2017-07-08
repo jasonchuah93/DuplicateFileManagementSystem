@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <time.h>
+#include "JSON.h"
+#include "generateCRC32Value.h"
 
 #define TRUE 1
 #define FALSE 0
