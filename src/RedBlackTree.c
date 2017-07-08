@@ -4,7 +4,6 @@
 #include "compareJSON.h"
 #include "RedBlackTree.h"
 #include "RestructureNode.h"
-#include "ErrorCode.h"
 
 /*********************************************************************
 * This function will add a new file info into the red black tree

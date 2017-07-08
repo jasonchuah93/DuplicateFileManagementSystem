@@ -2,8 +2,6 @@
 #include "Node.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
-#include "ErrorCode.h"
-
 
 #define leftChild (*nodePtr)->left
 #define rightChild (*nodePtr)->right
