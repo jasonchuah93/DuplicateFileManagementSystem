@@ -13,8 +13,10 @@ struct Node {
  char color; // 'b' or 'r'(black or red)
  unsigned long long int fileSize;
  unsigned long int crc32Value;
+ const char *pathName;
 };
 
 Node *createNode(json_t *fileObjectSize,json_t *fileObjectCRC);
+Node *createNodeWithFileInfo(json_t *fileObjectSize,json_t *fileObjectCRC,json_t *fileObjectName);
 
 #endif // Node_H
