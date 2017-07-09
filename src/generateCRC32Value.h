@@ -6,6 +6,6 @@
 #include <string.h>
 #include <malloc.h>
 
-unsigned int hashCRC(const char* fileName);
+unsigned long int hashCRC(const char* fileName);
 
 #endif // generateCRC32Value_H

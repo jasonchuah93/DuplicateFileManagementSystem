@@ -65,11 +65,11 @@ const unsigned int crc32Table[256] = {
 *			
 *	Destroy: none
 **************************************************************/
-unsigned int hashCRC(const char* fileName){
+unsigned long int hashCRC(const char* fileName){
 	FILE *fptr = fopen(fileName,"rb");
 	int fileSize = 0;
 	int fileByte = 0;
-	unsigned int c = 0xFFFFFFFF;
+	unsigned long int c = 0xFFFFFFFF;
 	if(fptr == NULL){
 		//printf("Invalid File!!!\n");
 		return 0;

@@ -33,6 +33,7 @@ int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int
 	while(i < fileCount){
 		json_t *fileInfo = json_object();
 		json_t *fileObject = json_object();
+		json_t *fileObjectName = json_string(filePath);
 		json_t *fileObjectSize = json_integer(fileSize);
 		json_t *fileObjectCRC = json_integer(crc32Val);
 		//Set file info

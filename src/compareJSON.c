@@ -25,9 +25,21 @@ int compareFileCRC(Node **crcFromRBT,Node *crcToCompare){
 	}
 }
 
-int compareFilePath(Error *pathFromRBT,Error *pathToCompare){
-	const char *rootLoc = getFilePathLocation(pathFromRBT);
-	const char *targetLoc = getFilePathLocation(pathToCompare);
-	
-	
+int compareFileByte(Error *nodeFromRBT,Node *nodeToCompare){
+	int i = 0,int1 = 0, int2 = 0;
+	char temp[100] = {0}, temp2[100] = {0};
+	const char *rootLocation = getFilePathLocationFrmErr(nodeFromRBT);
+	const char *targetLocation = getFilePathLocationFrmNode(nodeToCompare);
+	FILE *fptr1 = fopen(rootLocation,"r");
+	FILE *fptr2 = fopen(targetLocation,"r");
+	int1 = getc(fptr1);
+	int2 = getc(fptr2);
+	while ((int1 != EOF) && (int2 != EOF) && (int1 == int2)) {
+         int1 = getc(fptr1);
+         int2 = getc(fptr2);
+	}
+	if(int1 == int2)
+		return 0;
+	else
+		return -1;
 }

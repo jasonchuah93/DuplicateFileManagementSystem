@@ -845,7 +845,8 @@ void test_addFile_add_same_crc_value_into_tree(void){
 		addFile(&nodePtr,fileNode5);
 		TEST_FAIL_MESSAGE("Same CRC");
 	}Catch(e){
-		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode5);
+		TEST_ASSERT_EQUAL_PTR(e->data,fileNode3);
+		TEST_ASSERT_EQUAL(e->errCode,ERR_EQUIVALENT_NODE);
 	}
 	free(fileNode1);
 	free(fileNode2);
