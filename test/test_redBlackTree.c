@@ -40,7 +40,6 @@ void test_addFile_should_add_fileNode_into_empty_root(void){
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',fileNode);
 		
 	free(fileNode);
-	free(nodePtr);
 }
 
 /*****************************************
@@ -82,7 +81,6 @@ void test_addFile_should_add_n100_into_n200(void){
 
 	free(fileNode1);
 	free(fileNode2);
-	free(nodePtr);
 }
 
 /**
@@ -119,7 +117,6 @@ void test_addFile_should_add_n500_into_n200(void){
 
 	free(fileNode1);
 	free(fileNode2);
-	free(nodePtr);
 }
 
 /*****************************************
@@ -171,7 +168,6 @@ void test_addFile_add_n300_into_n100_n200_root(void){
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
-	free(nodePtr);
 }
 
 /**
@@ -218,7 +214,6 @@ void test_addFile_add_n100_into_n300_n200_root(void){
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
-	free(nodePtr);
 }
 
 /**
@@ -268,7 +263,6 @@ void test_addFile_add_n400_into_n200_n300_and_leftRotate(void){
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
-	free(nodePtr);
 }
 
 /**
@@ -318,7 +312,6 @@ void test_addFile_add_n50_into_n100_n200_root_and_rightRotate(void){
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
-	free(nodePtr);
 }
 
 /**
@@ -367,7 +360,6 @@ void test_addFile_add_n200_into_n100_n300_root_and_do_leftRightRotate(void){
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
-	free(nodePtr);
 }
 
 /**
@@ -417,7 +409,6 @@ void test_addFile_add_n250_into_n300_n200_root_and_do_rightLeftRotate(void){
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
-	free(nodePtr);
 }
 
 /*****************************************
@@ -482,7 +473,6 @@ void test_addFile_add_n50_into_n200_n100_n300_root(void){
 	free(fileNode2);
 	free(fileNode3);
 	free(fileNode4);
-	free(nodePtr);
 }
 
 /**
@@ -542,7 +532,6 @@ void test_addFile_add_n25_into_n50_n300_n200_root(void){
 	free(fileNode2);
 	free(fileNode3);
 	free(fileNode4);
-	free(nodePtr);
 }
 
 /**
@@ -602,7 +591,6 @@ void test_addFile_add_n100_into_n50_n300_n200_root(void){
 	free(fileNode2);
 	free(fileNode3);
 	free(fileNode4);
-	free(nodePtr);
 }
 
 /**
@@ -662,7 +650,6 @@ void test_addFile_add_n250_into_n50_n300_n200_root(void){
 	free(fileNode2);
 	free(fileNode3);
 	free(fileNode4);
-	free(nodePtr);
 }
 
 /**
@@ -722,7 +709,6 @@ void test_addFile_add_n500_into_n50_n300_n200_root(void){
 	free(fileNode2);
 	free(fileNode3);
 	free(fileNode4);
-	free(nodePtr);
 }
 
 /*****************************************
@@ -798,21 +784,20 @@ void test_addFile_add_same_size_value_into_tree_to_compare_crc(void){
 	free(fileNode3);
 	free(fileNode4);
 	free(fileNode5);
-	free(nodePtr);
 }
-
 /**
-*       root              root      Add n300              root
-*        |    add n300(2)  |        Same Value Detected    |          
-*        v   --------->    v        Compare CRC instead    v
-*       n200              n200      --------------------> n300(2)
-*     /    \              /  \                            /  \
-*   n50     n300       n50  n300(1)                    n200  n5000   
-*            \                 \                       / \
-*            n500            n5000                  n50  n300(1)
+*       root              root                               root
+*        |    add n300(2)  |        Same Value,crc detected    |          
+*        v   --------->    v        Throw instead              v
+*       n200              n200      -------------------->     n200
+*     /    \              /  \                                /  \
+*   n50     n300       n50  n300(1)                        n50  n300(1)   
+*            \                 \                                    \ 
+*            n500            n5000                                  n50000  
 *
 **/
 void test_addFile_add_same_crc_value_into_tree(void){
+	Error *e = NULL;
 	//Initialize root
 	Node *nodePtr = NULL;
 	//Create node 1
@@ -841,7 +826,7 @@ void test_addFile_add_same_crc_value_into_tree(void){
 	Node *fileNode4 = createNode(fileObjectSize4,fileObjectCRC4);
 	//Create node 4
 	unsigned long long int size5 = 300;
-	unsigned long int crc5 = 1231234569;
+	unsigned long int crc5 = 1231234567;
 	json_t *fileObjectSize5 = json_integer(size5);
 	json_t *fileObjectCRC5 = json_integer(crc5);
 	Node *fileNode5 = createNode(fileObjectSize5,fileObjectCRC5);
@@ -854,21 +839,17 @@ void test_addFile_add_same_crc_value_into_tree(void){
 	//Add node 4 into RBT
 	addFile(&nodePtr,fileNode4);
 	//Add node 5 into RBT
-	addFile(&nodePtr,fileNode5);
-	//Test 
-	/*
-	TEST_ASSERT_EQUAL_PTR(nodePtr,fileNode5);
-	TEST_ASSERT_EQUAL_NODE(fileNode2,fileNode3,'r',fileNode1);
-	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode4);
-	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',fileNode2);
-	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode3);
-	TEST_ASSERT_EQUAL_NODE(fileNode1,fileNode4,'b',nodePtr);
 	
+	//Test 
+	Try{
+		addFile(&nodePtr,fileNode5);
+		TEST_FAIL_MESSAGE("Same CRC");
+	}Catch(e){
+		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode5);
+	}
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
 	free(fileNode4);
 	free(fileNode5);
-	free(nodePtr);
-	*/
 }

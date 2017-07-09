@@ -3,17 +3,17 @@
         {
             "File Info":{
                 "name":"Assignment #1.docx",
+                "crc32 value":1313464042,
                 "size":13244,
-                "Epoch Sec":1499498515,
-                "crc32 value":1313464042
+                "Epoch Sec":1499590384
             }
         },
         {
             "File Info":{
                 "name":"test p.point2.pptx",
+                "crc32 value":3403213022,
                 "size":82858,
-                "Epoch Sec":1499498515,
-                "crc32 value":3403213022
+                "Epoch Sec":1499590384
             }
         }
     ]

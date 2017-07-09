@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Node.h"
+#include "errorNode.h"
 #include "Rotation.h"
 #include "compareJSON.h"
 #include "RedBlackTree.h"
@@ -40,7 +41,9 @@ void test_removeFile_should_remove_n200_and_root_become_null(void){
 	//Test 
 	TEST_ASSERT_EQUAL_PTR(nodePtr,NULL);
 	TEST_ASSERT_EQUAL_PTR(removedNode,fileNode);
-	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',removedNode);	
+	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',removedNode);
+
+	free(fileNode);
 }
 
 /*****************************************
@@ -82,4 +85,7 @@ void test_removeFile_should_remove_n100_from_root_and_left_n200(void){
 	TEST_ASSERT_EQUAL_PTR(removedNode,fileNode2);
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',nodePtr);
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',removedNode);
+	
+	free(fileNode1);
+	free(fileNode2);
 }
