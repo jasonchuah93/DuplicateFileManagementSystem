@@ -1,6 +1,4 @@
 #include "JSON.h"
-#include "fileHandling.h"
-#include "generateCRC32Value.h"
 
 int checkJSON(const char* path){
 	int cmp = 0;
@@ -62,4 +60,21 @@ int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int
 	json_decref(fileTitle);
 	fclose(fp);
 	return 0;
+}
+
+int delJSON(char *JSONfile){
+	int check =0,ret = 0;
+	check = checkJSON(JSONfile);
+	if(check){
+		ret = remove(JSONfile);
+		if(ret == 0){
+			return 1;
+		}else{
+			printf("JSON file does not exist!!!");
+			return 0;
+		}
+	}else{
+		printf("This is not JSON file!!!");
+		return 0;
+	}
 }

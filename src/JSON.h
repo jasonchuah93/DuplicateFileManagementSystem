@@ -8,11 +8,12 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <time.h>
+#include "fileHandling.h"
+#include "generateCRC32Value.h"
 #include "jansson.h"
 
-
-void dump_json_error(json_error_t *error);
 int checkJSON(const char* path);
 int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int fileCount);
+int delJSON(char *file);
 
 #endif // JSON_H

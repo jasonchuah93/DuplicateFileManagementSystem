@@ -6,7 +6,7 @@
 typedef enum{
 	ERR_NO_ERROR,
 	ERR_EQUIVALENT_NODE,
-	ERR_NODE_UNAVAILABLE
+	ERR_JSON_UNAVAILABLE
 }ErrorCode;
 
 typedef struct Error Error;
