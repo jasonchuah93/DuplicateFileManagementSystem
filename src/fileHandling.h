@@ -21,7 +21,7 @@ DIR *getFolderPtr(const char *path);
 int getFileSize(const char *path);
 int listFileNumber(const char *path);
 int listSubFolderNumber(const char *path);
-char *traverseFolder(char *folderPath);
+int traverseFolder(char *folderPath);
 char *subFolder(const char *path);
 int compareDateTime(char *dateTime,const char *path);
 int fileDateTime(char *dateTime,const char *path);

@@ -5,7 +5,7 @@ struct stat attr;
 struct dirent *dir;
 struct tm t;
 static char* lastFile[MaxFile] = {0};
-static int lastFileCount = 0;
+static int lastFileCount;
 
 /*************************************************************
 *   Scan the folder, traverse all content inside
@@ -16,32 +16,49 @@ static int lastFileCount = 0;
 *			
 *	Destroy: none
 **************************************************************/
-char *traverseFolder(char *folderPath){
+int traverseFolder(char *folderPath){
 	DIR *d = getFolderPtr(folderPath);
-	int countFileNumber = 0,fileLen = 0;
+	int countFileNumber = 0,fileLen = 0, latestFileNumber = 0;
 	char *subFolderPath = NULL, *jsonFileName = "/jsonInfo.json";
 	char *jsonPath = (char*)malloc(1+strlen(folderPath)+strlen(jsonFileName));
+	unsigned long int latestEpochSec = 0, currentEpochSec = 0;
+	char dateTime[100] = {0}, filePath[200] = {0}, latestFilePath[200] = {0};
 	while((dir = readdir(d))!= NULL){
 		if(dir->d_type == DT_REG){
-			//printf("file name: %s\n",dir->d_name);
-			fileLen = strlen(dir->d_name)+1;
-			lastFile[countFileNumber] = malloc(fileLen);
-			strcpy(lastFile[countFileNumber],dir->d_name);
-			countFileNumber++;
+			if(memcmp(dir->d_name,"jsonInfo.json",13) == 0){
+				goto here;
+			}else{
+				fileLen = strlen(dir->d_name)+1;
+				lastFile[countFileNumber] = malloc(fileLen);
+				strcpy(lastFile[countFileNumber],dir->d_name);
+				countFileNumber++;
+			}
+			here:
+			sprintf(filePath,"%s/%s",folderPath,dir->d_name);
+			fileDateTime(dateTime,filePath);
+			latestEpochSec = convertEpoch(dateTime);
+			if(latestEpochSec > currentEpochSec){
+				strcpy(latestFilePath,dir->d_name);
+				currentEpochSec = latestEpochSec;
+			}
 		}else if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
-			//printf("folder name: %s\n",dir->d_name);
 			subFolderPath = subFolder(folderPath);
 			traverseFolder(subFolderPath);
 		}
 	}
-	strcpy(jsonPath,folderPath);
-	strcat(jsonPath,jsonFileName);
-	lastFileCount = countFileNumber;
-	if(lastFileCount > 0){
-		createJSON(jsonPath,folderPath,lastFile,lastFileCount);
+	if(strcmp(latestFilePath,"jsonInfo.json") == 0){
+		printf("JSON File is latest at %s.\n",folderPath);
+	}else{
+		strcpy(jsonPath,folderPath);
+		strcat(jsonPath,jsonFileName);
+		lastFileCount = countFileNumber;
+		if(lastFileCount > 0){
+			createJSON(jsonPath,folderPath,lastFile,lastFileCount);
+		}
 	}
+	latestFileNumber = countFileNumber;
 	closedir(d);
-	return 0;
+	return latestFileNumber;
 }
 
 /*************************************************************

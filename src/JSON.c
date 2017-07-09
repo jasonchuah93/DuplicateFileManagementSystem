@@ -13,12 +13,12 @@ int checkJSON(const char* path){
 }
 
 int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int fileCount){
-	FILE *fp = NULL ;
+	FILE *fp = NULL;
 	int fileSize = 0, i = 0;
 	unsigned int crc32Val = 0;
 	unsigned long int epochSec = 0;
-	char *cp = NULL, fileName[200]={0}, fileNamePath[200]={0};
-	const char *newFilePath = NULL;
+	char *cp = NULL, *jsonExt = NULL, fileDate[200]={0}, fileNamePath[200]={0};
+	const char ext = '/';
 	fp = fopen(JSONpath,"w");
 	if(fp == NULL){
 		printf("Error!");
@@ -39,7 +39,8 @@ int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int
 		json_object_set_new(fileInfo,"File Info",fileObject);
 		sprintf(fileNamePath,"%s/%s",filePath,filePathPtr[i]);
 		//Get file name
-		json_object_set_new(fileObject,"name",json_string(fileNamePath));
+		jsonExt = strrchr(fileNamePath,ext);
+		json_object_set_new(fileObject,"name",json_string(jsonExt+1));
 		//Get file size
 		fileSize = getFileSize(fileNamePath);
 		json_object_set_new(fileObject,"size",json_integer(fileSize));
@@ -48,8 +49,8 @@ int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int
 		crc32Val = hashCRC(fileNamePath);
 		json_object_set_new(fileObject,"crc32 value",json_integer(crc32Val));
 		//Get file date and time in Epoch format
-		fileDateTime(fileName,fileNamePath);
-		epochSec = convertEpoch(fileName);
+		fileDateTime(fileDate,fileNamePath);
+		epochSec = convertEpoch(fileDate);
 		json_object_set_new(fileObject,"Epoch Sec",json_integer(epochSec));
 		json_array_append(jArray,fileInfo);
 		i++;
