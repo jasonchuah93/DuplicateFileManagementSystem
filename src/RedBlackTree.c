@@ -34,6 +34,7 @@ void _genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareFile)(Nod
 		else if(compare == -1)
 			_genericAddRedBlackTree(&(*rootPtr)->right,newNode,compareFile);
 		else if(compare == 0){
+			printf("come in here same crc\n");
 			duplicatedNode = createErr(*rootPtr);
 			Throw(duplicatedNode);
 		}

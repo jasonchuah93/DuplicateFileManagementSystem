@@ -4,6 +4,7 @@
 #include <malloc.h>
 #include "errorNode.h"
 #include "Node.h"
+#include "CustomAssertions.h"
 #include "CException.h"
 
 void setUp(void){}
@@ -31,7 +32,7 @@ void test_createErrNode_should_store_fileNode(void){
 
 void test_createErrNode_should_throw_err(void){
 	Node *nodePtr = NULL;
-	Error *e;
+	Error *e = NULL;
 	unsigned long long int size = 50;
 	unsigned long long int crc = 123123456789;
 	char *pathName = "forTesting/testPicture2.jpg";
@@ -40,12 +41,13 @@ void test_createErrNode_should_throw_err(void){
 	json_t *fileObjectCRC = json_integer(crc);
 	
 	nodePtr = createNodeWithFileInfo(fileObjectName,fileObjectSize,fileObjectCRC);
+	e = createErr(nodePtr);
 	Try{
-		e = createErr(nodePtr);	
 		Throw(e);
 	}Catch(e){
 		TEST_ASSERT_NOT_NULL(e);
 		TEST_ASSERT_EQUAL_PTR(e->data,nodePtr);
+		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',nodePtr);
 		free(nodePtr);
 		freeErr(e);
 	}

@@ -8,6 +8,7 @@
 #include "compareJSON.h"
 #include "RedBlackTree.h"
 #include "RestructureNode.h"
+#include <malloc.h>
 
 //Make these define for easy programming
 #define addFile(rootPtr,newNode) genericAddRedBlackTree(rootPtr,newNode,compareFileSize)
