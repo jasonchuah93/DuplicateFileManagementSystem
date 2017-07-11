@@ -13,7 +13,7 @@
 #include "jansson.h"
 
 int checkJSON(const char* path);
-int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int fileCount);
+void createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int fileCount);
 int delJSON(char *file);
 
 #endif // JSON_H

@@ -12,7 +12,7 @@ int checkJSON(const char* path){
 		return 0;
 }
 
-int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int fileCount){
+void createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int fileCount){
 	FILE *fp = NULL;
 	int fileSize = 0, i = 0;
 	unsigned int crc32Val = 0;
@@ -61,7 +61,6 @@ int createJSON(const char* JSONpath,const char* filePath,char *filePathPtr[],int
 	puts(cp);
 	json_decref(fileTitle);
 	fclose(fp);
-	return 0;
 }
 
 int delJSON(char *JSONfile){

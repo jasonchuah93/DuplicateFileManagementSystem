@@ -755,7 +755,7 @@ void test_addFile_add_same_size_value_into_tree_to_compare_crc(void){
 	json_t *fileObjectSize4 = json_integer(size4);
 	json_t *fileObjectCRC4 = json_integer(crc4);
 	Node *fileNode4 = createNode(fileObjectSize4,fileObjectCRC4);
-	//Create node 4
+	//Create node 5
 	unsigned long long int size5 = 300;
 	unsigned long int crc5 = 3211234567;
 	json_t *fileObjectSize5 = json_integer(size5);
@@ -771,14 +771,13 @@ void test_addFile_add_same_size_value_into_tree_to_compare_crc(void){
 	addFile(&nodePtr,fileNode4);
 	//Add node 5 into RBT
 	addFile(&nodePtr,fileNode5);
-	//Test 
 	TEST_ASSERT_EQUAL_PTR(nodePtr,fileNode5);
 	TEST_ASSERT_EQUAL_NODE(fileNode2,fileNode3,'r',fileNode1);
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode4);
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',fileNode2);
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode3);
 	TEST_ASSERT_EQUAL_NODE(fileNode1,fileNode4,'b',nodePtr);
-	
+
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
@@ -824,7 +823,7 @@ void test_addFile_add_same_crc_value_into_tree(void){
 	json_t *fileObjectSize4 = json_integer(size4);
 	json_t *fileObjectCRC4 = json_integer(crc4);
 	Node *fileNode4 = createNode(fileObjectSize4,fileObjectCRC4);
-	//Create node 4
+	//Create node 5
 	unsigned long long int size5 = 300;
 	unsigned long int crc5 = 1231234567;
 	json_t *fileObjectSize5 = json_integer(size5);
@@ -838,8 +837,8 @@ void test_addFile_add_same_crc_value_into_tree(void){
 	addFile(&nodePtr,fileNode3);
 	//Add node 4 into RBT
 	addFile(&nodePtr,fileNode4);
-	//Add node 5 into RBT
-	
+	//Add node 5 into RBT but fail to add in. 
+	//Throw similar crc node out from the tree
 	//Test 
 	Try{
 		addFile(&nodePtr,fileNode5);

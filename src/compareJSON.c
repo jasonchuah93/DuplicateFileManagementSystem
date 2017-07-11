@@ -1,5 +1,20 @@
 #include "compareJSON.h"
 
+/******************************************************************
+* 	Compare the size of 2 input parameters
+*
+*	Input: 	sizeFromRBT		the size of node from RBT   
+*			sizeToCompare	the size of node to compareFileByte
+*
+*	Output:  1			indicate the sizeFromRBT is larger than
+*						sizeToCompare
+*
+*			-1`			indicate the sizeFromRBT is smaller than
+*						sizeToCompare
+*	If both size are the same, call function to compare their CRC32
+*	value instead
+*	Destroy: none
+*******************************************************************/
 int compareFileSize(Node **sizeFromRBT,Node *sizeToCompare){
 	unsigned long long int rootSize = getFileSize(*sizeFromRBT);
 	unsigned long long int targetSize = getFileSize(sizeToCompare);
@@ -12,6 +27,21 @@ int compareFileSize(Node **sizeFromRBT,Node *sizeToCompare){
 	}
 }
 
+/******************************************************************
+* 	Compare the crc value of 2 input parameters
+*
+*	Input: 	crcFromRBT		the crc of node from RBT   
+*			crcToCompare	the crc of node to compareFileByte
+*
+*	Output:  1			indicate the crcFromRBT is larger than
+*						sizeToCompare
+*
+*			-1`			indicate the crcFromRBT is smaller than
+*						sizeToCompare
+*	If both crc are the same, call function to compare the 2 files 
+*	byte by byte
+*	Destroy: none
+*******************************************************************/
 int compareFileCRC(Node **crcFromRBT,Node *crcToCompare){
 	unsigned long int rootCrc = getFileCrc(*crcFromRBT);
 	unsigned long int targetCrc = getFileCrc(crcToCompare);
@@ -25,8 +55,20 @@ int compareFileCRC(Node **crcFromRBT,Node *crcToCompare){
 	}
 }
 
+/******************************************************************
+* 	Compare the byte of 2 input parameters
+*
+*	Input: 	nodeFromRBT		the node from RBT   
+*			nodeToCompare	the node to compareFileByte
+*
+*	Output:  0			indicate the bytes of 2 files are the same
+*
+*			-1`			indicate the bytes of 2 files are different
+*
+*	Destroy: none
+*******************************************************************/
 int compareFileByte(Error *nodeFromRBT,Node *nodeToCompare){
-	int i = 0,int1 = 0, int2 = 0;
+	int int1 = 0, int2 = 0;
 	char temp[100] = {0}, temp2[100] = {0};
 	const char *rootLocation = getFilePathLocationFrmErr(nodeFromRBT);
 	const char *targetLocation = getFilePathLocationFrmNode(nodeToCompare);
