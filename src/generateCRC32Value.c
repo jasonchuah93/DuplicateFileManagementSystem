@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include"generateCRC32Value.h"
 
 const unsigned int crc32Table[256] = {

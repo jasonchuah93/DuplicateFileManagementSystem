@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
+#include "jansson.h"
+#include "JSON.h"
+#include "fileHandling.h"
+#include "generateCRC32Value.h"
 #include "Node.h"
 #include "errorNode.h"
-#include "Rotation.h"
-#include "compareJSON.h"
-#include "RedBlackTree.h"
-#include "RestructureNode.h"
 #include "CustomAssertions.h"
 #include "CException.h"
 

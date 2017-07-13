@@ -1,6 +1,15 @@
+#include "jansson.h"
+#include "JSON.h"
 #include "fileHandling.h"
+#include "generateCRC32Value.h"
+#include "Node.h"
+#include "errorNode.h"
+#include "compareJSON.h"
+#include "Rotation.h"
+#include "RestructureNode.h"
+#include "RedBlackTree.h"
+#include "CException.h"
 
-#define MaxFile 10000
 struct stat attr;
 struct dirent *dir;
 struct tm t;

@@ -1,12 +1,14 @@
 #include "unity.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
-#include "CustomAssertions.h"
-#include "Node.h"
+#include "jansson.h"
 #include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
+#include "Node.h"
+#include "CustomAssertions.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -37,7 +39,7 @@ void test_createNodeWithFileInfo_should_store_size_and_crc_and_pathName_of_file_
 	json_t *fileObjectSize = json_integer(size);
 	json_t *fileObjectCRC = json_integer(crc);
 	
-	nodePtr = createNodeWithFileInfo(fileObjectName,fileObjectSize,fileObjectCRC);
+	nodePtr = createRBTNode(fileObjectName,fileObjectSize,fileObjectCRC);
 	
 	TEST_ASSERT_NOT_NULL(nodePtr);
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',nodePtr);

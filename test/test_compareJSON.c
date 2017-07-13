@@ -1,14 +1,15 @@
 #include "unity.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <malloc.h>
+#include "JSON.h"
+#include "jansson.h"
+#include "fileHandling.h"
+#include "generateCRC32Value.h"
 #include "Node.h"
 #include "errorNode.h"
-#include "Rotation.h"
 #include "compareJSON.h"
-#include "RedBlackTree.h"
-#include "RestructureNode.h"
-#include "CustomAssertions.h"
-#include "CException.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -203,17 +204,21 @@ void test_compareFilePath_should_compare_2_similar_files_byte_by_byte_and_return
 	json_t *fileObjectName1 = json_string(pathName1);
 	json_t *fileObjectSize1 = json_integer(size1);
 	json_t *fileObjectCRC1 = json_integer(crc1);
-	fileNode1 = createNodeWithFileInfo(fileObjectName1,fileObjectSize1,fileObjectCRC1);
+	fileNode1 = createRBTNode(fileObjectName1,fileObjectSize1,fileObjectCRC1);
 	//Create node 2
 	json_t *fileObjectName2 = json_string(pathName2);
 	json_t *fileObjectSize2 = json_integer(size2);
 	json_t *fileObjectCRC2 = json_integer(crc2);
-	fileNode2 = createNodeWithFileInfo(fileObjectName2,fileObjectSize2,fileObjectCRC2);
+	fileNode2 = createRBTNode(fileObjectName2,fileObjectSize2,fileObjectCRC2);
 	//Add node 1 into err
-	e = createErr(fileNode1);
+	e = createErr("Duplicated Node",fileNode1);
 	//Compare 
 	compare = compareFileByte(e,fileNode2);
 	TEST_ASSERT_EQUAL(compare,0);
+	
+	free(fileNode1);
+	free(fileNode2);
+	freeErr(e);
 }
 
 void test_compareFilePath_should_compare_2_different_files_byte_by_byte_and_return_negative_1(void){
@@ -237,7 +242,7 @@ void test_compareFilePath_should_compare_2_different_files_byte_by_byte_and_retu
 	json_t *fileObjectCRC2 = json_integer(crc2);
 	fileNode2 = createNodeWithFileInfo(fileObjectName2,fileObjectSize2,fileObjectCRC2);
 	//Add node 1 into err
-	e = createErr(fileNode1);
+	e = createErr("Not Duplicated Node",fileNode1);
 	//Compare 
 	compare = compareFileByte(e,fileNode2);
 	TEST_ASSERT_EQUAL(compare,-1);

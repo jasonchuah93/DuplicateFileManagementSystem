@@ -1,6 +1,24 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <malloc.h>
+#include "JSON.h"
+#include "fileHandling.h"
+#include "generateCRC32Value.h"
+#include "Node.h"
+#include "errorNode.h"
+#include "compareJSON.h"
+#include "Rotation.h"
+#include "RestructureNode.h"
 #include "RedBlackTree.h"
 #include "CException.h"
+
+#define leftChild (*rootPtr)->left
+#define rightChild (*rootPtr)->right
+#define leftGrandChild (*rootPtr)->left->left
+#define rightGrandChild (*rootPtr)->right->right
+#define leftRightGrandChild (*rootPtr)->left->right
+#define rightLeftGrandChild (*rootPtr)->right->left
 
 /*********************************************************************
 * This function will add a new file info into the red black tree
@@ -34,8 +52,7 @@ void _genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareFile)(Nod
 		else if(compare == -1)
 			_genericAddRedBlackTree(&(*rootPtr)->right,newNode,compareFile);
 		else if(compare == 0){
-			//printf("come in here same crc\n");
-			duplicatedNode = createErr(*rootPtr);
+			duplicatedNode = createErr("Duplicated Node",(*rootPtr));
 			Throw(duplicatedNode);
 		}
 		if(((*rootPtr)->left!=NULL) && (*rootPtr)->left->left !=NULL){

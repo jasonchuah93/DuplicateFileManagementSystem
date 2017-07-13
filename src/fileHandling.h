@@ -4,15 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <malloc.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <time.h>
-#include "JSON.h"
-#include "generateCRC32Value.h"
 
 #define TRUE 1
 #define FALSE 0
+#define MaxFile 10000
 
 int checkFile(const char *path);
 int checkFolder(const char *path);

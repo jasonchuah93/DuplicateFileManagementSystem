@@ -1,8 +1,6 @@
 #ifndef errorNode_H
 #define errorNode_H
 
-#include "Node.h"
-
 typedef enum{
 	ERR_NO_ERROR,
 	ERR_EQUIVALENT_NODE,
@@ -17,7 +15,7 @@ struct Error{
 	char *errorMsg;
 };
 
-Error *createErr(char *stringMsg,void *duplicatedNode);
-void freeErr(Error *e);
+Error *createErr();
+void freeErr();
 
 #endif // errorNode_H

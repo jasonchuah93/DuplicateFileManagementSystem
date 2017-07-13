@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "Rotation.h"
 #include "Node.h"
+#include "Rotation.h"
 
 /*********************************************************************
 * Right rotate the tree, use to balance the tree

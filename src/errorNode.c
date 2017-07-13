@@ -1,11 +1,11 @@
 #include <stdlib.h>
+#include <string.h>
 #include <malloc.h>
+#include "JSON.h"
+#include "fileHandling.h"
+#include "generateCRC32Value.h"
+#include "Node.h"
 #include "errorNode.h"
-#include "CException.h"
-
-void catchErr(Node **newRoot,Error *err){
-	
-}
 
 Error *createErr(char *stringMsg,void *duplicatedNode){
 	Error *errNode = malloc(sizeof(Error));

@@ -1,12 +1,18 @@
 #include "unity.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <malloc.h>
+#include "JSON.h"
+#include "jansson.h"
+#include "fileHandling.h"
+#include "generateCRC32Value.h"
 #include "Node.h"
 #include "errorNode.h"
-#include "Rotation.h"
 #include "compareJSON.h"
-#include "RedBlackTree.h"
+#include "Rotation.h"
 #include "RestructureNode.h"
+#include "RedBlackTree.h"
 #include "CustomAssertions.h"
 #include "CException.h"
 

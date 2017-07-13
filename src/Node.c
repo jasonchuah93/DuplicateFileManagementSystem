@@ -1,5 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <malloc.h>
+#include "jansson.h"
+#include "JSON.h"
+#include "fileHandling.h"
+#include "generateCRC32Value.h"
 #include "Node.h"
 
 /****************************************************************************

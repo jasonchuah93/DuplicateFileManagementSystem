@@ -1,4 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <malloc.h>
+#include "JSON.h"
+#include "fileHandling.h"
+#include "generateCRC32Value.h"
+#include "Node.h"
+#include "errorNode.h"
 #include "compareJSON.h"
+
+#define getFileSize(node) (((Node*)node)->fileSize)
+#define getFileCrc(node)  (((Node*)node)->crc32Value)
+#define getFilePathLocationFrmErr(errorNode)  (((Node*)((Error*)(errorNode))->data)->pathName)
+#define getFilePathLocationFrmNode(node)  (((Node*)node)->pathName)
 
 /******************************************************************
 * 	Compare the size of 2 input parameters

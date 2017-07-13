@@ -1,12 +1,9 @@
 #ifndef Node_H
 #define Node_H
 
-#include "JSON.h"
-#include "fileHandling.h"
-#include "generateCRC32Value.h"
+#define createRBTNode(fileObjectName,fileObjectSize,fileObjectCRC) createNodeWithFileInfo(fileObjectName,fileObjectSize,fileObjectCRC)
 
 typedef struct Node Node;
-
 struct Node {
  Node *left;
  Node *right;
@@ -16,7 +13,7 @@ struct Node {
  const char *pathName;
 };
 
-Node *createNode(json_t *fileObjectSize,json_t *fileObjectCRC);
-Node *createNodeWithFileInfo(json_t *fileObjectSize,json_t *fileObjectCRC,json_t *fileObjectName);
+Node *createNode();
+Node *createNodeWithFileInfo();
 
 #endif // Node_H

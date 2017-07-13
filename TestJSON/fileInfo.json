@@ -2,18 +2,18 @@
     "File":[
         {
             "File Info":{
+                "Epoch Sec":0,
                 "name":"Testing 2.xlsx",
                 "size":-1,
-                "crc32 value":0,
-                "Epoch Sec":0
+                "crc32 value":0
             }
         },
         {
             "File Info":{
+                "Epoch Sec":0,
                 "name":"Testing 3.xlsx",
                 "size":-1,
-                "crc32 value":0,
-                "Epoch Sec":0
+                "crc32 value":0
             }
         }
     ]
