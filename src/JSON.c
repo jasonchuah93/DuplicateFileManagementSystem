@@ -6,7 +6,6 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <time.h>
-#include "jansson.h"
 #include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
@@ -17,6 +16,29 @@
 #include "RestructureNode.h"
 #include "RedBlackTree.h"
 #include "CException.h"
+
+struct dirent *dir;
+
+json_t *createJsonObject(const char *folderPath){
+	DIR *d = opendir(folderPath);
+	json_t *jsonArray = json_array();
+	json_t *jsonTitle = json_object();
+	json_t *fileInfo = json_object();
+	json_t *fileObject = json_object();
+	json_object_set_new(jsonTitle,"File Info",jsonArray);
+	while((dir = readdir(d))!=NULL){
+		if(dir->d_type == DT_REG){
+			printf("file name: %s\n",dir->d_name);
+			json_object_set_new(fileInfo,dir->d_name,fileObject);
+		}
+	}
+	return fileInfo;
+}
+
+void writeJsonIntoFile(const char *jsonFile,json_t *jsonObject){
+	
+	
+}
 
 int checkJSON(const char* path){
 	int cmp = 0;

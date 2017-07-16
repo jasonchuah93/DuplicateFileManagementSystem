@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
+#include "jansson.h"
 #include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
@@ -51,10 +52,15 @@ void test_delJSON_should_return_0_if_not_JSON_file_type(void){
 	TEST_ASSERT_EQUAL(deletedFile,0);
 }
 
-*/
 
 void test_createJSON_should_able_to_create_JSON_file(void){
-	createJSON("TestJSON/fileInfo.json","TestJSON",fileArray,2);
-	
+	createJSON("TestJSON/fileInfo.json","TestJSON",fileArray,2);	
 }
+*/
+
+void test_creatJsonObject_should_return_json_object_with_file_info(void){
+	json_t *object = NULL;
+	object = createJsonObject("TestJSON");
+}
+
 
