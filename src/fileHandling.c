@@ -44,7 +44,7 @@ int traverseFolder(char *folderPath){
 			}
 			here:
 			sprintf(filePath,"%s/%s",folderPath,dir->d_name);
-			fileDateTime(dateTime,filePath);
+			getFileDateTime(dateTime,filePath);
 			latestEpochSec = convertEpoch(dateTime);
 			if(latestEpochSec > currentEpochSec){
 				strcpy(latestFilePath,dir->d_name);
@@ -68,6 +68,14 @@ int traverseFolder(char *folderPath){
 	latestFileNumber = countFileNumber;
 	closedir(d);
 	return latestFileNumber;
+}
+
+char *createJSONFilePath(const char *folderPath){
+	char *jsonFileName = "/fileInformation.json";
+	char *jsonPath = (char*)malloc(1+strlen(folderPath)+strlen(jsonFileName));
+	strcpy(jsonPath,folderPath);
+	strcat(jsonPath,jsonFileName);
+	return jsonPath;
 }
 
 /*************************************************************
@@ -235,7 +243,7 @@ int compareDateTime(char *dateTime,const char *path){
 	unsigned long int epoch1 = 0;
 	unsigned long int epoch2 = 0;
 	char dateTimePath[20] ={0};
-	fileDateTime(dateTimePath,path);
+	getFileDateTime(dateTimePath,path);
 	epoch1 = convertEpoch(dateTime);
 	epoch2 = convertEpoch(dateTimePath);
 	if(epoch1 > epoch2)
@@ -256,7 +264,7 @@ int compareDateTime(char *dateTime,const char *path){
 *			
 *	Destroy: none
 **************************************************************/
-int fileDateTime(char *dateTime,const char *path){
+int getFileDateTime(char *dateTime,const char *path){
 	char times[50]={0};
 	time_t t = time(NULL);
 	stat(path, &attr);

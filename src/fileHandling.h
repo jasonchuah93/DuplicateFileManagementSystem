@@ -14,6 +14,7 @@
 #define FALSE 0
 #define MaxFile 10000
 
+char *createJSONFilePath(const char *folderPath);
 int checkFile(const char *path);
 int checkFolder(const char *path);
 FILE *getFilePtr(const char *path);
@@ -24,7 +25,7 @@ int listSubFolderNumber(const char *path);
 int traverseFolder(char *folderPath);
 char *subFolder(const char *path);
 int compareDateTime(char *dateTime,const char *path);
-int fileDateTime(char *dateTime,const char *path);
+int getFileDateTime(char *dateTime,const char *path);
 int convertEpoch(char *fileDateTime);
 
 #endif // fileHandling_H

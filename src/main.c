@@ -19,6 +19,8 @@
 #include "main.h"
 #include "CException.h"
 
-int scanFolder(){
-	
+int scanFolder(const char *folderName){
+	json_t *fileObj = createJsonObject(folderName);
+	char *jsonPath = createJSONFilePath(folderName);
+	writeJsonIntoFile(jsonPath,fileObj);
 }

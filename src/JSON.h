@@ -3,6 +3,7 @@
 
 #include "jansson.h"
 
+void traverseJson(json_t* jObject);
 json_t *createJsonObject();
 void writeJsonIntoFile();
 int checkJSON();

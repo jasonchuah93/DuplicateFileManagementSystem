@@ -56,11 +56,12 @@ void test_delJSON_should_return_0_if_not_JSON_file_type(void){
 void test_createJSON_should_able_to_create_JSON_file(void){
 	createJSON("TestJSON/fileInfo.json","TestJSON",fileArray,2);	
 }
-*/
 
+*/
 void test_creatJsonObject_should_return_json_object_with_file_info(void){
 	json_t *object = NULL;
 	object = createJsonObject("TestJSON");
+	traverseJson(object);
 }
 
 

@@ -24,6 +24,6 @@
 void setUp(void){}
 void tearDown(void){}
 
-void test_main(void){
-	
+void test_scanFolder(void){
+	scanFolder("TestJSON");
 }

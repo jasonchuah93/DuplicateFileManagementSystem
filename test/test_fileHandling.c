@@ -199,8 +199,12 @@ void test_listSubFolderNumber_should_list_the_total_number_of_sub_folder_in_fold
 	subFolderNumber = listSubFolderNumber("forTesting"); //Number of subfolder in this folder is 3
 	TEST_ASSERT_EQUAL(subFolderNumber,2);
 }
-*/
+
 void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
 	traverseFolder("forTesting");
 }
-
+*/
+void test_createJSONFilePath_should_create_a_json_file_path(void){
+	char *test = createJSONFilePath("TestJSON");
+	TEST_ASSERT_EQUAL_STRING("TestJSON/fileInformation.json",test);
+}
