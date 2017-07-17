@@ -20,11 +20,20 @@
 struct dirent *dir;
 
 void traverseJson(json_t* jObject){
-	const char *key;
-	json_t *value;
-	json_object_foreach(jObject, key, value) {
+	const char *key, *key2, *key3;
+	json_t *value,*value2,*value3,*value4;
+	size_t size;
+	json_object_foreach(jObject,key,value){
 		printf("file key: %s\n",key);
-		printf("file value: %s\n",json_string_value(value));
+		json_array_foreach(value,size,value2){
+			json_object_foreach(value2,key2,value3){
+				printf("file key2: %s\n",key2);
+				json_object_foreach(value3,key3,value4){
+					printf("key inside: %s\n",key3);
+					printf("value inside: %d\n",json_integer_value(value4));
+				}
+			}
+		}
 	}
 }
 
@@ -66,7 +75,7 @@ json_t *createJsonObject(const char *folderPath){
 	cptr = json_dumps(jsonTitle,0);
 	//puts(cptr);
 	closedir(d);
-	return fileInfo;
+	return jsonTitle;
 }
 
 void writeJsonIntoFile(const char *jsonFile,json_t *jsonObject){

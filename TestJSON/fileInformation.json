@@ -1,17 +1,21 @@
 {
-    "Testing 8.pdf":{
-        "epoch seconds":1500185350,
-        "size":249159,
-        "crc":289821883
-    },
-    "Testing 2.xlsx":{
-        "epoch seconds":1500185350,
-        "size":10038,
-        "crc":305591788
-    },
-    "Testing 3.xlsx":{
-        "epoch seconds":1500185350,
-        "size":10038,
-        "crc":305591788
-    }
+    "File Info":[
+        {
+            "Testing 2.xlsx":{
+                "epoch seconds":1500185350,
+                "size":10038,
+                "crc":305591788
+            },
+            "Testing 3.xlsx":{
+                "epoch seconds":1500185350,
+                "size":10038,
+                "crc":305591788
+            },
+            "Testing 8.pdf":{
+                "epoch seconds":1500185350,
+                "size":249159,
+                "crc":289821883
+            }
+        }
+    ]
 }
