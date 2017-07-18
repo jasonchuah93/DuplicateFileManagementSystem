@@ -32,8 +32,40 @@ void test_checkJSON_should_return_0_if_the_file_type_is_not_json(void){
 	TEST_ASSERT_EQUAL(check,0);
 }
 
+void test_getJsonArrayFrmFolderObj_should_throw_error_if_input_is_not_an_json_object(void){
+	Error *e = NULL;
+	json_t *folderObj = json_array();
+	
+	Try{
+		getJsonArrayFrmFolderObj(folderObj);
+		TEST_FAIL_MESSAGE("Expected ERR_NOT_JSON_ARRAY to be thrown.");
+	}Catch(e){
+		TEST_ASSERT_EQUAL(e,ERR_NOT_JSON_OBJECT);
+	}	
+}
+
+void test_getFileInfoFrmJson_should_throw_error_if_input_is_not_an_array(void){
+	FileInfo *info = NULL;
+	Error *e = NULL;
+	json_t *fileArray = json_object();
+	Try{
+		getFileInfoFrmJson(fileArray,info,0);
+		TEST_FAIL_MESSAGE("Expected ERR_NOT_JSON_ARRAY to be thrown.");
+	}Catch(e){
+		TEST_ASSERT_EQUAL(e,ERR_NOT_JSON_ARRAY);
+	}	
+}
+
+void test_getFileInfoFrmJson_should_get_file_info_from_json_array(void){
+	FileInfo *info = NULL;
+	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
+	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFrmJson(fileArry,info,0);
+		
+}
+
 /*
-This test will delete JSON file
+These test will delete JSON file
 void test_delJSON_should_delete_JSON_type_file_inside_folder_and_return_1(void){
 	int deletedFile = 0;
 	deletedFile = delJSON("forTesting/jsonInfo.json");
@@ -51,17 +83,4 @@ void test_delJSON_should_return_0_if_not_JSON_file_type(void){
 	deletedFile = delJSON("forTesting/Testing 1.mp3");
 	TEST_ASSERT_EQUAL(deletedFile,0);
 }
-
-
-void test_createJSON_should_able_to_create_JSON_file(void){
-	createJSON("TestJSON/fileInfo.json","TestJSON",fileArray,2);	
-}
-
 */
-void test_creatJsonObject_should_return_json_object_with_file_info(void){
-	json_t *object = NULL;
-	object = createJsonObject("TestJSON");
-	traverseJson(object);
-}
-
-

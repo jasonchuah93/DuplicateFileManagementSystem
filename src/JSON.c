@@ -17,47 +17,52 @@
 #include "RedBlackTree.h"
 #include "CException.h"
 
-struct dirent *dir;
+struct dirent *dir = NULL;
 
-void traverseJson(json_t* jObject){
-	const char *key, *key2, *key3;
-	json_t *value,*value2,*value3,*value4;
-	size_t size;
-	json_object_foreach(jObject,key,value){
-		printf("file key: %s\n",key);
-		json_array_foreach(value,size,value2){
-			json_object_foreach(value2,key2,value3){
-				printf("file key2: %s\n",key2);
-				json_object_foreach(value3,key3,value4){
-					printf("key inside: %s\n",key3);
-					printf("value inside: %d\n",json_integer_value(value4));
-				}
-			}
-		}
-	}
+void getFileInfoFrmJson(json_t *fileArray,FileInfo *fptr,int counter){
+	void *iter = NULL;
+	json_t *fileObject = NULL;
+	json_t *objName = NULL;
+	json_t *objSize = NULL;
+	json_t *objCRC = NULL;
+	if(json_is_array(fileArray)){
+		fileObject = json_array_get(fileArray,counter);
+		if(json_is_object(fileObject)){
+			objName = json_object_get(fileObject,"name");
+			printf("file name: %s\n",json_string_value(objName));
+		}else
+			Throw((Error*)ERR_NOT_JSON_OBJECT);
+	}else
+		Throw((Error*)ERR_NOT_JSON_ARRAY);
 }
 
-json_t *createJsonObject(const char *folderPath){
+json_t *getJsonArrayFrmFolderObj(json_t *folderObject){
+	json_t *fileArray = NULL;
+	if(json_is_object(folderObject)){
+		void *iter = json_object_iter(folderObject);
+		fileArray = json_object_iter_value(iter);
+	}else
+		Throw((Error*)ERR_NOT_JSON_OBJECT);
+	return fileArray;
+}
+
+json_t *createJsonObjectFrmFolder(const char *folderPath){
 	unsigned long long int fileSize = 0;
 	unsigned long int fileCRC32Value = 0, fileEpochSec = 0;
-	char *cptr = NULL;
 	char filePath[100] = {0}, fileDateTime[50] = {0};
 	DIR *d = opendir(folderPath);
-	json_t *fileObject = NULL;
-	json_t *jsonArray = json_array();
-	json_t *jsonTitle = json_object();
 	json_t *fileInfo = json_object();
-	json_object_set_new(jsonTitle,"File Info",jsonArray);
+	json_t *jArray = json_array();
+	json_object_set_new(fileInfo,"File Info",jArray);
 	while((dir = readdir(d))!=NULL){
+		json_t *fileObject = json_object();
 		strcpy(filePath,folderPath);
 		strcat(filePath,"/");
 		strcat(filePath,dir->d_name);
-		fileObject = json_object();
 		if(dir->d_type == DT_REG){
-			//printf("file name: %s\n",dir->d_name);
 			if(strcmp(dir->d_name,"fileInformation.json")!=0){
 				//Set File Name
-				json_object_set_new(fileInfo,dir->d_name,fileObject);
+				json_object_set_new(fileObject,"name",json_string(dir->d_name));
 				//Set File Size
 				fileSize = getFileSize(filePath);
 				json_object_set_new(fileObject,"size",json_integer(fileSize));
@@ -68,14 +73,12 @@ json_t *createJsonObject(const char *folderPath){
 				getFileDateTime(fileDateTime,filePath);
 				fileEpochSec = convertEpoch(fileDateTime);
 				json_object_set_new(fileObject,"epoch seconds",json_integer(fileEpochSec));
+				json_array_append(jArray,fileObject);
 			}
-		}	
+		}
 	}
-	json_array_append(jsonArray,fileInfo);
-	cptr = json_dumps(jsonTitle,0);
-	//puts(cptr);
 	closedir(d);
-	return jsonTitle;
+	return fileInfo;		
 }
 
 void writeJsonIntoFile(const char *jsonFile,json_t *jsonObject){
