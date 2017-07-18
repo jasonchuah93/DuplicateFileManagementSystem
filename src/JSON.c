@@ -19,6 +19,14 @@
 
 struct dirent *dir = NULL;
 
+FileInfo *createInfo(){
+	FileInfo *info = malloc(sizeof(FileInfo));
+	info->fileName = NULL;
+	info->fileSize = 0;
+	info->fileCRC32Value = 0;
+	return info;
+}
+
 void getFileInfoFrmJson(json_t *fileArray,FileInfo *fptr,int counter){
 	void *iter = NULL;
 	json_t *fileObject = NULL;
@@ -28,8 +36,27 @@ void getFileInfoFrmJson(json_t *fileArray,FileInfo *fptr,int counter){
 	if(json_is_array(fileArray)){
 		fileObject = json_array_get(fileArray,counter);
 		if(json_is_object(fileObject)){
+			//Get file name put into fptr
 			objName = json_object_get(fileObject,"name");
-			printf("file name: %s\n",json_string_value(objName));
+			if(json_is_string(objName)){
+				fptr->fileName = json_string_value(objName);
+				//printf("file name in ptr: %s\n",fptr->fileName);	
+			}else
+				Throw((Error*)ERR_NOT_STRING_OBJECT);
+			//Get file size put into fptr
+			objSize = json_object_get(fileObject,"size");
+			if(json_is_integer(objSize)){
+				fptr->fileSize = json_integer_value(objSize);
+				//printf("file size in ptr: %llu\n",fptr->fileSize);	
+			}else
+				Throw((Error*)ERR_NOT_INTEGER_OBJECT);
+			//Get file crc put into fptr
+			objCRC = json_object_get(fileObject,"crc");
+			if(json_is_integer(objCRC)){
+				fptr->fileCRC32Value = json_integer_value(objCRC);
+				//printf("file crc in ptr: %lu\n",fptr->fileCRC32Value);	
+			}else
+				Throw((Error*)ERR_NOT_INTEGER_OBJECT);
 		}else
 			Throw((Error*)ERR_NOT_JSON_OBJECT);
 	}else

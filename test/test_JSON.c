@@ -38,7 +38,7 @@ void test_getJsonArrayFrmFolderObj_should_throw_error_if_input_is_not_an_json_ob
 	
 	Try{
 		getJsonArrayFrmFolderObj(folderObj);
-		TEST_FAIL_MESSAGE("Expected ERR_NOT_JSON_ARRAY to be thrown.");
+		TEST_FAIL_MESSAGE("Expected ERR_NOT_JSON_OBJECT to be thrown.");
 	}Catch(e){
 		TEST_ASSERT_EQUAL(e,ERR_NOT_JSON_OBJECT);
 	}	
@@ -56,12 +56,15 @@ void test_getFileInfoFrmJson_should_throw_error_if_input_is_not_an_array(void){
 	}	
 }
 
-void test_getFileInfoFrmJson_should_get_file_info_from_json_array(void){
-	FileInfo *info = NULL;
+void test_getFileInfoFrmJson_should_get_Testing_8_info_from_json_array(void){
+	FileInfo *info = createInfo();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,0);
-		
+	getFileInfoFrmJson(fileArry,info,2);
+	TEST_ASSERT_NOT_NULL(info);
+	TEST_ASSERT_EQUAL_STRING(info->fileName,"Testing 8.pdf");
+	TEST_ASSERT_EQUAL(info->fileSize,249159);
+	TEST_ASSERT_EQUAL(info->fileCRC32Value,289821883);
 }
 
 /*

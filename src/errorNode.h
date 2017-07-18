@@ -7,6 +7,8 @@ typedef enum{
 	ERR_JSON_UNAVAILABLE,
 	ERR_NOT_JSON_ARRAY,
 	ERR_NOT_JSON_OBJECT,
+	ERR_NOT_STRING_OBJECT,
+	ERR_NOT_INTEGER_OBJECT
 }ErrorCode;
 
 typedef struct Error Error;
