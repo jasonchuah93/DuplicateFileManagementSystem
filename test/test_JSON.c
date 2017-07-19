@@ -15,8 +15,6 @@
 #include "RedBlackTree.h"
 #include "CException.h"
 
-static char* fileArray[2] = {"TestJSON/Testing 2.xlsx","TestJSON/Testing 3.xlsx"};
-
 void setUp(void){}
 void tearDown(void){}
 
@@ -65,6 +63,7 @@ void test_getFileInfoFrmJson_should_get_Testing_8_info_from_json_array(void){
 	TEST_ASSERT_EQUAL_STRING(info->fileName,"Testing 8.pdf");
 	TEST_ASSERT_EQUAL(info->fileSize,249159);
 	TEST_ASSERT_EQUAL(info->fileCRC32Value,289821883);
+	
 }
 
 /*

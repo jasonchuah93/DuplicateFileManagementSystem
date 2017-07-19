@@ -62,7 +62,7 @@ int traverseFolder(char *folderPath){
 		strcat(jsonPath,jsonFileName);
 		lastFileCount = countFileNumber;
 		if(lastFileCount > 0){
-			createJSON(jsonPath,folderPath,lastFile,lastFileCount);
+			//createJSON(jsonPath,folderPath,lastFile,lastFileCount);
 		}
 	}
 	latestFileNumber = countFileNumber;

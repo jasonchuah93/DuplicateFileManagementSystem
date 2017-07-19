@@ -5,7 +5,6 @@
 #include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
-#include "Node.h"
 #include "errorNode.h"
 #include "compareJSON.h"
 #include "Rotation.h"

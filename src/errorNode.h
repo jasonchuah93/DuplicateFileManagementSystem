@@ -19,7 +19,7 @@ struct Error{
 	char *errorMsg;
 };
 
-Error *createErr();
-void freeErr();
+Error *createErr(char *stringMsg,void *duplicatedNode);
+void freeErr(Error *e);
 
 #endif // errorNode_H

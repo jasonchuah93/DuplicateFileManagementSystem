@@ -2,17 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
-#include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
-#include "Node.h"
-#include "errorNode.h"
 #include "compareJSON.h"
-
-#define getFileSize(node) (((Node*)node)->fileSize)
-#define getFileCrc(node)  (((Node*)node)->crc32Value)
-#define getFilePathLocationFrmErr(errorNode)  (((Node*)((Error*)(errorNode))->data)->pathName)
-#define getFilePathLocationFrmNode(node)  (((Node*)node)->pathName)
 
 /******************************************************************
 * 	Compare the size of 2 input parameters
@@ -30,8 +22,8 @@
 *	Destroy: none
 *******************************************************************/
 int compareFileSize(Node **sizeFromRBT,Node *sizeToCompare){
-	unsigned long long int rootSize = getFileSize(*sizeFromRBT);
-	unsigned long long int targetSize = getFileSize(sizeToCompare);
+	unsigned long long int rootSize = getSize(*sizeFromRBT);
+	unsigned long long int targetSize = getSize(sizeToCompare);
 	if(rootSize > targetSize){
 		return 1;
 	}else if(rootSize < targetSize){
@@ -57,8 +49,8 @@ int compareFileSize(Node **sizeFromRBT,Node *sizeToCompare){
 *	Destroy: none
 *******************************************************************/
 int compareFileCRC(Node **crcFromRBT,Node *crcToCompare){
-	unsigned long int rootCrc = getFileCrc(*crcFromRBT);
-	unsigned long int targetCrc = getFileCrc(crcToCompare);
+	unsigned long int rootCrc = getCRC(*crcFromRBT);
+	unsigned long int targetCrc = getCRC(crcToCompare);
 	
 	if(rootCrc > targetCrc){
 		return 1;
@@ -84,8 +76,8 @@ int compareFileCRC(Node **crcFromRBT,Node *crcToCompare){
 int compareFileByte(Error *nodeFromRBT,Node *nodeToCompare){
 	int int1 = 0, int2 = 0;
 	char temp[100] = {0}, temp2[100] = {0};
-	const char *rootLocation = getFilePathLocationFrmErr(nodeFromRBT);
-	const char *targetLocation = getFilePathLocationFrmNode(nodeToCompare);
+	const char *rootLocation = getFilePathFrmErr(nodeFromRBT);
+	const char *targetLocation = getName(nodeToCompare);
 	FILE *fptr1 = fopen(rootLocation,"r");
 	FILE *fptr2 = fopen(targetLocation,"r");
 	int1 = getc(fptr1);

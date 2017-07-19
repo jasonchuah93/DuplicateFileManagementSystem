@@ -3,6 +3,7 @@
 #include <string.h>
 #include <malloc.h>
 #include "jansson.h"
+#include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
 #include "Node.h"
@@ -14,7 +15,7 @@
 	Input  : fileObjectSize, fileObjectCRC
     Output : node
 ****************************************************************************/
-Node *createNode(FileInfo *fileInfo){
+Node *createNode(void *fileInfo){
 	Node *node  = malloc(sizeof(Node));
 	node->left  = NULL;
 	node->right = NULL;
