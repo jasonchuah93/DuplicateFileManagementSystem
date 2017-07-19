@@ -1,19 +1,20 @@
 #ifndef Node_H
 #define Node_H
 
-#define createRBTNode(fileObjectName,fileObjectSize,fileObjectCRC) createNodeWithFileInfo(fileObjectName,fileObjectSize,fileObjectCRC)
+#include "JSON.h"
+
+#define getFileName(nodePtr) ((FileInfo*)(nodePtr->data))->fileName
+#define getFileSize(nodePtr) ((FileInfo*)(nodePtr->data))->fileSize
+#define getFileCRC(nodePtr) ((FileInfo*)(nodePtr->data))->fileCRC32Value
 
 typedef struct Node Node;
 struct Node {
  Node *left;
  Node *right;
  char color; // 'b' or 'r'(black or red)
- unsigned long long int fileSize;
- unsigned long int crc32Value;
- const char *pathName;
+ void *data;
 };
 
-Node *createNode();
-Node *createNodeWithFileInfo();
+Node *createNode(FileInfo *fileInfo);
 
 #endif // Node_H
