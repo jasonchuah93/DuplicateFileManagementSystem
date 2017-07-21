@@ -14,16 +14,12 @@
 void setUp(void){}
 void tearDown(void){}
 
-#define getEleName(ele) (((FileInfo*)((Element*)(ele))->data))->fileName
-#define getEleSize(ele) (((FileInfo*)((Element*)(ele))->data))->fileSize
-#define getEleCRC(ele) (((FileInfo*)((Element*)(ele))->data))->fileCRC32Value
-
 void test_createElement_should_create_element_with_mock_file_infomation(void){
 	FileInfo info = {.fileName = "jason.txt",.fileSize = 3016,. fileCRC32Value = 110000};
 	Element *ele = createElement(&info);
-	TEST_ASSERT_EQUAL_STRING(getEleName(ele),"jason.txt");
-	TEST_ASSERT_EQUAL(getEleSize(ele),3016);
-	TEST_ASSERT_EQUAL(getEleCRC(ele),110000);
+	TEST_ASSERT_EQUAL_STRING("jason.txt",getEleName(ele));
+	TEST_ASSERT_EQUAL(3016,getEleSize(ele));
+	TEST_ASSERT_EQUAL(110000,getEleCRC(ele));
 	
 	free(ele);
 }
@@ -35,10 +31,64 @@ void test_createElement_should_create_element_with_real_file_infomation(void){
 	getFileInfoFrmJson(fileArry,info,1);
 	Element *ele = createElement(info);
 	
-	TEST_ASSERT_EQUAL_STRING(getEleName(ele),"Testing 3.xlsx");
-	TEST_ASSERT_EQUAL(getEleSize(ele),10038);
-	TEST_ASSERT_EQUAL(getEleCRC(ele),305591788);
+	TEST_ASSERT_EQUAL_STRING("Testing 3.xlsx",getEleName(ele));
+	TEST_ASSERT_EQUAL(10038,getEleSize(ele));
+	TEST_ASSERT_EQUAL(305591788,getEleCRC(ele));
 	
 	free(info);
 	free(ele);
+}
+
+void test_createLinkedList_should_return_initialized_object(void){
+	LinkedList *list = createLinkedList();
+	
+	TEST_ASSERT_NOT_NULL(list);
+	TEST_ASSERT_NULL(list->head);
+	TEST_ASSERT_EQUAL(0,list->length);
+	
+	free(list);
+}
+
+void test_listAddFirst_should_add_element_into_linkedList(void){
+	FileInfo *info = createInfo();
+	LinkedList *list = createLinkedList();
+	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
+	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFrmJson(fileArry,info,2);
+	Element *ele = createElement(info);
+    listAddFirst(ele,list);
+	
+	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getListName(list));
+	TEST_ASSERT_EQUAL(249159,getListSize(list));
+	TEST_ASSERT_EQUAL(289821883,getListCRC(list));
+	
+	free(info);
+	free(list);
+	free(ele);
+}
+
+void test_listAddFirst_should_add_2_element_into_linkedList(void){
+	FileInfo *info = createInfo();
+	FileInfo *info2 = createInfo();
+	LinkedList *list = createLinkedList();
+	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
+	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFrmJson(fileArry,info,0);
+	getFileInfoFrmJson(fileArry,info2,1);
+	Element *ele = createElement(info);
+	Element *ele2 = createElement(info2);
+	
+    listAddFirst(ele,list);
+	listAddFirst(ele2,list);
+	
+	TEST_ASSERT_EQUAL_STRING("Testing 3.xlsx",getListName(list));
+	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",((FileInfo*)(list->head->next->data))->fileName );
+	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",((FileInfo*)(list->tail->data))->fileName );
+	TEST_ASSERT_NULL(list->tail->next);
+	
+	free(info);
+	free(info2);
+	free(list);
+	free(ele);
+	free(ele2);
 }
