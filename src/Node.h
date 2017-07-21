@@ -1,10 +1,6 @@
 #ifndef Node_H
 #define Node_H
 
-#define getName(node) (((FileInfo*)((Node*)(node))->data))->fileName
-#define getSize(node) (((FileInfo*)((Node*)(node))->data))->fileSize
-#define getCRC(node) (((FileInfo*)((Node*)(node))->data))->fileCRC32Value
-
 typedef struct Node Node;
 struct Node {
  Node *left;
@@ -13,6 +9,6 @@ struct Node {
  void *data;
 };
 
-Node *createNode(void *fileInfo);
+Node *createNode(void *list);
 
 #endif // Node_H

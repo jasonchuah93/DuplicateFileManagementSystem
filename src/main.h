@@ -1,6 +1,6 @@
 #ifndef main_H
 #define main_H
 
-int scanFolder();
+int scanFolder(const char *folderName);
 
 #endif // main_H

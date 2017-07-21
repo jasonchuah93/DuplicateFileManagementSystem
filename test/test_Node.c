@@ -13,6 +13,7 @@
 void setUp(void){}
 void tearDown(void){}
 
+/*
 void test_createNode_should_create_node_with_mock_file_info(void){
     FileInfo info = {.fileName = "jason.txt",.fileSize = 3016,. fileCRC32Value = 110000};
 	Node *nodePtr = createNode(&info);
@@ -31,3 +32,4 @@ void test_createNode_should_create_node_with_real_file_info(void){
 	TEST_ASSERT_EQUAL(getSize(nodePtr),10038);
 	TEST_ASSERT_EQUAL(getCRC(nodePtr),305591788);
 }
+*/

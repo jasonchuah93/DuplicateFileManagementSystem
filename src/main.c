@@ -20,9 +20,13 @@
 #include "CException.h"
 
 int scanFolder(const char *folderName){
-	json_t *folderObj = createJsonObjectFrmFolder(folderName);
-	//traverseJson(folderObj);
+	//Check is there any json file inside the folder
 	char *jsonPath = createJSONFilePath(folderName);
-	writeJsonIntoFile(jsonPath,folderObj);
-	
+	if(checkJSON(jsonPath))
+		printf("json file exist in folder");
+	else{
+		printf("json file no exist in folder");
+		json_t *folderObj = createJsonObjectFrmFolder(folderName);
+		writeJsonIntoFile(jsonPath,folderObj);
+	}
 }

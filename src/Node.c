@@ -15,11 +15,11 @@
 	Input  : fileObjectSize, fileObjectCRC
     Output : node
 ****************************************************************************/
-Node *createNode(void *fileInfo){
+Node *createNode(void *list){
 	Node *node  = malloc(sizeof(Node));
 	node->left  = NULL;
 	node->right = NULL;
 	node->color = 'r';
-	node->data = fileInfo;
+	node->data = list;
 	return node;
 }
