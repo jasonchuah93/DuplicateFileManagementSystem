@@ -21,6 +21,7 @@ void setUp(void){}
 void tearDown(void){}
 
 void test_addFileNode_should_add_fileNode_into_empty_root(void){
+	Error *e = NULL;
 	Node *nodePtr = NULL;
 	FileInfo *info = createInfo();
 	LinkedList *list = createLinkedList();
@@ -30,10 +31,12 @@ void test_addFileNode_should_add_fileNode_into_empty_root(void){
 	Element *ele = createElement(info);
     listAddFirst(ele,list);
 	Node *fileNode = createNode(list);
-	addFileNode(&nodePtr,fileNode);
-	
-	TEST_ASSERT_EQUAL_PTR(nodePtr,fileNode);
-	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',fileNode);
+	Try{
+		addFileNode(&nodePtr,fileNode);
+	}Catch(e){
+		TEST_ASSERT_EQUAL_PTR(nodePtr,fileNode);
+		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',fileNode);
+	}
 	
 	free(info);
 	free(list);
@@ -42,6 +45,7 @@ void test_addFileNode_should_add_fileNode_into_empty_root(void){
 }
 
 void test_addFileNode_should_add_n100_into_n200(void){
+	Error *e = NULL;
 	Node *nodePtr = NULL;
 	FileInfo info1 = {.fileSize = 200};
 	FileInfo info2 = {.fileSize = 100};
@@ -54,13 +58,14 @@ void test_addFileNode_should_add_n100_into_n200(void){
 	Node *fileNode1 = createNode(list1);
 	Node *fileNode2 = createNode(list2);
 	
-	addFileNode(&nodePtr,fileNode1);
-	addFileNode(&nodePtr,fileNode2);
-	
-	TEST_ASSERT_EQUAL_PTR(nodePtr,fileNode1);
-	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode2);
-	TEST_ASSERT_EQUAL_NODE(fileNode2,NULL,'b',nodePtr);
-
+	Try{
+		addFileNode(&nodePtr,fileNode1);
+		addFileNode(&nodePtr,fileNode2);
+	}Catch(e){
+		TEST_ASSERT_EQUAL_PTR(nodePtr,fileNode1);
+		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode2);
+		TEST_ASSERT_EQUAL_NODE(fileNode2,NULL,'b',nodePtr);
+	}
 	free(list1);
 	free(list2);
 	free(fileNode1);
@@ -68,6 +73,7 @@ void test_addFileNode_should_add_n100_into_n200(void){
 }
 
 void test_addFile_test_3_node_with_same_size_but_different_crc(void){
+	int i = 0;
 	Node *nodePtr = NULL;
 	FileInfo info1 = {.fileSize = 200, .fileCRC32Value = 111111111};
 	FileInfo info2 = {.fileSize = 100, .fileCRC32Value = 121111111};
@@ -130,6 +136,7 @@ void test_addFile_test_5_node_with_same_size_but_different_crc(void){
 	Node *fileNode3 = createNode(list3);
 	Node *fileNode4 = createNode(list4);
 	Node *fileNode5 = createNode(list5);
+	
 	addFileNode(&nodePtr,fileNode1);
 	addFileNode(&nodePtr,fileNode2);
 	addFileNode(&nodePtr,fileNode3);

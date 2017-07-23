@@ -25,6 +25,7 @@ static int lastFileCount;
 *			
 *	Destroy: none
 **************************************************************/
+/*
 int traverseFolder(char *folderPath){
 	DIR *d = getFolderPtr(folderPath);
 	int countFileNumber = 0,fileLen = 0, latestFileNumber = 0;
@@ -69,7 +70,7 @@ int traverseFolder(char *folderPath){
 	closedir(d);
 	return latestFileNumber;
 }
-
+*/
 char *addFolderPathToFilePath(const char *folderName,const char *fileName){
 	char *filePath = (char*)malloc(1+strlen(folderName)+strlen(fileName));
 	strcpy(filePath,folderName);
@@ -193,7 +194,8 @@ int listFileNumber(const char *path){
 	DIR *folder = getFolderPtr(path);
 	while((dir=readdir(folder))!=NULL){
 		if(dir->d_type == DT_REG){
-			count++;
+			if(strcmp(dir->d_name,"fileInformation.json")!=0)
+				count++;
 		}
 	}
 	return count;

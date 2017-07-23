@@ -17,13 +17,13 @@
 #include "RestructureNode.h"
 #include "RedBlackTree.h"
 #include "jansson.h"
+#include "LinkedList.h"
 #include "main.h"
 #include "CException.h"
-#include "main.h"
 
 void setUp(void){}
 void tearDown(void){}
 
 void test_scanFolder(void){
-	scanFolder("TestJSON");
+	scanFolder("forTesting");
 }

@@ -117,6 +117,18 @@ void writeJsonIntoFile(const char *jsonFile,json_t *jsonObject){
 	fclose(fptr);
 }
 
+int checkJsonFile(const char *folder, const char *jsonFile){
+	int cmp = 0;
+	DIR *dPtr = opendir(folder);
+	while((dir = readdir(dPtr))!=NULL){
+		if(strcmp(dir->d_name,jsonFile) == 0){
+			//printf("file name: %s\n",dir->d_name);
+			return 0;
+		}
+	}
+	return -1;
+}
+
 int checkJSON(const char* path){
 	int cmp = 0;
 	char *jsonExt = NULL;
