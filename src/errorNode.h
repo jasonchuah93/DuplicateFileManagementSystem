@@ -1,6 +1,10 @@
 #ifndef errorNode_H
 #define errorNode_H
 
+#define getNameInErr(err) ((FileInfo*)((LinkedList*)((Node*)(err->data))->data)->head->data)->fileName
+#define getSizeInErr(err) ((FileInfo*)((LinkedList*)((Node*)(err->data))->data)->head->data)->fileSize
+#define getCRCInErr(err) ((FileInfo*)((LinkedList*)((Node*)(err->data))->data)->head->data)->fileCRC32Value
+
 typedef enum{
 	ERR_NO_ERROR,
 	ERR_EQUIVALENT_NODE,

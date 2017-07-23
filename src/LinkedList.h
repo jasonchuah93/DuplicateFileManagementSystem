@@ -23,7 +23,7 @@ typedef struct{
 
 Element *createElement(void *fileInfo);
 LinkedList *createLinkedList();
-Element *listAddFirst(Element *newElement, LinkedList *list);
+void *listAddFirst(Element *newElement, LinkedList *list);
 Element *listRemoveFirst(LinkedList *list);
 Element *listAddLast(Element *newElement, LinkedList *list);
 Element *listRemoveLast(LinkedList *list);

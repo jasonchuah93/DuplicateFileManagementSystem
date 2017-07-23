@@ -70,6 +70,14 @@ int traverseFolder(char *folderPath){
 	return latestFileNumber;
 }
 
+char *addFolderPathToFilePath(const char *folderName,const char *fileName){
+	char *filePath = (char*)malloc(1+strlen(folderName)+strlen(fileName));
+	strcpy(filePath,folderName);
+	strcat(filePath,"/");
+	strcat(filePath,fileName);
+	return filePath;
+}
+
 char *createJSONFilePath(const char *folderPath){
 	char *jsonFileName = "/fileInformation.json";
 	char *jsonPath = (char*)malloc(1+strlen(folderPath)+strlen(jsonFileName));

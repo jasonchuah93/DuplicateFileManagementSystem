@@ -15,6 +15,7 @@
 #define MaxFile 10000
 
 char *createJSONFilePath(const char *folderPath);
+char *addFolderPathToFilePath(const char *folderName,const char *fileName);
 int checkFile(const char *path);
 int checkFolder(const char *path);
 FILE *getFilePtr(const char *path);

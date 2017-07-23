@@ -5,6 +5,7 @@
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
 #include "Node.h"
+#include "LinkedList.h"
 #include "errorNode.h"
 
 Error *createErr(char *stringMsg,void *duplicatedNode){

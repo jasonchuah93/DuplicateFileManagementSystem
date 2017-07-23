@@ -10,6 +10,7 @@
 #include "Rotation.h"
 #include "RestructureNode.h"
 #include "RedBlackTree.h"
+#include "LinkedList.h"
 #include "CException.h"
 
 #define leftChild (*rootPtr)->left

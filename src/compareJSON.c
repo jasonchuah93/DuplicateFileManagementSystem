@@ -4,6 +4,7 @@
 #include <malloc.h>
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
+#include "LinkedList.h"
 #include "compareJSON.h"
 
 /******************************************************************
@@ -73,21 +74,20 @@ int compareFileCRC(Node **crcFromRBT,Node *crcToCompare){
 *
 *	Destroy: none
 *******************************************************************/
-int compareFileByte(Error *nodeFromRBT,Node *nodeToCompare){
+int compareFileByte(char *rootFile,char *fileToCompare){
 	int int1 = 0, int2 = 0;
 	char temp[100] = {0}, temp2[100] = {0};
-	const char *rootLocation = getFilePathFrmErr(nodeFromRBT);
-	const char *targetLocation = getName(nodeToCompare);
-	FILE *fptr1 = fopen(rootLocation,"r");
-	FILE *fptr2 = fopen(targetLocation,"r");
+	FILE *fptr1 = fopen(rootFile,"r");
+	FILE *fptr2 = fopen(fileToCompare,"r");
 	int1 = getc(fptr1);
 	int2 = getc(fptr2);
 	while ((int1 != EOF) && (int2 != EOF) && (int1 == int2)) {
          int1 = getc(fptr1);
          int2 = getc(fptr2);
 	}
-	if(int1 == int2)
+	if(int1 == int2){
 		return 0;
-	else
+	}else if(int1 != int2){
 		return -1;
+	}
 }

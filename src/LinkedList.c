@@ -17,7 +17,7 @@ LinkedList *createLinkedList(){
 	return list;
 }
 
-Element *listAddFirst(Element *newElement, LinkedList *list){
+void *listAddFirst(Element *newElement, LinkedList *list){
 	if(list->head == NULL && list->tail == NULL){
 		list->head = list->tail = newElement;
 		newElement -> next = NULL;

@@ -5,10 +5,8 @@
 #include "JSON.h"
 #include "errorNode.h"
 
-#define getFilePathFrmErr(errorNode) (((FileInfo*)((Node*)((Error*)(errorNode))->data)->data))->fileName
-
 int compareFileSize(Node **sizeFromRBT,Node *sizeToCompare);
 int compareFileCRC(Node **crcFromRBT,Node *crcToCompare);
-int compareFileByte(Error *nodeFromRBT,Node *nodeToCompare);
+int compareFileByte(char *rootFile,char *fileToCompare);
 
 #endif // compareJSON_H

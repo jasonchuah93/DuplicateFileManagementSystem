@@ -92,3 +92,33 @@ void test_listAddFirst_should_add_2_element_into_linkedList(void){
 	free(ele);
 	free(ele2);
 }
+
+void test_listRemoveFirst_should_remove_2_element_from_linkedList(void){
+	int len = 0;
+	Element *removedList = NULL;
+	FileInfo *info = createInfo();
+	FileInfo *info2 = createInfo();
+	LinkedList *list = createLinkedList();
+	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
+	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFrmJson(fileArry,info,0);
+	getFileInfoFrmJson(fileArry,info2,1);
+	Element *ele = createElement(info);
+	Element *ele2 = createElement(info2);
+	
+    listAddFirst(ele,list);
+	listAddFirst(ele2,list);
+	
+	for(len = 0; len <= list->length; len = len+1){
+		removedList = listRemoveFirst(list);
+		//printf("name: %s\n",((FileInfo*)removedList->data)->fileName);
+	}
+	TEST_ASSERT_NULL(list->head);
+	TEST_ASSERT_EQUAL(0,list->length);
+	
+	free(info);
+	free(info2);
+	free(list);
+	free(ele);
+	free(ele2);
+}
