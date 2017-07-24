@@ -14,15 +14,13 @@
 void setUp(void){}
 void tearDown(void){}
 
-void test_createNode_should_create_node_to_store_linked_list(void){
+void test_createNode_should_create_node_to_store_element(void){
     FileInfo *info = createInfo();
-	LinkedList *list = createLinkedList();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
 	getFileInfoFrmJson(fileArry,info,2);
 	Element *ele = createElement(info);
-    listAddFirst(ele,list);
-	Node *nodePtr = createNode(list);
+	Node *nodePtr = createNode(ele);
 	
 	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getName(nodePtr));
 	TEST_ASSERT_EQUAL(249159,getSize(nodePtr));
@@ -30,7 +28,6 @@ void test_createNode_should_create_node_to_store_linked_list(void){
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',nodePtr);
 	
 	free(info);
-	free(list);
 	free(ele);
 	free(nodePtr);
 }

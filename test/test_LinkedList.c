@@ -95,7 +95,7 @@ void test_listAddFirst_should_add_2_element_into_linkedList(void){
 
 void test_listRemoveFirst_should_remove_2_element_from_linkedList(void){
 	int len = 0;
-	Element *removedList = NULL;
+	Element *removedEle = NULL;
 	FileInfo *info = createInfo();
 	FileInfo *info2 = createInfo();
 	LinkedList *list = createLinkedList();
@@ -108,11 +108,12 @@ void test_listRemoveFirst_should_remove_2_element_from_linkedList(void){
 	
     listAddFirst(ele,list);
 	listAddFirst(ele2,list);
-	
+	printf("Following files are duplicated: \n");
 	for(len = 0; len <= list->length; len = len+1){
-		removedList = listRemoveFirst(list);
-		//printf("name: %s\n",((FileInfo*)removedList->data)->fileName);
+		removedEle = listRemoveFirst(list);
+		printf("%s\n",((FileInfo*)removedEle->data)->fileName);
 	}
+	
 	TEST_ASSERT_NULL(list->head);
 	TEST_ASSERT_EQUAL(0,list->length);
 	
