@@ -8,13 +8,18 @@
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
 #include "Node.h"
+#include "RedBlackTree.h"
+#include "errorNode.h"
+#include "Rotation.h"
+#include "RestructureNode.h"
+#include "compareJSON.h"
 #include "LinkedList.h"
 #include "CustomAssertions.h"
 
 void setUp(void){}
 void tearDown(void){}
 
-void test_createNode_should_create_node_to_store_element(void){
+void test_createNode_should_create_node_to_store_file_information(void){
     FileInfo *info = createInfo();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);

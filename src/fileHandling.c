@@ -17,8 +17,8 @@ static char* lastFile[MaxFile] = {0};
 static int lastFileCount;
 
 void scanFolder(Node *nodeRoot, Node *duplicatedFileRoot,const char *folderName){
-	/*
-	int cmpFileByte = 0, checkFileNum = 0, i = 0;
+	int cmpFileByte = 0, i = 0;
+	size_t arraySize = 0;
 	char *jsonPath = NULL, *errNodeFilePath = NULL, *targetNodeFilePath = NULL;
 	json_t *folderObj = NULL;
 	json_t *fileArray = NULL;
@@ -26,40 +26,30 @@ void scanFolder(Node *nodeRoot, Node *duplicatedFileRoot,const char *folderName)
 	Node *fileNode = NULL;
 	Error *errNode = NULL;
 	
-	checkFileNum = listFileNumber(folderName);
 	folderObj = createJsonObjectFrmFolder(folderName);
 	fileArray = getJsonArrayFrmFolderObj(folderObj);
 	//Check is there any json file inside the folder
 	if(checkJsonFile(folderName,"fileInformation.json")==0)
-		printf("json file exist in folder\n");
+		printf("json file exist in folder.\n");
 	//UpdateJSON here
 	else{
-		printf("json file no exist in folder\n");
+		printf("json file no exist in folder. Create 1.\n");
 		jsonPath = createJSONFilePath(folderName);
 		writeJsonIntoFile(jsonPath,folderObj);
 	}
-	for(i=0;i<checkFileNum;i=i+1){
+	arraySize = json_array_size(fileArray);
+	for(i=0;i<arraySize;i=i+1){
 		FileInfo *information = createInfo();
-		//LinkedList *list = createLinkedList();
 		getFileInfoFrmJson(fileArray,information,i);
-		fileElement = createElement(information);
-		//listAddFirst(fileElement,list);
-		fileNode = createNode(fileElement);
+		fileNode = createNode(information);
+		//printf("node name:%s\n",getName(fileNode));
 		Try{
 			addFileNode(&nodeRoot,fileNode);
 		}Catch(errNode){
-			errNodeFilePath = addFolderPathToFilePath(folderName,getNameInErr(errNode));
-			targetNodeFilePath = addFolderPathToFilePath(folderName,getName(fileNode));
-			cmpFileByte = compareFileByte(errNodeFilePath,targetNodeFilePath);
-			if(cmpFileByte == 0){
-				printf("%s & %s are duplicated files\n",errNodeFilePath,targetNodeFilePath);
-				
-			}
+			printf("node root name:%s\n",getNameInErr(errNode));
+			printf("node file name:%s\n",getName(fileNode));
 		}
 	}
-	*/
-	//printf("error file name: %s\n",getNameInErr(errNode));
-	//addFileNode(&duplicatedFileRoot,errNode->data);
 }
 
 /*************************************************************

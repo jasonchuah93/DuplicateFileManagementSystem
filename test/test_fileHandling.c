@@ -208,3 +208,9 @@ void test_createJSONFilePath_should_create_a_json_file_path(void){
 	char *test = createJSONFilePath("TestJSON");
 	TEST_ASSERT_EQUAL_STRING("TestJSON/fileInformation.json",test);
 }
+
+void test_scanFolder(void){
+	Node *root = NULL;
+	Node *dupRoot = NULL;
+	scanFolder(root,dupRoot,"TestJSON");
+}

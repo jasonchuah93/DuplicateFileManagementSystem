@@ -13,6 +13,6 @@ struct Node {
  void *data;
 };
 
-Node *createNode(void *element);
+Node *createNode(void *fileInfo);
 
 #endif // Node_H

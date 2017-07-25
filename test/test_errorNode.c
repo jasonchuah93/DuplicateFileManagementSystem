@@ -9,6 +9,11 @@
 #include "Node.h"
 #include "errorNode.h"
 #include "LinkedList.h"
+#include "RedBlackTree.h"
+#include "errorNode.h"
+#include "Rotation.h"
+#include "RestructureNode.h"
+#include "compareJSON.h"
 #include "CustomAssertions.h"
 #include "CException.h"
 
