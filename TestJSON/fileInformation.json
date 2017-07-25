@@ -1,21 +1,27 @@
 {
     "File Info":[
         {
-            "crc":305591788,
-            "size":10038,
             "name":"Testing 2.xlsx",
-            "epoch seconds":1500185350
-        },
-        {
             "crc":305591788,
             "size":10038,
-            "name":"Testing 3.xlsx",
             "epoch seconds":1500185350
         },
         {
+            "name":"Testing 3.xlsx",
+            "crc":305591788,
+            "size":10038,
+            "epoch seconds":1500185350
+        },
+        {
+            "name":"Testing 4.xlsx",
+            "crc":305591788,
+            "size":10038,
+            "epoch seconds":1500185350
+        },
+        {
+            "name":"Testing 8.pdf",
             "crc":289821883,
             "size":249159,
-            "name":"Testing 8.pdf",
             "epoch seconds":1500185350
         }
     ]

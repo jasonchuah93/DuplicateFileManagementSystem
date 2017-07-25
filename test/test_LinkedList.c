@@ -54,7 +54,7 @@ void test_listAddFirst_should_add_element_into_linkedList(void){
 	LinkedList *list = createLinkedList();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,2);
+	getFileInfoFrmJson(fileArry,info,3);
 	Element *ele = createElement(info);
     listAddFirst(ele,list);
 	

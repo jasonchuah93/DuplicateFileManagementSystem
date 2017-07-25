@@ -19,10 +19,8 @@ void test_compareFileSize_should_compare_2_files_size_and_return_1(void){
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 3016};
 	FileInfo info2 = {.fileSize = 1016};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	
 	compare = compareFileSize(&node1,node2);
 	 
@@ -36,10 +34,8 @@ void test_compareFileSize_should_compare_2_files_size_and_return_negative_1(void
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 0016};
 	FileInfo info2 = {.fileSize = 3016};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	
 	compare = compareFileSize(&node1,node2);
 	 
@@ -53,10 +49,8 @@ void test_compareFileSize_should_call_compareFileCRC_and_return_1_if_2_file_size
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 3016, .fileCRC32Value = 852147963};
 	FileInfo info2 = {.fileSize = 3016, .fileCRC32Value = 352147963};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	compare = compareFileSize(&node1,node2);
 	 
 	TEST_ASSERT_EQUAL(1,compare);
@@ -69,10 +63,8 @@ void test_compareFileSize_should_call_compareFileCRC_and_return_negative_1_if_2_
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 3016, .fileCRC32Value = 654747963};
 	FileInfo info2 = {.fileSize = 3016, .fileCRC32Value = 811147963};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	
 	compare = compareFileSize(&node1,node2);
 	 
@@ -86,10 +78,8 @@ void test_compareFileSize_should_return_0_if_file_size_and_crc_are_same_in_2_fil
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 3016, .fileCRC32Value = 654747963};
 	FileInfo info2 = {.fileSize = 3016, .fileCRC32Value = 654747963};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	compare = compareFileSize(&node1,node2);
 	 
 	TEST_ASSERT_EQUAL(0,compare);
@@ -103,10 +93,8 @@ void test_compareFileByte_should_compare_2_similar_files_byte_by_byte_and_return
 	const char *folderName = "TestJSON";
 	FileInfo info1 = {.fileName = "Testing 2.xlsx"};
 	FileInfo info2 = {.fileName = "Testing 3.xlsx"};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	Error *errNode = createErr("Duplicated Node",node1);
 	char *fullFilePath1 = addFolderPathToFilePath(folderName,getNameInErr(errNode));
 	char *fullFilePath2 = addFolderPathToFilePath(folderName,getName(node2));
@@ -124,10 +112,8 @@ void test_compareFileByte_should_compare_2_different_files_byte_by_byte_and_retu
 	const char *folderName = "TestJSON";
 	FileInfo info1 = {.fileName = "Testing 3.xlsx"};
 	FileInfo info2 = {.fileName = "Testing 8.pdf"};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	Error *errNode = createErr("Not Duplicated Node",node1);
 	char *fullFilePath1 = addFolderPathToFilePath(folderName,getNameInErr(errNode));
 	char *fullFilePath2 = addFolderPathToFilePath(folderName,getName(node2));
@@ -145,10 +131,8 @@ void test_compareFileByte_should_compare_image_and_song_files_byte_by_byte_and_r
 	const char *folderName = "forTesting";
 	FileInfo info1 = {.fileName = "Testing 1.mp3"};
 	FileInfo info2 = {.fileName = "Testing 10.jpg"};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	Error *errNode = createErr("Not Duplicated Node",node1);
 	char *fullFilePath1 = addFolderPathToFilePath(folderName,getNameInErr(errNode));
 	char *fullFilePath2 = addFolderPathToFilePath(folderName,getName(node2));
@@ -166,10 +150,8 @@ void test_compareFileByte_should_compare_words_and_powerpoint_files_byte_by_byte
 	const char *folderName = "forTesting";
 	FileInfo info1 = {.fileName = "Testing 4.docx"};
 	FileInfo info2 = {.fileName = "Testing 11.pptx"};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Node *node1 = createNode(&ele1);
-	Node *node2 = createNode(&ele2);
+	Node *node1 = createNode(&info1);
+	Node *node2 = createNode(&info2);
 	Error *errNode = createErr("Not Duplicated Node",node1);
 	char *fullFilePath1 = addFolderPathToFilePath(folderName,getNameInErr(errNode));
 	char *fullFilePath2 = addFolderPathToFilePath(folderName,getName(node2));

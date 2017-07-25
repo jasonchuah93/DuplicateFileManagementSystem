@@ -18,9 +18,8 @@ void test_createNode_should_create_node_to_store_element(void){
     FileInfo *info = createInfo();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,2);
-	Element *ele = createElement(info);
-	Node *nodePtr = createNode(ele);
+	getFileInfoFrmJson(fileArry,info,3);
+	Node *nodePtr = createNode(info);
 	
 	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getName(nodePtr));
 	TEST_ASSERT_EQUAL(249159,getSize(nodePtr));
@@ -28,6 +27,5 @@ void test_createNode_should_create_node_to_store_element(void){
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',nodePtr);
 	
 	free(info);
-	free(ele);
 	free(nodePtr);
 }

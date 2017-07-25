@@ -19,9 +19,8 @@ void test_createErr_should_create_errorPtr_store_nodePtr(void){
 	FileInfo *info = createInfo();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,2);
-	Element *ele = createElement(info);
-	Node *nodePtr = createNode(ele);
+	getFileInfoFrmJson(fileArry,info,3);
+	Node *nodePtr = createNode(info);
 	Error *errPtr = createErr("Try add node inside",nodePtr);
 	
 	TEST_ASSERT_EQUAL(nodePtr,errPtr->data);

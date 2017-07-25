@@ -2,12 +2,12 @@
 #include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
-#include "Node.h"
 #include "errorNode.h"
 #include "compareJSON.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
 #include "RedBlackTree.h"
+#include "LinkedList.h"
 #include "CException.h"
 
 struct stat attr;
@@ -15,6 +15,52 @@ struct dirent *dir;
 struct tm t;
 static char* lastFile[MaxFile] = {0};
 static int lastFileCount;
+
+void scanFolder(Node *nodeRoot, Node *duplicatedFileRoot,const char *folderName){
+	/*
+	int cmpFileByte = 0, checkFileNum = 0, i = 0;
+	char *jsonPath = NULL, *errNodeFilePath = NULL, *targetNodeFilePath = NULL;
+	json_t *folderObj = NULL;
+	json_t *fileArray = NULL;
+	Element *fileElement = NULL;
+	Node *fileNode = NULL;
+	Error *errNode = NULL;
+	
+	checkFileNum = listFileNumber(folderName);
+	folderObj = createJsonObjectFrmFolder(folderName);
+	fileArray = getJsonArrayFrmFolderObj(folderObj);
+	//Check is there any json file inside the folder
+	if(checkJsonFile(folderName,"fileInformation.json")==0)
+		printf("json file exist in folder\n");
+	//UpdateJSON here
+	else{
+		printf("json file no exist in folder\n");
+		jsonPath = createJSONFilePath(folderName);
+		writeJsonIntoFile(jsonPath,folderObj);
+	}
+	for(i=0;i<checkFileNum;i=i+1){
+		FileInfo *information = createInfo();
+		//LinkedList *list = createLinkedList();
+		getFileInfoFrmJson(fileArray,information,i);
+		fileElement = createElement(information);
+		//listAddFirst(fileElement,list);
+		fileNode = createNode(fileElement);
+		Try{
+			addFileNode(&nodeRoot,fileNode);
+		}Catch(errNode){
+			errNodeFilePath = addFolderPathToFilePath(folderName,getNameInErr(errNode));
+			targetNodeFilePath = addFolderPathToFilePath(folderName,getName(fileNode));
+			cmpFileByte = compareFileByte(errNodeFilePath,targetNodeFilePath);
+			if(cmpFileByte == 0){
+				printf("%s & %s are duplicated files\n",errNodeFilePath,targetNodeFilePath);
+				
+			}
+		}
+	}
+	*/
+	//printf("error file name: %s\n",getNameInErr(errNode));
+	//addFileNode(&duplicatedFileRoot,errNode->data);
+}
 
 /*************************************************************
 *   Scan the folder, traverse all content inside
@@ -25,52 +71,15 @@ static int lastFileCount;
 *			
 *	Destroy: none
 **************************************************************/
-/*
-int traverseFolder(char *folderPath){
-	DIR *d = getFolderPtr(folderPath);
-	int countFileNumber = 0,fileLen = 0, latestFileNumber = 0;
-	char *subFolderPath = NULL, *jsonFileName = "/jsonInfo.json";
-	char *jsonPath = (char*)malloc(1+strlen(folderPath)+strlen(jsonFileName));
-	unsigned long int latestEpochSec = 0, currentEpochSec = 0;
-	char dateTime[100] = {0}, filePath[200] = {0}, latestFilePath[200] = {0};
-	while((dir = readdir(d))!= NULL){
-		if(dir->d_type == DT_REG){
-			if(memcmp(dir->d_name,"jsonInfo.json",13) == 0){
-				goto here;
-			}else{
-				fileLen = strlen(dir->d_name)+1;
-				lastFile[countFileNumber] = malloc(fileLen);
-				strcpy(lastFile[countFileNumber],dir->d_name);
-				countFileNumber++;
-			}
-			here:
-			sprintf(filePath,"%s/%s",folderPath,dir->d_name);
-			getFileDateTime(dateTime,filePath);
-			latestEpochSec = convertEpoch(dateTime);
-			if(latestEpochSec > currentEpochSec){
-				strcpy(latestFilePath,dir->d_name);
-				currentEpochSec = latestEpochSec;
-			}
-		}else if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
-			subFolderPath = subFolder(folderPath);
-			traverseFolder(subFolderPath);
-		}
-	}
-	if(strcmp(latestFilePath,"jsonInfo.json") == 0){
-		printf("JSON File is latest at %s.\n",folderPath);
-	}else{
-		strcpy(jsonPath,folderPath);
-		strcat(jsonPath,jsonFileName);
-		lastFileCount = countFileNumber;
-		if(lastFileCount > 0){
-			//createJSON(jsonPath,folderPath,lastFile,lastFileCount);
-		}
-	}
-	latestFileNumber = countFileNumber;
-	closedir(d);
-	return latestFileNumber;
+void traverseFolder(Node *duplicatedFileRoot,char *folderPath){
+	Node *root = NULL;
+	_traverseFolder(root,duplicatedFileRoot,folderPath);
 }
-*/
+
+void _traverseFolder(Node *root,Node *duplicatedRoot,char *folderPath){
+	
+}
+
 char *addFolderPathToFilePath(const char *folderName,const char *fileName){
 	char *filePath = (char*)malloc(1+strlen(folderName)+strlen(fileName));
 	strcpy(filePath,folderName);

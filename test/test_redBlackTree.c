@@ -27,8 +27,7 @@ void test_addFileNode_should_add_fileNode_into_empty_root(void){
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
 	getFileInfoFrmJson(fileArry,info,2);
-	Element *ele = createElement(info);
-    Node *fileNode = createNode(ele);
+	Node *fileNode = createNode(info);
 	Try{
 		addFileNode(&nodePtr,fileNode);
 	}Catch(e){
@@ -37,7 +36,6 @@ void test_addFileNode_should_add_fileNode_into_empty_root(void){
 	}
 	
 	free(info);
-	free(ele);
 	free(fileNode);
 }
 
@@ -46,10 +44,8 @@ void test_addFileNode_should_add_n100_into_n200(void){
 	Node *nodePtr = NULL;
 	FileInfo info1 = {.fileSize = 200};
 	FileInfo info2 = {.fileSize = 100};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-    Node *fileNode1 = createNode(&ele1);
-	Node *fileNode2 = createNode(&ele2);
+	Node *fileNode1 = createNode(&info1);
+	Node *fileNode2 = createNode(&info2);
 	
 	Try{
 		addFileNode(&nodePtr,fileNode1);
@@ -70,12 +66,9 @@ void test_addFile_test_3_node_with_same_size_but_different_crc(void){
 	FileInfo info1 = {.fileSize = 200, .fileCRC32Value = 111111111};
 	FileInfo info2 = {.fileSize = 100, .fileCRC32Value = 121111111};
 	FileInfo info3 = {.fileSize = 100, .fileCRC32Value = 321111111};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Element ele3 = {.data = &info3};
-    Node *fileNode1 = createNode(&ele1);
-	Node *fileNode2 = createNode(&ele2);
-	Node *fileNode3 = createNode(&ele3);
+	Node *fileNode1 = createNode(&info1);
+	Node *fileNode2 = createNode(&info2);
+	Node *fileNode3 = createNode(&info3);
 	
 	addFileNode(&nodePtr,fileNode1);
 	addFileNode(&nodePtr,fileNode2);
@@ -98,16 +91,11 @@ void test_addFile_test_5_node_with_same_size_but_different_crc(void){
 	FileInfo info3 = {.fileSize = 100, .fileCRC32Value = 321111111};
 	FileInfo info4 = {.fileSize = 1000, .fileCRC32Value = 532111111};
 	FileInfo info5 = {.fileSize = 22200, .fileCRC32Value = 1321111111};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Element ele3 = {.data = &info3};
-	Element ele4 = {.data = &info4};
-	Element ele5 = {.data = &info5};
-    Node *fileNode1 = createNode(&ele1);
-	Node *fileNode2 = createNode(&ele2);
-	Node *fileNode3 = createNode(&ele3);
-	Node *fileNode4 = createNode(&ele4);
-	Node *fileNode5 = createNode(&ele5);
+	Node *fileNode1 = createNode(&info1);
+	Node *fileNode2 = createNode(&info2);
+	Node *fileNode3 = createNode(&info3);
+	Node *fileNode4 = createNode(&info4);
+	Node *fileNode5 = createNode(&info5);
 	
 	addFileNode(&nodePtr,fileNode1);
 	addFileNode(&nodePtr,fileNode2);
@@ -136,14 +124,10 @@ void test_addFile_test_4_node_with_same_size_and_same_crc(void){
 	FileInfo info2 = {.fileSize = 100, .fileCRC32Value = 121111111};
 	FileInfo info3 = {.fileSize = 100, .fileCRC32Value = 321111111};
 	FileInfo info4 = {.fileSize = 100, .fileCRC32Value = 121111111};
-	Element ele1 = {.data = &info1};
-	Element ele2 = {.data = &info2};
-	Element ele3 = {.data = &info3};
-	Element ele4 = {.data = &info4};
-    Node *fileNode1 = createNode(&ele1);
-	Node *fileNode2 = createNode(&ele2);
-	Node *fileNode3 = createNode(&ele3);
-	Node *fileNode4 = createNode(&ele4);
+	Node *fileNode1 = createNode(&info1);
+	Node *fileNode2 = createNode(&info2);
+	Node *fileNode3 = createNode(&info3);
+	Node *fileNode4 = createNode(&info4);
 	
 	addFileNode(&nodePtr,fileNode1);
 	addFileNode(&nodePtr,fileNode2);

@@ -58,7 +58,7 @@ void test_getFileInfoFrmJson_should_get_Testing_8_info_from_json_array(void){
 	FileInfo *info = createInfo();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,2);
+	getFileInfoFrmJson(fileArry,info,3);
 	TEST_ASSERT_NOT_NULL(info);
 	TEST_ASSERT_EQUAL_STRING(info->fileName,"Testing 8.pdf");
 	TEST_ASSERT_EQUAL(info->fileSize,249159);
