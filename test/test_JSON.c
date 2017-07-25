@@ -72,12 +72,6 @@ void test_checkJsonFile_should_return_0_if_folder_contain_json_file(void){
 	TEST_ASSERT_EQUAL(0,check);
 }
 
-void test_checkJsonFile_should_return_negative_1_if_folder_no_contain_json_file(void){
-	int check = 1;
-	check = checkJsonFile("TestJSON","fileInformation.json");
-	TEST_ASSERT_EQUAL(-1,check);
-}
-
 /*
 These test will delete JSON file
 void test_delJSON_should_delete_JSON_type_file_inside_folder_and_return_1(void){

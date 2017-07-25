@@ -24,13 +24,11 @@ void test_addFileNode_should_add_fileNode_into_empty_root(void){
 	Error *e = NULL;
 	Node *nodePtr = NULL;
 	FileInfo *info = createInfo();
-	LinkedList *list = createLinkedList();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
 	getFileInfoFrmJson(fileArry,info,2);
 	Element *ele = createElement(info);
-    listAddFirst(ele,list);
-	Node *fileNode = createNode(list);
+    Node *fileNode = createNode(ele);
 	Try{
 		addFileNode(&nodePtr,fileNode);
 	}Catch(e){
@@ -39,7 +37,6 @@ void test_addFileNode_should_add_fileNode_into_empty_root(void){
 	}
 	
 	free(info);
-	free(list);
 	free(ele);
 	free(fileNode);
 }
@@ -49,14 +46,10 @@ void test_addFileNode_should_add_n100_into_n200(void){
 	Node *nodePtr = NULL;
 	FileInfo info1 = {.fileSize = 200};
 	FileInfo info2 = {.fileSize = 100};
-	LinkedList *list1 = createLinkedList();
-	LinkedList *list2 = createLinkedList();
 	Element ele1 = {.data = &info1};
 	Element ele2 = {.data = &info2};
-    listAddFirst(&ele1,list1);
-	listAddFirst(&ele2,list2);
-	Node *fileNode1 = createNode(list1);
-	Node *fileNode2 = createNode(list2);
+    Node *fileNode1 = createNode(&ele1);
+	Node *fileNode2 = createNode(&ele2);
 	
 	Try{
 		addFileNode(&nodePtr,fileNode1);
@@ -66,8 +59,7 @@ void test_addFileNode_should_add_n100_into_n200(void){
 		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode2);
 		TEST_ASSERT_EQUAL_NODE(fileNode2,NULL,'b',nodePtr);
 	}
-	free(list1);
-	free(list2);
+	
 	free(fileNode1);
 	free(fileNode2);
 }
@@ -78,18 +70,12 @@ void test_addFile_test_3_node_with_same_size_but_different_crc(void){
 	FileInfo info1 = {.fileSize = 200, .fileCRC32Value = 111111111};
 	FileInfo info2 = {.fileSize = 100, .fileCRC32Value = 121111111};
 	FileInfo info3 = {.fileSize = 100, .fileCRC32Value = 321111111};
-	LinkedList *list1 = createLinkedList();
-	LinkedList *list2 = createLinkedList();
-	LinkedList *list3 = createLinkedList();
 	Element ele1 = {.data = &info1};
 	Element ele2 = {.data = &info2};
 	Element ele3 = {.data = &info3};
-    listAddFirst(&ele1,list1);
-	listAddFirst(&ele2,list2);
-	listAddFirst(&ele3,list3);
-	Node *fileNode1 = createNode(list1);
-	Node *fileNode2 = createNode(list2);
-	Node *fileNode3 = createNode(list3);
+    Node *fileNode1 = createNode(&ele1);
+	Node *fileNode2 = createNode(&ele2);
+	Node *fileNode3 = createNode(&ele3);
 	
 	addFileNode(&nodePtr,fileNode1);
 	addFileNode(&nodePtr,fileNode2);
@@ -100,9 +86,6 @@ void test_addFile_test_3_node_with_same_size_but_different_crc(void){
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode2);
 	TEST_ASSERT_EQUAL_NODE(fileNode2,fileNode1,'b',fileNode3);
 
-	free(list1);
-	free(list2);
-	free(list3);
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
@@ -115,27 +98,16 @@ void test_addFile_test_5_node_with_same_size_but_different_crc(void){
 	FileInfo info3 = {.fileSize = 100, .fileCRC32Value = 321111111};
 	FileInfo info4 = {.fileSize = 1000, .fileCRC32Value = 532111111};
 	FileInfo info5 = {.fileSize = 22200, .fileCRC32Value = 1321111111};
-	
-	LinkedList *list1 = createLinkedList();
-	LinkedList *list2 = createLinkedList();
-	LinkedList *list3 = createLinkedList();
-	LinkedList *list4 = createLinkedList();
-	LinkedList *list5 = createLinkedList();
 	Element ele1 = {.data = &info1};
 	Element ele2 = {.data = &info2};
 	Element ele3 = {.data = &info3};
 	Element ele4 = {.data = &info4};
 	Element ele5 = {.data = &info5};
-    listAddFirst(&ele1,list1);
-	listAddFirst(&ele2,list2);
-	listAddFirst(&ele3,list3);
-	listAddFirst(&ele4,list4);
-	listAddFirst(&ele5,list5);
-	Node *fileNode1 = createNode(list1);
-	Node *fileNode2 = createNode(list2);
-	Node *fileNode3 = createNode(list3);
-	Node *fileNode4 = createNode(list4);
-	Node *fileNode5 = createNode(list5);
+    Node *fileNode1 = createNode(&ele1);
+	Node *fileNode2 = createNode(&ele2);
+	Node *fileNode3 = createNode(&ele3);
+	Node *fileNode4 = createNode(&ele4);
+	Node *fileNode5 = createNode(&ele5);
 	
 	addFileNode(&nodePtr,fileNode1);
 	addFileNode(&nodePtr,fileNode2);
@@ -150,11 +122,6 @@ void test_addFile_test_5_node_with_same_size_but_different_crc(void){
 	TEST_ASSERT_EQUAL_NODE(fileNode2,fileNode1,'r',fileNode3);
 	TEST_ASSERT_EQUAL_NODE(fileNode3,fileNode5,'b',fileNode4);
 
-	free(list1);
-	free(list2);
-	free(list3);
-	free(list4);
-	free(list5);
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);
@@ -169,22 +136,14 @@ void test_addFile_test_4_node_with_same_size_and_same_crc(void){
 	FileInfo info2 = {.fileSize = 100, .fileCRC32Value = 121111111};
 	FileInfo info3 = {.fileSize = 100, .fileCRC32Value = 321111111};
 	FileInfo info4 = {.fileSize = 100, .fileCRC32Value = 121111111};
-	LinkedList *list1 = createLinkedList();
-	LinkedList *list2 = createLinkedList();
-	LinkedList *list3 = createLinkedList();
-	LinkedList *list4 = createLinkedList();
 	Element ele1 = {.data = &info1};
 	Element ele2 = {.data = &info2};
 	Element ele3 = {.data = &info3};
 	Element ele4 = {.data = &info4};
-    listAddFirst(&ele1,list1);
-	listAddFirst(&ele2,list2);
-	listAddFirst(&ele3,list3);
-	listAddFirst(&ele4,list4);
-	Node *fileNode1 = createNode(list1);
-	Node *fileNode2 = createNode(list2);
-	Node *fileNode3 = createNode(list3);
-	Node *fileNode4 = createNode(list4);
+    Node *fileNode1 = createNode(&ele1);
+	Node *fileNode2 = createNode(&ele2);
+	Node *fileNode3 = createNode(&ele3);
+	Node *fileNode4 = createNode(&ele4);
 	
 	addFileNode(&nodePtr,fileNode1);
 	addFileNode(&nodePtr,fileNode2);
@@ -201,10 +160,7 @@ void test_addFile_test_4_node_with_same_size_and_same_crc(void){
 		TEST_ASSERT_EQUAL_PTR(e->data,fileNode2);
 		TEST_ASSERT_EQUAL(e->errCode,ERR_EQUIVALENT_NODE);
 	}
-	free(list1);
-	free(list2);
-	free(list3);
-	free(list4);
+	
 	free(fileNode1);
 	free(fileNode2);
 	free(fileNode3);

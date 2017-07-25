@@ -17,13 +17,11 @@ void tearDown(void){}
 
 void test_createErr_should_create_errorPtr_store_nodePtr(void){
 	FileInfo *info = createInfo();
-	LinkedList *list = createLinkedList();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
 	getFileInfoFrmJson(fileArry,info,2);
 	Element *ele = createElement(info);
-    listAddFirst(ele,list);
-	Node *nodePtr = createNode(list);
+	Node *nodePtr = createNode(ele);
 	Error *errPtr = createErr("Try add node inside",nodePtr);
 	
 	TEST_ASSERT_EQUAL(nodePtr,errPtr->data);
