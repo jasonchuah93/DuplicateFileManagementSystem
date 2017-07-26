@@ -20,6 +20,59 @@
 #define leftRightGrandChild (*rootPtr)->left->right
 #define rightLeftGrandChild (*rootPtr)->right->left
 
+void genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareList)(Node **rootPtr,Node *newNode)){
+    _genericAddRedBlackTreeForList(rootPtr,newNode,compareList);    
+    (*rootPtr)->color='b';
+}
+
+void _genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareFile)(Node **rootPtr,Node *newNode)){
+	int compare = 0;
+	Error *duplicatedNode = NULL;
+	if(*rootPtr == NULL){
+		*rootPtr = newNode;
+        (*rootPtr)->color='r';
+	}else{
+		if ((*rootPtr)->left!=NULL && (*rootPtr)->right!=NULL){
+			handleColor(rootPtr,newNode);
+		}
+		compare = compareFile(rootPtr,newNode);
+		if(compare == 1)
+			_genericAddRedBlackTreeForList(&(*rootPtr)->left,newNode,compareFile);
+		else if(compare == -1)
+			_genericAddRedBlackTreeForList(&(*rootPtr)->right,newNode,compareFile);
+		
+		if(((*rootPtr)->left!=NULL) && (*rootPtr)->left->left !=NULL){
+			if((*rootPtr)->left->color == 'r' && (*rootPtr)->left->left->color == 'r'){
+				rightRotate(rootPtr);
+				(*rootPtr)->right->color = 'r';
+			}
+		}else if(((*rootPtr)->left!=NULL) && (*rootPtr)->left->right !=NULL){
+			if((*rootPtr)->left->color == 'r' && (*rootPtr)->left->right->color == 'r'){
+				leftRightRotate(rootPtr);
+				(*rootPtr)->right->color = 'r';
+			}
+		}else if(((*rootPtr)->right!=NULL) && (*rootPtr)->right->right != NULL){
+			if((*rootPtr)->right->color == 'r' && (*rootPtr)->right->right->color == 'r'){
+				leftRotate(rootPtr);
+				(*rootPtr)->left->color = 'r';
+			}
+		}else if(((*rootPtr)->right!=NULL) && (*rootPtr)->right->left !=NULL){
+			if((*rootPtr)->right->color == 'r' && (*rootPtr)->right->left->color == 'r'){
+				rightLeftRotate(rootPtr);
+				(*rootPtr)->left->color = 'r';
+			}
+		}
+		if((*rootPtr)->right !=NULL && (*rootPtr)->right->left !=NULL){
+			if((*rootPtr)->right->color == 'r' && (*rootPtr)->right->left->color == 'r'){
+				(*rootPtr)->right->color = 'b';
+				(*rootPtr)->right->left->color = 'r';
+				(*rootPtr)->right->right->color = 'r';
+			}
+		}
+		
+	}
+}
+
 /*********************************************************************
 * This function will add a new file info into the red black tree
 *

@@ -12,6 +12,7 @@
 #include "compareJSON.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
+#include "LinkedList.h"
 #include "RedBlackTree.h"
 #include "CException.h"
 
@@ -213,4 +214,6 @@ void test_scanFolder(void){
 	Node *root = NULL;
 	Node *dupRoot = NULL;
 	scanFolder(root,dupRoot,"TestJSON");
+	//TEST_ASSERT_NOT_NULL(root);
+	//TEST_ASSERT_NULL(dupRoot);
 }

@@ -19,6 +19,56 @@
 void setUp(void){}
 void tearDown(void){}
 
+void test_compareList_should_compare_2_linkedlist_size_and_return_1(void){
+	int compare = 0;
+	FileInfo info1 = {.fileSize = 3016};
+	FileInfo info2 = {.fileSize = 1016};
+	Element *ele1 = createElement(&info1);
+	Element *ele2 = createElement(&info2);
+	LinkedList *list1 = createLinkedList();
+	LinkedList *list2 = createLinkedList();
+	listAddFirst(ele1,list1);
+	listAddFirst(ele2,list2);
+	Node *node1 = createNode(list1);
+	Node *node2 = createNode(list2);
+	
+	compare = compareList(&node1,node2);
+	 
+	TEST_ASSERT_EQUAL(1,compare);
+	 
+	free(ele1);
+	free(ele2);
+	free(list1);
+	free(list2);
+	free(node1);
+	free(node2);
+}
+
+void test_compareList_should_compare_2_linkedlist_size_and_return_negative_1(void){
+	int compare = 0;
+	FileInfo info1 = {.fileSize = 3016};
+	FileInfo info2 = {.fileSize = 9016};
+	Element *ele1 = createElement(&info1);
+	Element *ele2 = createElement(&info2);
+	LinkedList *list1 = createLinkedList();
+	LinkedList *list2 = createLinkedList();
+	listAddFirst(ele1,list1);
+	listAddFirst(ele2,list2);
+	Node *node1 = createNode(list1);
+	Node *node2 = createNode(list2);
+	
+	compare = compareList(&node1,node2);
+	 
+	TEST_ASSERT_EQUAL(-1,compare);
+	 
+	free(ele1);
+	free(ele2);
+	free(list1);
+	free(list2);
+	free(node1);
+	free(node2);
+}
+
 void test_compareFileSize_should_compare_2_files_size_and_return_1(void){
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 3016};

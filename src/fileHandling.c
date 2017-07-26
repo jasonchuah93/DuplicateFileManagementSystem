@@ -22,9 +22,11 @@ void scanFolder(Node *nodeRoot, Node *duplicatedFileRoot,const char *folderName)
 	char *jsonPath = NULL, *errNodeFilePath = NULL, *targetNodeFilePath = NULL;
 	json_t *folderObj = NULL;
 	json_t *fileArray = NULL;
-	Element *fileElement = NULL;
-	Node *fileNode = NULL;
+	Element *fileElementFromErr = NULL, *duplicatedFileEle = NULL;
+	Node *fileNode = NULL, *listNode = NULL;
 	Error *errNode = NULL;
+	FileInfo *information = NULL;
+	LinkedList *duplicatedList = NULL; 
 	
 	folderObj = createJsonObjectFrmFolder(folderName);
 	fileArray = getJsonArrayFrmFolderObj(folderObj);
@@ -39,17 +41,28 @@ void scanFolder(Node *nodeRoot, Node *duplicatedFileRoot,const char *folderName)
 	}
 	arraySize = json_array_size(fileArray);
 	for(i=0;i<arraySize;i=i+1){
-		FileInfo *information = createInfo();
+		information = createInfo();
 		getFileInfoFrmJson(fileArray,information,i);
 		fileNode = createNode(information);
-		//printf("node name:%s\n",getName(fileNode));
 		Try{
 			addFileNode(&nodeRoot,fileNode);
+			//printf("fileNode: %s\n",getName(nodeRoot));
 		}Catch(errNode){
-			printf("node root name:%s\n",getNameInErr(errNode));
-			printf("node file name:%s\n",getName(fileNode));
+			errNodeFilePath = addFolderPathToFilePath(folderName,getNameInErr(errNode));
+			targetNodeFilePath = addFolderPathToFilePath(folderName,getName(fileNode));
+			cmpFileByte = compareFileByte(errNodeFilePath,targetNodeFilePath);
+			if(cmpFileByte == 0){
+				fileElementFromErr = createElement(((Node*)errNode->data)->data);
+				duplicatedFileEle = createElement(fileNode->data);
+				duplicatedList = createLinkedList();
+				listAddFirst(fileElementFromErr,duplicatedList);
+				listAddFirst(duplicatedFileEle,duplicatedList);
+				listNode = createNode(duplicatedList);
+				addFileNodeForList(&duplicatedFileRoot,listNode);
+			}
 		}
 	}
+	printf("fileNode: %s\n",getName(nodeRoot));
 }
 
 /*************************************************************

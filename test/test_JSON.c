@@ -13,6 +13,7 @@
 #include "Rotation.h"
 #include "RestructureNode.h"
 #include "RedBlackTree.h"
+#include "LinkedList.h"
 #include "CException.h"
 
 void setUp(void){}

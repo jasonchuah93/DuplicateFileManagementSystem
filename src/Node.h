@@ -5,6 +5,8 @@
 #define getSize(node) ((FileInfo*)((Node*)node)->data)->fileSize
 #define getCRC(node) ((FileInfo*)((Node*)node)->data)->fileCRC32Value
 
+#define getSizefromList(node) ((FileInfo*)((LinkedList*)((Node*)node)->data)->head->data)->fileSize
+
 typedef struct Node Node;
 struct Node {
  Node *left;
@@ -14,5 +16,6 @@ struct Node {
 };
 
 Node *createNode(void *fileInfo);
+Node *initNode();
 
 #endif // Node_H

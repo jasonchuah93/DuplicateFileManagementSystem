@@ -23,3 +23,12 @@ Node *createNode(void *fileInfo){
 	node->data = fileInfo;
 	return node;
 }
+
+Node *initNode(){
+	Node *node = malloc(sizeof(Node));
+	//node->left  = NULL;
+	//node->right = NULL;
+	//node->color = 'r';
+	//node->data = NULL;
+	return node;
+}
