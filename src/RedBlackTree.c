@@ -25,7 +25,7 @@ void genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareLis
     (*rootPtr)->color='b';
 }
 
-void _genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareFile)(Node **rootPtr,Node *newNode)){
+void _genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareFileList)(Node **rootPtr,Node *newNode)){
 	int compare = 0;
 	Error *duplicatedNode = NULL;
 	if(*rootPtr == NULL){
@@ -35,12 +35,14 @@ void _genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareFi
 		if ((*rootPtr)->left!=NULL && (*rootPtr)->right!=NULL){
 			handleColor(rootPtr,newNode);
 		}
-		compare = compareFile(rootPtr,newNode);
-		if(compare == 1)
-			_genericAddRedBlackTreeForList(&(*rootPtr)->left,newNode,compareFile);
-		else if(compare == -1)
-			_genericAddRedBlackTreeForList(&(*rootPtr)->right,newNode,compareFile);
-		
+		compare = compareFileList(rootPtr,newNode);
+		//printf("root: %s\n",((FileInfo*)((LinkedList*)((Node*)*rootPtr)->data)->tail->data)->fileName);
+		if(compare == 1){
+			//printf("come in here\n");
+			_genericAddRedBlackTreeForList(&(*rootPtr)->left,newNode,compareFileList);
+		}else if(compare == -1){
+			_genericAddRedBlackTreeForList(&(*rootPtr)->right,newNode,compareFileList);
+		}
 		if(((*rootPtr)->left!=NULL) && (*rootPtr)->left->left !=NULL){
 			if((*rootPtr)->left->color == 'r' && (*rootPtr)->left->left->color == 'r'){
 				rightRotate(rootPtr);

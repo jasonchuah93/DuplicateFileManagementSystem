@@ -210,10 +210,25 @@ void test_createJSONFilePath_should_create_a_json_file_path(void){
 	TEST_ASSERT_EQUAL_STRING("TestJSON/fileInformation.json",test);
 }
 
-void test_scanFolder(void){
+/************************************************************
+    1st RBT                    2nd RBT
+       |                          |
+	 Test 8                    Test 88
+     /     \                    /    \
+  Test 2 Test 9	             Test 4  Test 99
+ *************************************************************/	  
+void test_scanFolder_scan_folder_TestJSON(void){
 	Node *root = NULL;
 	Node *dupRoot = NULL;
-	scanFolder(root,dupRoot,"TestJSON");
-	//TEST_ASSERT_NOT_NULL(root);
-	//TEST_ASSERT_NULL(dupRoot);
+	scanFolder(&root,&dupRoot,"TestJSON");
+	
+	TEST_ASSERT_NOT_NULL(root);
+	TEST_ASSERT_NOT_NULL(dupRoot);
+	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getName(root));
+	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",getName(root->left));
+	TEST_ASSERT_EQUAL_STRING("Testing 9.jpg",getName(root->right));
+	TEST_ASSERT_EQUAL_STRING("Testing 88.pdf",getNamefromList(dupRoot));
+	TEST_ASSERT_EQUAL_STRING("Testing 4.xlsx",getNamefromList(dupRoot->left));
+	TEST_ASSERT_EQUAL_STRING("Testing 99.jpg",getNamefromList(dupRoot->right));
+	
 }

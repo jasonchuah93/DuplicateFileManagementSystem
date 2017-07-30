@@ -7,16 +7,13 @@
 #include "LinkedList.h"
 #include "compareJSON.h"
 
-
-
 int compareList(Node **sizeFromRBT, Node *sizeToCompare){
 	unsigned long long int rootSize = getSizefromList(*sizeFromRBT);
 	unsigned long long int targetSize = getSizefromList(sizeToCompare);
 	if(rootSize > targetSize)
 		return 1;
-	else
+	else if(rootSize < targetSize)
 		return -1;
-	
 }
 
 /******************************************************************

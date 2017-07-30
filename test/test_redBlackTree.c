@@ -150,3 +150,37 @@ void test_addFile_test_4_node_with_same_size_and_same_crc(void){
 	free(fileNode3);
 	free(fileNode4);
 }
+
+void test_addFileNodeForList_should_add_node_into_RBT(void){
+	Node *testRoot = NULL;
+	FileInfo info1 = {.fileSize = 100, .fileCRC32Value = 111111111};
+	FileInfo info2 = {.fileSize = 200, .fileCRC32Value = 121111111};
+	FileInfo info3 = {.fileSize = 300, .fileCRC32Value = 121111111};
+	FileInfo info4 = {.fileSize = 100, .fileCRC32Value = 111111111};
+	FileInfo info5 = {.fileSize = 200, .fileCRC32Value = 121111111};
+	FileInfo info6 = {.fileSize = 300, .fileCRC32Value = 121111111};
+	Element *ele1 = createElement(&info1);
+	Element *ele2 = createElement(&info2);
+	Element *ele3 = createElement(&info3);
+	Element *ele4 = createElement(&info4);
+	Element *ele5 = createElement(&info5);
+	Element *ele6 = createElement(&info6);
+	LinkedList *list1 = createLinkedList();
+	LinkedList *list2 = createLinkedList();
+	LinkedList *list3 = createLinkedList();
+	listAddFirst(ele1,list1);
+	listAddFirst(ele2,list2);
+	listAddFirst(ele3,list3);
+	listAddFirst(ele4,list1);
+	listAddFirst(ele5,list2);
+	listAddFirst(ele6,list3);
+	Node *node1 = createNode(list1);
+	Node *node2 = createNode(list2);
+	Node *node3 = createNode(list3);
+	addFileNodeForList(&testRoot,node1);
+	addFileNodeForList(&testRoot,node2);
+	addFileNodeForList(&testRoot,node3);
+	
+	TEST_ASSERT_EQUAL_PTR(node2,testRoot);
+	TEST_ASSERT_EQUAL_NODE(node1,node3,'b',testRoot);
+}

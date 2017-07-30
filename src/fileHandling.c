@@ -16,13 +16,13 @@ struct tm t;
 static char* lastFile[MaxFile] = {0};
 static int lastFileCount;
 
-void scanFolder(Node *nodeRoot, Node *duplicatedFileRoot,const char *folderName){
+void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderName){
 	int cmpFileByte = 0, i = 0;
 	size_t arraySize = 0;
 	char *jsonPath = NULL, *errNodeFilePath = NULL, *targetNodeFilePath = NULL;
 	json_t *folderObj = NULL;
 	json_t *fileArray = NULL;
-	Element *fileElementFromErr = NULL, *duplicatedFileEle = NULL;
+	Element *fileElementFromErr = NULL, *duplicatedFileEle = NULL, *previousEleFromErr = NULL;
 	Node *fileNode = NULL, *listNode = NULL;
 	Error *errNode = NULL;
 	FileInfo *information = NULL;
@@ -45,7 +45,7 @@ void scanFolder(Node *nodeRoot, Node *duplicatedFileRoot,const char *folderName)
 		getFileInfoFrmJson(fileArray,information,i);
 		fileNode = createNode(information);
 		Try{
-			addFileNode(&nodeRoot,fileNode);
+			addFileNode(nodeRoot,fileNode);
 			//printf("fileNode: %s\n",getName(nodeRoot));
 		}Catch(errNode){
 			errNodeFilePath = addFolderPathToFilePath(folderName,getNameInErr(errNode));
@@ -53,16 +53,46 @@ void scanFolder(Node *nodeRoot, Node *duplicatedFileRoot,const char *folderName)
 			cmpFileByte = compareFileByte(errNodeFilePath,targetNodeFilePath);
 			if(cmpFileByte == 0){
 				fileElementFromErr = createElement(((Node*)errNode->data)->data);
-				duplicatedFileEle = createElement(fileNode->data);
-				duplicatedList = createLinkedList();
-				listAddFirst(fileElementFromErr,duplicatedList);
-				listAddFirst(duplicatedFileEle,duplicatedList);
-				listNode = createNode(duplicatedList);
-				addFileNodeForList(&duplicatedFileRoot,listNode);
+				//printf("current: %s\n",((FileInfo*)fileElementFromErr->data)->fileName);
+				if(fileElementFromErr!=NULL && previousEleFromErr == NULL){
+					previousEleFromErr = fileElementFromErr;
+					duplicatedFileEle = createElement(fileNode->data);
+					duplicatedList = createLinkedList();
+					if(duplicatedList->head == NULL){
+						listAddFirst(fileElementFromErr,duplicatedList);
+						listAddFirst(duplicatedFileEle,duplicatedList);
+						listNode = createNode(duplicatedList);
+						if(*duplicatedFileRoot == NULL){
+							addFileNodeForList(duplicatedFileRoot,listNode);
+							//printf("ready to add node in 2nd tree\n");
+						}
+					}
+					//printf("not null\n");
+				}else if(previousEleFromErr != NULL){
+					if(((FileInfo*)previousEleFromErr->data)->fileName == ((FileInfo*)fileElementFromErr->data)->fileName){
+						duplicatedFileEle = createElement(fileNode->data);
+						listAddFirst(duplicatedFileEle,duplicatedList);
+						listNode = createNode(duplicatedList);
+						//printf("list data:%s\n",((FileInfo*)duplicatedList->head->data)->fileName);
+						//printf("list len: %d\n",duplicatedList->length);
+						//printf("next: %s\n",((FileInfo*)duplicatedFileEle->data)->fileName);
+					}else{
+						duplicatedFileEle = createElement(fileNode->data);
+						duplicatedList = createLinkedList();
+						if(duplicatedList->head == NULL){
+							listAddFirst(fileElementFromErr,duplicatedList);
+							listAddFirst(duplicatedFileEle,duplicatedList);
+							listNode = createNode(duplicatedList);
+							addFileNodeForList(duplicatedFileRoot,listNode);
+							//printf("list len 2: %d\n",duplicatedList->length);
+							//printf("list data:%s\n",((FileInfo*)duplicatedList->head->data)->fileName);
+						}
+					}
+				}
 			}
 		}
 	}
-	printf("fileNode: %s\n",getName(nodeRoot));
+	//printf("dup root: %s\n",((FileInfo*)((LinkedList*)((Node*)*duplicatedFileRoot)->left->data)->head->data)->fileName);
 }
 
 /*************************************************************

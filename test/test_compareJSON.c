@@ -33,7 +33,6 @@ void test_compareList_should_compare_2_linkedlist_size_and_return_1(void){
 	Node *node2 = createNode(list2);
 	
 	compare = compareList(&node1,node2);
-	 
 	TEST_ASSERT_EQUAL(1,compare);
 	 
 	free(ele1);

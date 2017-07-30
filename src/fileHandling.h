@@ -15,7 +15,7 @@
 #define FALSE 0
 #define MaxFile 10000
 
-void scanFolder(Node *root, Node *duplicatedRoot,const char *folderName);
+void scanFolder(Node **root, Node **duplicatedRoot,const char *folderName);
 void traverseFolder(Node *duplicatedFileRoot,char *folderPath);
 void _traverseFolder(Node *root,Node *duplicatedRoot,char *folderPath);
 char *createJSONFilePath(const char *folderPath);

@@ -4,7 +4,7 @@
 #include "Node.h"
 
 #define addFileNode(rootPtr,newNode) genericAddRedBlackTree(rootPtr,newNode,compareFileSize)
-#define addFileNodeForList(rootPtr,newNode) genericAddRedBlackTreeForList(rootPtr,newNode,compareFileSize)
+#define addFileNodeForList(rootPtr,newNode) genericAddRedBlackTreeForList(rootPtr,newNode,compareList)
 #define removeFileNode(rootPtr,delNode) genericDelRedBlackTree(rootPtr,delNode,compareFileSize)
 
 
