@@ -73,6 +73,32 @@ void test_checkJsonFile_should_return_0_if_folder_contain_json_file(void){
 	TEST_ASSERT_EQUAL(0,check);
 }
 
+void test_checkFileLaterThanJson_should_return_0_if_json_file_is_latest_inside_folder(void){
+	int check = 1;
+	check = checkFileLaterThanJson("TestJSON","fileInformation.json");
+	TEST_ASSERT_EQUAL(0,check);
+}
+
+void test_checkFileLaterThanJson_should_return_1_if_json_file_is_not_latest_inside_folder(void){
+	int check = 0;
+	check = checkFileLaterThanJson("forTesting/test folder","fileInformation.json");
+	TEST_ASSERT_EQUAL(1,check);
+}
+
+void test_load_existing_json_file_to_read_the_object_inside(void){
+	json_t *folderObj = NULL;
+	json_t *fileArray = NULL;
+	size_t arraySize = 0;
+	json_error_t jError;
+	folderObj = json_load_file("TestJSON/fileInformation.json",0,&jError);
+	
+	if(json_is_object(folderObj)){
+		fileArray = getJsonArrayFrmFolderObj(folderObj);
+		arraySize = json_array_size(fileArray);
+		printf("array size:%d\n",arraySize);
+	}
+}
+
 /*
 These test will delete JSON file
 void test_delJSON_should_delete_JSON_type_file_inside_folder_and_return_1(void){

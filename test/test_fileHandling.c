@@ -188,9 +188,9 @@ void test_compareDateTime_should_return_0_if_the_file_dateTime_is_latest_than_in
 }
 
 //Test for listFileNumber
-void test_listFileNumber_should_list_the_total_number_of_file_in_folder(void){
+void test_checkFileNumber_should_list_the_total_number_of_file_in_folder(void){
 	int fileNumber=0;
-	fileNumber = listFileNumber("forTesting"); //Number of file in this folder is 12
+	fileNumber = checkFileNumber("forTesting"); //Number of file in this folder is 12
 	TEST_ASSERT_EQUAL(fileNumber,12);
 }
 
@@ -230,5 +230,26 @@ void test_scanFolder_scan_folder_TestJSON(void){
 	TEST_ASSERT_EQUAL_STRING("Testing 88.pdf",getNamefromList(dupRoot));
 	TEST_ASSERT_EQUAL_STRING("Testing 4.xlsx",getNamefromList(dupRoot->left));
 	TEST_ASSERT_EQUAL_STRING("Testing 99.jpg",getNamefromList(dupRoot->right));
-	
+}
+
+void test_scanFolder_scan_folder_forTesting(void){
+	Node *root = NULL;
+	Node *dupRoot = NULL;
+	scanFolder(&root,&dupRoot,"forTesting");
+}
+
+void test_traverseFolder_should_traverse_main_folder(void){
+	Node *root = NULL;
+	Node *dupRoot = NULL;
+	_traverseFolder(&root,&dupRoot,"TestJSON");
+	TEST_ASSERT_NOT_NULL(root);
+	TEST_ASSERT_NOT_NULL(dupRoot);
+	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getName(root));
+	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",getName(root->left));
+	TEST_ASSERT_EQUAL_STRING("Testing 9.jpg",getName(root->right));
+	TEST_ASSERT_EQUAL_STRING("sysmem.c",getName(root->left->left));
+	TEST_ASSERT_EQUAL_STRING("Testing 88.pdf",getNamefromList(dupRoot));
+	TEST_ASSERT_EQUAL_STRING("Testing 4.xlsx",getNamefromList(dupRoot->left));
+	TEST_ASSERT_EQUAL_STRING("Testing 99.jpg",getNamefromList(dupRoot->right));
+	TEST_ASSERT_EQUAL_STRING("sysmem2.c",getNamefromList(dupRoot->left->left));
 }

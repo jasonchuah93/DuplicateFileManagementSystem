@@ -129,6 +129,31 @@ int checkJsonFile(const char *folder, const char *jsonFile){
 	return -1;
 }
 
+int checkFileLaterThanJson(const char *folder,char *jsonFile){
+	unsigned long int currentSec = 0, previousSec = 0;
+	DIR *dPtr = getFolderPtr(folder);
+	char dateTime[100] = {0}, filePath[200] = {0}, newFilePath[200] = {0};
+	
+	while((dir = readdir(dPtr))!=NULL){
+		if(dir->d_type == DT_REG){
+			sprintf(filePath,"%s/%s",folder,dir->d_name);
+			getFileDateTime(dateTime,filePath);
+			currentSec = convertEpoch(dateTime);
+			if(currentSec > previousSec){
+				strcpy(newFilePath,dir->d_name);
+				previousSec = currentSec;
+			}
+		}
+	}
+	if(strcmp(newFilePath,jsonFile)==0){
+		//printf("JSON File is latest at %s\n",folder);
+		return 0 ;
+	}else
+		return 1;
+	
+	closedir(dPtr);
+}
+
 int checkJSON(const char* path){
 	int cmp = 0;
 	char *jsonExt = NULL;

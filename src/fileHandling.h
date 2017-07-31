@@ -16,8 +16,9 @@
 #define MaxFile 10000
 
 void scanFolder(Node **root, Node **duplicatedRoot,const char *folderName);
+char *changeDir(char *curFolder, char *nextFolder);
 void traverseFolder(Node *duplicatedFileRoot,char *folderPath);
-void _traverseFolder(Node *root,Node *duplicatedRoot,char *folderPath);
+void _traverseFolder(Node **root,Node **duplicatedRoot,char *folderPath);
 char *createJSONFilePath(const char *folderPath);
 char *addFolderPathToFilePath(const char *folderName,const char *fileName);
 int checkFile(const char *path);
@@ -25,7 +26,7 @@ int checkFolder(const char *path);
 FILE *getFilePtr(const char *path);
 DIR *getFolderPtr(const char *path);
 int getFileSize(const char *path);
-int listFileNumber(const char *path);
+int checkFileNumber(const char *path);
 int listSubFolderNumber(const char *path);
 char *subFolder(const char *path);
 int compareDateTime(char *dateTime,const char *path);
