@@ -1,4 +1,5 @@
 #include "unity.h"
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -213,13 +214,14 @@ void test_createJSONFilePath_should_create_a_json_file_path(void){
 /************************************************************
     1st RBT                    2nd RBT
        |                          |
-	 Test 8                    Test 88
+	 Test 8                    Test 88--->Test 8   Test->
      /     \                    /    \
   Test 2 Test 9	             Test 4  Test 99
  *************************************************************/	  
-void test_scanFolder_scan_folder_TestJSON(void){
+void xtest_scanFolder_scan_folder_TestJSON(void){
 	Node *root = NULL;
 	Node *dupRoot = NULL;
+	printf("test this\n");
 	scanFolder(&root,&dupRoot,"TestJSON");
 	
 	TEST_ASSERT_NOT_NULL(root);
@@ -228,17 +230,19 @@ void test_scanFolder_scan_folder_TestJSON(void){
 	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",getName(root->left));
 	TEST_ASSERT_EQUAL_STRING("Testing 9.jpg",getName(root->right));
 	TEST_ASSERT_EQUAL_STRING("Testing 88.pdf",getNamefromList(dupRoot));
+	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",((FileInfo*)((LinkedList*)((Node*)dupRoot)->data)->head->next->data)->fileName);
 	TEST_ASSERT_EQUAL_STRING("Testing 4.xlsx",getNamefromList(dupRoot->left));
 	TEST_ASSERT_EQUAL_STRING("Testing 99.jpg",getNamefromList(dupRoot->right));
+	
 }
 
-void test_scanFolder_scan_folder_forTesting(void){
+void xtest_scanFolder_scan_folder_forTesting(void){
 	Node *root = NULL;
 	Node *dupRoot = NULL;
-	scanFolder(&root,&dupRoot,"forTesting");
+	scanFolder(&root,&dupRoot,"TestJSON2");
 }
 
-void test_traverseFolder_should_traverse_main_folder(void){
+void xtest_traverseFolder_with_3_argument_should_traverse_main_folder(void){
 	Node *root = NULL;
 	Node *dupRoot = NULL;
 	_traverseFolder(&root,&dupRoot,"TestJSON");
@@ -252,4 +256,56 @@ void test_traverseFolder_should_traverse_main_folder(void){
 	TEST_ASSERT_EQUAL_STRING("Testing 4.xlsx",getNamefromList(dupRoot->left));
 	TEST_ASSERT_EQUAL_STRING("Testing 99.jpg",getNamefromList(dupRoot->right));
 	TEST_ASSERT_EQUAL_STRING("sysmem2.c",getNamefromList(dupRoot->left->left));
+}
+
+void xtest_traverseFolder_with_2_argument_should_traverse_main_folder(void){
+	Node *root = NULL;
+	Node *dupRoot = NULL;
+}
+
+void test_createFileForTesting_should_create_a_txt_file_with_random_number_inside(void){
+	char *testFile = createFileForTesting("FolderForTesting/TestFileA.txt",50);
+	TEST_ASSERT_NOT_NULL(testFile);
+}
+
+void test_duplicateFileForTesting_should_throw_error_if_file_to_duplicate_not_exist(void){
+	Error *e = NULL;
+	char *fileToDuplicate = NULL;
+	Try{
+		duplicateFileForTesting(fileToDuplicate,"1");
+		TEST_FAIL_MESSAGE("File to duplicate not exist\n");
+	}Catch(e)
+		TEST_ASSERT_EQUAL(e,ERR_FILE_NOT_OPEN);
+}
+	
+void test_duplicateFileForTesting_should_copy_the_content_of_input_file(void){
+	char *testFile = createFileForTesting("FolderForTesting/TestFileB.txt",100);
+	char *dupFile = duplicateFileForTesting(testFile,"1");
+	TEST_ASSERT_NOT_NULL(testFile);
+	TEST_ASSERT_NOT_NULL(dupFile);
+}
+
+void test_deleteFile_should_throw_error_if_file_to_delete_not_exist(void){
+	Error *e = NULL;
+	char *fileToDelete = NULL;
+	Try{
+		deleteFile(fileToDelete);
+		TEST_FAIL_MESSAGE("File to delete not exist\n");
+	}Catch(e)
+		TEST_ASSERT_EQUAL(e,ERR_FILE_NO_EXIST);
+}
+
+void test_deleteFile_should_delete_1_file_inside_folder(void){
+	char *testFile = createFileForTesting("FolderForTesting/TestFileC.txt",110);
+	deleteFile(testFile);
+}
+
+void test_deleteAllContentInFolder_should_throw_error_if_inside_is_empty(void){
+	Error *e = NULL;
+	Try{
+		deleteAllContentInFolder("TestJSON2");
+		TEST_FAIL_MESSAGE("File to delete not exist\n");
+	}Catch(e){
+		TEST_ASSERT_EQUAL(e,ERR_EMPTY_CONTENT);
+	}
 }

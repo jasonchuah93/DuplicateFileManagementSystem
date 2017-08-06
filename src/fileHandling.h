@@ -1,6 +1,7 @@
 #ifndef fileHandling_H
 #define fileHandling_H
 
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,9 +16,13 @@
 #define FALSE 0
 #define MaxFile 10000
 
+void deleteAllContentInFolder(const char *folderPath);
+void deleteFile(char *filePathToDelete);
+char *duplicateFileForTesting(char *fileToDuplicate, char *newName);
+char *createFileForTesting(char *filePath,int size);
 void scanFolder(Node **root, Node **duplicatedRoot,const char *folderName);
 char *changeDir(char *curFolder, char *nextFolder);
-void traverseFolder(Node *duplicatedFileRoot,char *folderPath);
+void traverseFolder(Node **duplicatedFileRoot,char *folderPath);
 void _traverseFolder(Node **root,Node **duplicatedRoot,char *folderPath);
 char *createJSONFilePath(const char *folderPath);
 char *addFolderPathToFilePath(const char *folderName,const char *fileName);
@@ -28,8 +33,9 @@ DIR *getFolderPtr(const char *path);
 int getFileSize(const char *path);
 int checkFileNumber(const char *path);
 int listSubFolderNumber(const char *path);
-char *subFolder(const char *path);
+char *getSubFolderPath(const char *path);
 int compareDateTime(char *dateTime,const char *path);
+int getFileEpoch(const char *filePath);
 int getFileDateTime(char *dateTime,const char *path);
 int convertEpoch(char *fileDateTime);
 

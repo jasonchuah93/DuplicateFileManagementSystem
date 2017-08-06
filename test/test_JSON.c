@@ -72,7 +72,7 @@ void test_checkJsonFile_should_return_0_if_folder_contain_json_file(void){
 	check = checkJsonFile("forTesting","fileInformation.json");
 	TEST_ASSERT_EQUAL(0,check);
 }
-
+/*
 void test_checkFileLaterThanJson_should_return_0_if_json_file_is_latest_inside_folder(void){
 	int check = 1;
 	check = checkFileLaterThanJson("TestJSON","fileInformation.json");
@@ -84,7 +84,7 @@ void test_checkFileLaterThanJson_should_return_1_if_json_file_is_not_latest_insi
 	check = checkFileLaterThanJson("forTesting/test folder","fileInformation.json");
 	TEST_ASSERT_EQUAL(1,check);
 }
-
+*/
 void test_load_existing_json_file_to_read_the_object_inside(void){
 	json_t *folderObj = NULL;
 	json_t *fileArray = NULL;
@@ -95,8 +95,18 @@ void test_load_existing_json_file_to_read_the_object_inside(void){
 	if(json_is_object(folderObj)){
 		fileArray = getJsonArrayFrmFolderObj(folderObj);
 		arraySize = json_array_size(fileArray);
-		printf("array size:%d\n",arraySize);
+		//printf("array size:%d\n",arraySize);
 	}
+}
+
+void xtest_updateJson_should_check_file_date_time_compare_to_json_file(void){
+	size_t arraySize = 0;
+	json_t *obj = NULL, *fileArray = NULL;
+	obj = updateJson("TestJSON2","fileInformation.json");
+	fileArray = getJsonArrayFrmFolderObj(obj);
+	arraySize = json_array_size(fileArray);
+	TEST_ASSERT_NOT_NULL(obj);
+	//TEST_ASSERT_EQUAL(3,arraySize);
 }
 
 /*

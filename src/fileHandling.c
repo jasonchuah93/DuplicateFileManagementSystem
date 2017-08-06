@@ -16,6 +16,74 @@ struct tm t;
 static char* lastFile[MaxFile] = {0};
 static int lastFileCount;
 
+void deleteAllContentInFolder(const char *folderPath){
+	int i=0,check = 0;
+	char filePath[100] = {0}, subPath[100] = {0};
+	char *subFolderPath = NULL;
+	DIR *dPtr = opendir(folderPath);
+	while((dir=readdir(dPtr))!=NULL){
+		if(dir->d_type == DT_REG){
+			sprintf(filePath,"%s/%s",folderPath,dir->d_name);
+			remove(filePath);
+		}else if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+			sprintf(subPath,"%s/%s",folderPath,dir->d_name);
+			deleteAllContentInFolder(subPath);
+			rmdir(subPath);
+		}
+	}
+	if((dir=readdir(dPtr))==NULL){
+		Throw((Error*)ERR_EMPTY_CONTENT);
+	}
+	closedir(dPtr);
+}
+
+void deleteFile(char *filePathToDelete){
+	
+	if(filePathToDelete == NULL)
+		Throw((Error*)ERR_FILE_NO_EXIST);
+	else
+		remove(filePathToDelete);
+}
+
+char *duplicateFileForTesting(char *fileToDuplicate, char *number){
+	char duplicateFileArray[100] = {0}, numArray[50] = {0}, tempNameArray[50] = {0}, ch;
+	char *tempName = NULL, *duplicateFilePath = NULL;
+	int bytes = 0;
+	FILE *fPtr = fopen(fileToDuplicate,"r+");
+	FILE *dupFPtr = NULL;
+	if(fPtr == NULL)
+		Throw((Error*)ERR_FILE_NOT_OPEN);
+	else{
+		tempName = strrchr(fileToDuplicate,'.');
+		strcpy(numArray,number);
+		strcpy(tempNameArray,tempName);
+		strcat(numArray,tempNameArray);
+		strncpy(duplicateFileArray,fileToDuplicate,26);
+		strcat(duplicateFileArray,numArray);
+		duplicateFilePath = (char *)malloc(strlen(duplicateFileArray)+1);
+		strcpy(duplicateFilePath,duplicateFileArray);
+		dupFPtr = fopen(duplicateFilePath,"w");
+		while((ch = fgetc(fPtr))!=EOF)
+			fputc(ch,dupFPtr);
+	}
+	free(duplicateFilePath);
+	fclose(fPtr);
+	fclose(dupFPtr);
+	return duplicateFilePath;
+}
+
+char *createFileForTesting(char *filePath,int size){
+	int counter = 0;
+	time_t t;
+	FILE *fPtr = fopen(filePath,"w+");
+	srand((unsigned) time(&t));
+	for(counter=0;counter<size;counter++){
+		fprintf(fPtr,"%d\n",rand()%1000);
+	}
+	fclose(fPtr);
+	return filePath;
+}
+
 void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderName){
 	int cmpFileByte = 0, i = 0, numOfFiles = 0;
 	size_t arraySize = 0;
@@ -30,7 +98,9 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 	FileInfo *information = NULL;
 	LinkedList *duplicatedList = NULL; 
 	//Check is there any json file inside the folder
+	
 	if(checkJsonFile(folderName,"fileInformation.json")==0){
+	//Updatejson call here
 		if(checkFileLaterThanJson(folderName,"fileInformation.json")==0){
 			fullJsonPath = addFolderPathToFilePath(folderName,"fileInformation.json");
 			existingFolderObj = json_load_file(fullJsonPath,0,&jError);
@@ -54,8 +124,9 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 	}else{
 		folderObj = createJsonObjectFrmFolder(folderName);
 		fileArray = getJsonArrayFrmFolderObj(folderObj);
-		jsonPath = createJSONFilePath(folderName);
-		writeJsonIntoFile(jsonPath,folderObj);
+		arraySize = json_array_size(fileArray);
+		printf("arraysize: %d\n",arraySize);
+		
 	}
 	for(i=0;i<arraySize;i=i+1){
 		information = createInfo();
@@ -108,6 +179,8 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 			}
 		}
 	}
+	jsonPath = createJSONFilePath(folderName);
+	writeJsonIntoFile(jsonPath,folderObj);
 }
 
 /*************************************************************
@@ -119,9 +192,9 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 *			
 *	Destroy: none
 **************************************************************/
-void traverseFolder(Node *duplicatedFileRoot,char *folderPath){
-	Node *root = NULL;
-	//_traverseFolder(root,duplicatedFileRoot,folderPath);
+void traverseFolder(Node **duplicatedFileRoot,char *folderPath){
+	Node **root = NULL;
+	_traverseFolder(root,duplicatedFileRoot,folderPath);
 }
 
 void _traverseFolder(Node **root,Node **duplicatedRoot,char *folderPath){
@@ -130,7 +203,7 @@ void _traverseFolder(Node **root,Node **duplicatedRoot,char *folderPath){
 	scanFolder(root,duplicatedRoot,folderPath);
 	while((dir = readdir(d)) != NULL){
 		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
-			subFolderPath = subFolder(folderPath);
+			subFolderPath = getSubFolderPath(folderPath);
 			scanFolder(root,duplicatedRoot,subFolderPath);
 			printf("subfolder: %s\n",subFolderPath);
 		}
@@ -296,7 +369,7 @@ int listSubFolderNumber(const char *path){
 *			
 *	Destroy: none
 ****************************************************************************/
-char *subFolder(const char *path){
+char *getSubFolderPath(const char *path){
 	static char newPath[500];
 	strcpy(newPath,path);//Copy the path to a new path 
 	strcat(newPath,"/");//Add / right after the path name
@@ -328,6 +401,24 @@ int compareDateTime(char *dateTime,const char *path){
 		return -1;
 	else if(epoch1 == epoch2)
 		return 0;
+}
+
+/*************************************************************
+* Call getFileDateTime & convertEpoch into this function
+*
+*	Input: 	 dateTime       Initially is NULL
+*			 filepath		the path of the file we want to get the time
+
+*	Output:  epochSecs		date and time of the file 
+*			
+*	Destroy: none
+**************************************************************/
+int getFileEpoch(const char *filePath){
+	unsigned long int epochSecs = 0;
+	char dateTime[50] = {0};
+	getFileDateTime(dateTime,filePath);
+	epochSecs = convertEpoch(dateTime);
+	return epochSecs;
 }
 
 /*************************************************************

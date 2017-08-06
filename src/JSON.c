@@ -27,6 +27,82 @@ FileInfo *createInfo(){
 	return info;
 }
 
+json_t *updateJson(const char *folderPath, const char *jsonFile){
+	//Initialize
+	int i = 0, numOfFiles = 0;
+	char *jsonPath = NULL;
+	unsigned long long int fileSize = 0;
+	unsigned long int fileEpochSec = 0, fileCRC32Value = 0;
+	size_t arraySize = 0;
+	json_t *jsonObj = NULL, *fileArray = NULL, *fileObj = NULL, *objName = NULL, *objTime = NULL, *newFileObj = NULL;
+	json_error_t jError;
+	DIR *dPtr = getFolderPtr(folderPath);
+	const char *fullJsonPath = NULL, *fullFilePath = NULL;
+	//Do 
+	fullJsonPath = addFolderPathToFilePath(folderPath,jsonFile);
+	jsonObj = json_load_file(fullJsonPath,0,&jError);
+	fileArray = getJsonArrayFrmFolderObj(jsonObj);
+	arraySize = json_array_size(fileArray);
+	//printf("size:%d\n",arraySize);
+	//printf("full path:%s\n",fullJsonPath);
+	while((dir = readdir(dPtr))!=NULL){
+		if(dir->d_type == DT_REG){
+			if(strcmp(dir->d_name,"fileInformation.json")!=0){
+				fileObj = json_array_get(fileArray,i);
+				if(json_is_object(fileObj)){
+					objName = json_object_get(fileObj,"name");
+					if(strcmp(json_string_value(objName),dir->d_name)==0){
+						fullFilePath = addFolderPathToFilePath(folderPath,dir->d_name);
+						fileEpochSec = getFileEpoch(fullFilePath);
+						objTime = json_object_get(fileObj,"epoch seconds");
+						if(fileEpochSec > json_integer_value(objTime)){
+							fileSize = getFileSize(fullFilePath);
+							fileCRC32Value = hashCRC(fullFilePath);
+							json_object_set_new(fileObj,"size",json_integer(fileSize));
+							json_object_set_new(fileObj,"crc",json_integer(fileCRC32Value));
+							json_object_set_new(fileObj,"epoch seconds",json_integer(fileEpochSec));
+							delJSON(fullJsonPath);
+							jsonPath = createJSONFilePath(folderPath);
+							writeJsonIntoFile(jsonPath,jsonObj);
+						}
+					}else{
+						//jsonObj = createJsonObjectFrmFolder(folderPath);
+						//delJSON(fullJsonPath);
+						//jsonPath = createJSONFilePath(folderPath);
+						//writeJsonIntoFile(jsonPath,jsonObj);
+						/*
+						fullFilePath = addFolderPathToFilePath(folderPath,dir->d_name);
+						fileSize = getFileSize(fullFilePath);
+						fileCRC32Value = hashCRC(fullFilePath);
+						fileEpochSec = getFileEpoch(fullFilePath);
+						json_object_set_new(fileObj,"name",json_string(dir->d_name));
+						json_object_set_new(fileObj,"size",json_integer(fileSize));
+						json_object_set_new(fileObj,"crc",json_integer(fileCRC32Value));
+						json_object_set_new(fileObj,"epoch seconds",json_integer(fileEpochSec));
+						delJSON(fullJsonPath);
+						jsonPath = createJSONFilePath(folderPath);
+						writeJsonIntoFile(jsonPath,jsonObj);
+						*/
+						printf("extra file:%s\n",dir->d_name);
+						
+					}
+					i++;
+				}else{
+					jsonObj = createJsonObjectFrmFolder(folderPath);
+					delJSON(fullJsonPath);
+					jsonPath = createJSONFilePath(folderPath);
+					writeJsonIntoFile(jsonPath,jsonObj);
+					//printf("extra file:%s\n",dir->d_name);
+					printf("come in here\n");
+					//Throw((Error*)ERR_NOT_JSON_OBJECT);
+				}
+			}
+		}
+	}
+	free((void*)fullFilePath);
+	return jsonObj;
+}
+
 void getFileInfoFrmJson(json_t *fileArray,FileInfo *fptr,int counter){
 	void *iter = NULL;
 	json_t *fileObject = NULL;
@@ -166,7 +242,7 @@ int checkJSON(const char* path){
 		return 0;
 }
 
-int delJSON(char *JSONfile){
+int delJSON(const char *JSONfile){
 	int check =0,ret = 0;
 	check = checkJSON(JSONfile);
 	if(check){
