@@ -236,10 +236,10 @@ void xtest_scanFolder_scan_folder_TestJSON(void){
 	
 }
 
-void xtest_scanFolder_scan_folder_forTesting(void){
+void test_scanFolder_scan_folder_forTesting(void){
 	Node *root = NULL;
 	Node *dupRoot = NULL;
-	scanFolder(&root,&dupRoot,"TestJSON2");
+	scanFolder(&root,&dupRoot,"forTesting");
 }
 
 void xtest_traverseFolder_with_3_argument_should_traverse_main_folder(void){
@@ -298,14 +298,4 @@ void test_deleteFile_should_throw_error_if_file_to_delete_not_exist(void){
 void test_deleteFile_should_delete_1_file_inside_folder(void){
 	char *testFile = createFileForTesting("FolderForTesting/TestFileC.txt",110);
 	deleteFile(testFile);
-}
-
-void test_deleteAllContentInFolder_should_throw_error_if_inside_is_empty(void){
-	Error *e = NULL;
-	Try{
-		deleteAllContentInFolder("TestJSON2");
-		TEST_FAIL_MESSAGE("File to delete not exist\n");
-	}Catch(e){
-		TEST_ASSERT_EQUAL(e,ERR_EMPTY_CONTENT);
-	}
 }

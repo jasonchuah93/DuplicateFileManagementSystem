@@ -16,14 +16,14 @@
 #define FALSE 0
 #define MaxFile 10000
 
-void deleteAllContentInFolder(const char *folderPath);
+void deleteAllContentInFolder(char *folderPath);
 void deleteFile(char *filePathToDelete);
 char *duplicateFileForTesting(char *fileToDuplicate, char *newName);
 char *createFileForTesting(char *filePath,int size);
 void scanFolder(Node **root, Node **duplicatedRoot,const char *folderName);
 char *changeDir(char *curFolder, char *nextFolder);
-void traverseFolder(Node **duplicatedFileRoot,char *folderPath);
-void _traverseFolder(Node **root,Node **duplicatedRoot,char *folderPath);
+void traverseFolder(Node **duplicatedFileRoot,const char *folderPath);
+void _traverseFolder(Node **root,Node **duplicatedRoot,const char *folderPath);
 char *createJSONFilePath(const char *folderPath);
 char *addFolderPathToFilePath(const char *folderName,const char *fileName);
 int checkFile(const char *path);

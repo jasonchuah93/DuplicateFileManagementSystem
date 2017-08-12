@@ -19,6 +19,6 @@ int checkJsonFile(const char *folder, const char *jsonFile);
 int checkFileLaterThanJson(const char *folder,char *jsonFile);
 void writeJsonIntoFile(const char *jsonFile,json_t *jsonObject);
 int checkJSON(const char* path);
-int delJSON(const char *JSONfile);
+int delJSONFile(const char *JSONfile);
 
 #endif // JSON_H

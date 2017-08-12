@@ -99,33 +99,42 @@ void test_load_existing_json_file_to_read_the_object_inside(void){
 	}
 }
 
-void xtest_updateJson_should_check_file_date_time_compare_to_json_file(void){
-	size_t arraySize = 0;
-	json_t *obj = NULL, *fileArray = NULL;
-	obj = updateJson("TestJSON2","fileInformation.json");
-	fileArray = getJsonArrayFrmFolderObj(obj);
-	arraySize = json_array_size(fileArray);
-	TEST_ASSERT_NOT_NULL(obj);
-	//TEST_ASSERT_EQUAL(3,arraySize);
+void test_updateJson_should_check_file_date_time_compare_to_json_file(void){
+	Node *dupRoot = NULL;
+	json_t *updatedObj = NULL;
+	//char *testFile1 = createFileForTesting("FolderForTesting/TestFileP.txt",5000);
+	//duplicateFileForTesting(testFile1,"5");
+	traverseFolder(&dupRoot,"FolderForTesting");
+	//updatedObj = updateJson("FolderForTesting","fileInformation.json");	
+	//deleteAllContentInFolder("FolderForTesting");
+}
+/*
+void test_updateJson_should_check_file_number_compare_to_json_file_array_size(void){
+	json_t *obj = NULL;
+	Node *dupRoot = NULL;
+	
+	//traverseFolder(&dupRoot,"FolderForTesting");
+	//obj = updateJson("FolderForTesting","fileInformation.json");
+	//TEST_ASSERT_NOT_NULL(obj);
 }
 
-/*
+
 These test will delete JSON file
 void test_delJSON_should_delete_JSON_type_file_inside_folder_and_return_1(void){
 	int deletedFile = 0;
-	deletedFile = delJSON("forTesting/jsonInfo.json");
+	deletedFile = delJSONFile("forTesting/jsonInfo.json");
 	TEST_ASSERT_EQUAL(deletedFile,1);
 }
 
 void test_delJSON_should_return_0_if_no_JSON_file_type(void){
 	int deletedFile = 0;
-	deletedFile = delJSON("forTesting/jsonInfo.json");
+	deletedFile = delJSONFile("forTesting/jsonInfo.json");
 	TEST_ASSERT_EQUAL(deletedFile,0);
 }
 
 void test_delJSON_should_return_0_if_not_JSON_file_type(void){
 	int deletedFile = 0;
-	deletedFile = delJSON("forTesting/Testing 1.mp3");
+	deletedFile = delJSONFile("forTesting/Testing 1.mp3");
 	TEST_ASSERT_EQUAL(deletedFile,0);
 }
 */

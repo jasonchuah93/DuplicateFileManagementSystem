@@ -16,10 +16,9 @@ struct tm t;
 static char* lastFile[MaxFile] = {0};
 static int lastFileCount;
 
-void deleteAllContentInFolder(const char *folderPath){
+void deleteAllContentInFolder(char *folderPath){
 	int i=0,check = 0;
 	char filePath[100] = {0}, subPath[100] = {0};
-	char *subFolderPath = NULL;
 	DIR *dPtr = opendir(folderPath);
 	while((dir=readdir(dPtr))!=NULL){
 		if(dir->d_type == DT_REG){
@@ -30,9 +29,6 @@ void deleteAllContentInFolder(const char *folderPath){
 			deleteAllContentInFolder(subPath);
 			rmdir(subPath);
 		}
-	}
-	if((dir=readdir(dPtr))==NULL){
-		Throw((Error*)ERR_EMPTY_CONTENT);
 	}
 	closedir(dPtr);
 }
@@ -62,7 +58,7 @@ char *duplicateFileForTesting(char *fileToDuplicate, char *number){
 		strcat(duplicateFileArray,numArray);
 		duplicateFilePath = (char *)malloc(strlen(duplicateFileArray)+1);
 		strcpy(duplicateFilePath,duplicateFileArray);
-		dupFPtr = fopen(duplicateFilePath,"w");
+		dupFPtr = fopen(duplicateFilePath,"w+");
 		while((ch = fgetc(fPtr))!=EOF)
 			fputc(ch,dupFPtr);
 	}
@@ -75,13 +71,81 @@ char *duplicateFileForTesting(char *fileToDuplicate, char *number){
 char *createFileForTesting(char *filePath,int size){
 	int counter = 0;
 	time_t t;
-	FILE *fPtr = fopen(filePath,"w+");
-	srand((unsigned) time(&t));
-	for(counter=0;counter<size;counter++){
-		fprintf(fPtr,"%d\n",rand()%1000);
+	char folderPath[50] = {0}, getFolderPath[50] = {0}, cmpFileName[100] = {0};
+	strcpy(getFolderPath,filePath);
+	strncpy(folderPath,getFolderPath,16);
+	FILE *fPtr = NULL;
+	DIR *dPtr = opendir(folderPath);
+	while((dir = readdir(dPtr)) != NULL){
+		if(dir->d_type == DT_REG){
+			if(strcmp(dir->d_name,"fileInformation.json")!=0){
+				sprintf(cmpFileName,"%s/%s",folderPath,dir->d_name);
+				if(strcmp(cmpFileName,filePath) == 0){
+					fclose(fPtr);
+					closedir(dPtr);
+					return filePath;
+				}else{
+					fPtr = fopen(filePath,"w+");
+					srand((unsigned) time(&t));
+					for(counter=0;counter<size;counter++){
+						fprintf(fPtr,"%d\n",rand()%1000);
+					}
+				}
+			}
+		}else if(dir->d_type == DT_DIR){
+			if((strcmp(dir->d_name,".")!=0) && (strcmp(dir->d_name,"..")!=0)){
+				if(strcmp(cmpFileName,filePath)!=0){
+				fPtr = fopen(filePath,"w+");
+				srand((unsigned) time(&t));
+				for(counter=0;counter<size;counter++){
+					fprintf(fPtr,"%d\n",rand()%1000);
+				}
+				fclose(fPtr);
+				closedir(dPtr);
+				return filePath;
+			}
+			}
+		}
+	}
+	if((dir = readdir(dPtr))==NULL){
+		fPtr = fopen(filePath,"w+");
+		srand((unsigned) time(&t));
+		for(counter=0;counter<size;counter++){
+			fprintf(fPtr,"%d\n",rand()%1000);
+		}
 	}
 	fclose(fPtr);
+	closedir(dPtr);
 	return filePath;
+}
+
+/*************************************************************
+*   Scan the folder, traverse all content inside
+*
+*	Input: 	path		the path of the folder we want to scan  
+*			
+*	Output: size		size of the file 
+*			
+*	Destroy: none
+**************************************************************/
+void traverseFolder(Node **duplicatedFileRoot,const char *folderPath){
+	Node *root = NULL;
+	_traverseFolder(&root,duplicatedFileRoot,folderPath);
+}
+
+void _traverseFolder(Node **root,Node **duplicatedRoot,const char *folderPath){
+	char subFolderPath[500] = {0};
+	DIR *d = getFolderPtr(folderPath);
+	while((dir = readdir(d)) != NULL){
+		if(dir->d_type == DT_REG){
+			break;
+		}else if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+			sprintf(subFolderPath,"%s/%s",folderPath,dir->d_name);
+			_traverseFolder(root,duplicatedRoot,subFolderPath);
+		}
+	}
+	scanFolder(root,duplicatedRoot,folderPath);
+	closedir(d);
 }
 
 void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderName){
@@ -89,7 +153,7 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 	size_t arraySize = 0;
 	char *jsonPath = NULL, *errNodeFilePath = NULL, *targetNodeFilePath = NULL;
 	const char *fullJsonPath = NULL;
-	json_t *folderObj = NULL, *existingFolderObj = NULL;
+	json_t *folderObj = NULL, *existingFolderObj = NULL, *updateObj = NULL;
 	json_t *fileArray = NULL;
 	json_error_t jError;
 	Element *fileElementFromErr = NULL, *duplicatedFileEle = NULL, *previousEleFromErr = NULL;
@@ -97,37 +161,9 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 	Error *errNode = NULL;
 	FileInfo *information = NULL;
 	LinkedList *duplicatedList = NULL; 
-	//Check is there any json file inside the folder
-	
-	if(checkJsonFile(folderName,"fileInformation.json")==0){
-	//Updatejson call here
-		if(checkFileLaterThanJson(folderName,"fileInformation.json")==0){
-			fullJsonPath = addFolderPathToFilePath(folderName,"fileInformation.json");
-			existingFolderObj = json_load_file(fullJsonPath,0,&jError);
-			fileArray = getJsonArrayFrmFolderObj(existingFolderObj);
-			arraySize = json_array_size(fileArray);
-			numOfFiles = checkFileNumber(folderName);
-			if(arraySize != numOfFiles){
-				folderObj = createJsonObjectFrmFolder(folderName);
-				fileArray = getJsonArrayFrmFolderObj(folderObj);
-				jsonPath = createJSONFilePath(folderName);
-				writeJsonIntoFile(jsonPath,folderObj);
-				//printf("pls update\n");
-			}
-			//printf("json file is the most update at: %s\n",folderName);
-		}else{
-			folderObj = createJsonObjectFrmFolder(folderName);
-			fileArray = getJsonArrayFrmFolderObj(folderObj);
-			jsonPath = createJSONFilePath(folderName);
-			writeJsonIntoFile(jsonPath,folderObj);
-		}
-	}else{
-		folderObj = createJsonObjectFrmFolder(folderName);
-		fileArray = getJsonArrayFrmFolderObj(folderObj);
-		arraySize = json_array_size(fileArray);
-		printf("arraysize: %d\n",arraySize);
-		
-	}
+	folderObj = createJsonObjectFrmFolder(folderName);
+	fileArray = getJsonArrayFrmFolderObj(folderObj);
+	arraySize = json_array_size(fileArray);
 	for(i=0;i<arraySize;i=i+1){
 		information = createInfo();
 		getFileInfoFrmJson(fileArray,information,i);
@@ -180,35 +216,22 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 		}
 	}
 	jsonPath = createJSONFilePath(folderName);
-	writeJsonIntoFile(jsonPath,folderObj);
-}
-
-/*************************************************************
-*   Scan the folder, traverse all content inside
-*
-*	Input: 	path		the path of the folder we want to scan  
-*			
-*	Output: size		size of the file 
-*			
-*	Destroy: none
-**************************************************************/
-void traverseFolder(Node **duplicatedFileRoot,char *folderPath){
-	Node **root = NULL;
-	_traverseFolder(root,duplicatedFileRoot,folderPath);
-}
-
-void _traverseFolder(Node **root,Node **duplicatedRoot,char *folderPath){
-	char *subFolderPath = NULL;
-	DIR *d = getFolderPtr(folderPath);
-	scanFolder(root,duplicatedRoot,folderPath);
-	while((dir = readdir(d)) != NULL){
-		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
-			subFolderPath = getSubFolderPath(folderPath);
-			scanFolder(root,duplicatedRoot,subFolderPath);
-			printf("subfolder: %s\n",subFolderPath);
-		}
+	if(checkJsonFile(folderName,"fileInformation.json")==0){
+		printf("2nd in here\n");
+		updateJson(folderName,"fileInformation.json");
+		//writeJsonIntoFile(jsonPath,updateObj);
+	}else{
+		printf("first in here\n");
+		writeJsonIntoFile(jsonPath,folderObj);
 	}
+	free(duplicatedList);
+	free(fileElementFromErr);
+	free(duplicatedFileEle);
+	free(fileNode);
+	free(information);
 }
+
+
 
 char *addFolderPathToFilePath(const char *folderName,const char *fileName){
 	char *filePath = (char*)malloc(1+strlen(folderName)+strlen(fileName));
