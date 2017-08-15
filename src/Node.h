@@ -17,6 +17,5 @@ struct Node {
 };
 
 Node *createNode(void *fileInfo);
-Node *initNode();
 
 #endif // Node_H

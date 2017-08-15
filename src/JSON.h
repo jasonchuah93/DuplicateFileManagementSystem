@@ -2,7 +2,7 @@
 #define JSON_H
 
 #include "jansson.h"
-#include "fileHandling.h"
+#include "fileInfo.h"
 
 
 json_t *updateJson(const char *folderPath, const char *jsonFile);

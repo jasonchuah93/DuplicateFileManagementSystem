@@ -1,6 +1,6 @@
 #include "jansson.h"
 #include "JSON.h"
-#include "fileHandling.h"
+#include "fileInfo.h"
 #include "generateCRC32Value.h"
 #include "errorNode.h"
 #include "compareFileInfo.h"
@@ -9,6 +9,7 @@
 #include "RedBlackTree.h"
 #include "LinkedList.h"
 #include "CException.h"
+#include "fileHandling.h"
 
 struct stat attr;
 struct dirent *dir;
@@ -16,16 +17,26 @@ struct tm t;
 static char* lastFile[MaxFile] = {0};
 static int lastFileCount;
 
-/*
+/*************************************************************
+* Check the size of a given file
+*
+*	Input: 	path		the path of the file we want to check  
+*			
+*	Output: size		size of the file 
+*			
+*	Destroy: none
+**************************************************************/
 
-FileInfo *createInfo(){
-	FileInfo *info = malloc(sizeof(FileInfo));
-	info->fileName = NULL;
-	info->fileSize = 0;
-	info->fileCRC32Value = 0;
-	return info;
+int getFileSize(const char *path){
+	int size = 0;
+	FILE *f = getFilePtr(path);
+	fseek(f,0,SEEK_END);    
+	size = ftell(f);   
+    return size;
 }
 
+
+/*
 void summariseFolder(Node **dupRoot){
 	int i = 0;
 	Node *removedNode = NULL;
@@ -279,7 +290,7 @@ char *createJSONFilePath(const char *folderPath){
 *	
 *	Destroy: none
 **************************************************************/
-/*
+
 int checkFile(const char *path) {
     FILE *f = fopen(path,"r");
 	if(f!=NULL)
@@ -287,7 +298,7 @@ int checkFile(const char *path) {
 	else
 		return 0;
 }
-*/
+
 /*************************************************************
 * 	Get file pointer  
 *
@@ -298,7 +309,7 @@ int checkFile(const char *path) {
 *	
 *	Destroy: none
 **************************************************************/
-/*
+
 FILE *getFilePtr(const char *path){
 	int c = 0;
 	c = checkFile(path);
@@ -307,7 +318,7 @@ FILE *getFilePtr(const char *path){
 		return f;
 	}
 }
-*/
+
 /*************************************************************
 * Check if the parameter is folder
 *
@@ -318,7 +329,7 @@ FILE *getFilePtr(const char *path){
 *	
 *	Destroy: none
 **************************************************************/
-/*
+
 int checkFolder(const char *path) {
     DIR *d = opendir(path);
 	if(d!=NULL)
@@ -326,7 +337,7 @@ int checkFolder(const char *path) {
 	else 
 		return 0;
 }
-*/
+
 /*************************************************************
 * 	Get folder pointer  
 *
@@ -336,7 +347,7 @@ int checkFolder(const char *path) {
 *			Throw error			indicate is not a folder
 *	
 *	Destroy: none
-**************************************************************/
+************************************************************/
 /*
 DIR *getFolderPtr(const char *path){
 	int c = 0;
@@ -347,24 +358,6 @@ DIR *getFolderPtr(const char *path){
 	}else if(c == 0){
 		Throw((Error*)ERR_FILE_NOT_OPEN);
 	}
-}
-*/
-/*************************************************************
-* Check the size of a given file
-*
-*	Input: 	path		the path of the file we want to check  
-*			
-*	Output: size		size of the file 
-*			
-*	Destroy: none
-**************************************************************/
-/*
-int getFileSize(const char *path){
-	int size = 0;
-	FILE *f = getFilePtr(path);
-	fseek(f,0,SEEK_END);    
-	size = ftell(f);   
-    return size;
 }
 */
 /*************************************************************
@@ -484,7 +477,7 @@ int getFileEpoch(const char *filePath){
 *			
 *	Destroy: none
 **************************************************************/
-/*
+
 int getFileDateTime(char *dateTime,const char *path){
 	char times[50]={0};
 	time_t t = time(NULL);
@@ -492,7 +485,7 @@ int getFileDateTime(char *dateTime,const char *path){
 	strftime(times,20,"%Y/%m/%d %H:%M:%S",localtime(&(attr.st_mtime)));
 	strcpy(dateTime,times);
 }
-*/
+
 /*************************************************************
 * Convert date and time of given file to epoch format
 *
@@ -502,7 +495,7 @@ int getFileDateTime(char *dateTime,const char *path){
 *			
 *	Destroy: none
 **************************************************************/
-/*
+
 int convertEpoch(char *fileDateTime){
 	unsigned long int epochSecs = 0;
 	time_t epoch = 0;
@@ -525,4 +518,3 @@ int convertEpoch(char *fileDateTime){
 	epochSecs = (unsigned long int)epoch;
 	return epochSecs;
 }
-*/
