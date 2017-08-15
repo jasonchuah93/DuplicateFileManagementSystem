@@ -17,6 +17,15 @@ static char* lastFile[MaxFile] = {0};
 static int lastFileCount;
 
 /*
+
+FileInfo *createInfo(){
+	FileInfo *info = malloc(sizeof(FileInfo));
+	info->fileName = NULL;
+	info->fileSize = 0;
+	info->fileCRC32Value = 0;
+	return info;
+}
+
 void summariseFolder(Node **dupRoot){
 	int i = 0;
 	Node *removedNode = NULL;

@@ -6,7 +6,7 @@
 #include "Node.h"
 #include "errorNode.h"
 #include "LinkedList.h"
-#include "fileHandling.h"
+#include "fileInfo.h"
 #include "compareFileInfo.h"
 
 void setUp(void){}

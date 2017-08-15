@@ -18,13 +18,7 @@
 
 struct dirent *dir = NULL;
 /*
-FileInfo *createInfo(){
-	FileInfo *info = malloc(sizeof(FileInfo));
-	info->fileName = NULL;
-	info->fileSize = 0;
-	info->fileCRC32Value = 0;
-	return info;
-}
+
 
 json_t *updateJson(const char *folderPath, const char *jsonFile){
 	int countArray = 0,i = 0;

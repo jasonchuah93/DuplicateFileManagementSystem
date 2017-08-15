@@ -19,7 +19,7 @@
 void setUp(void){}
 void tearDown(void){}
 
-void test_createNode_should_create_node_to_store_file_information(void){
+void test_createNode_should_create_a_node_to_store_file_information(void){
     FileInfo *info = createInfo();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
