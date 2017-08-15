@@ -1,17 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <malloc.h>
-#include "JSON.h"
-#include "fileHandling.h"
-#include "generateCRC32Value.h"
-#include "errorNode.h"
-#include "compareJSON.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
-#include "RedBlackTree.h"
-#include "LinkedList.h"
 #include "CException.h"
+#include "RedBlackTree.h"
 
 #define leftChild (*rootPtr)->left
 #define rightChild (*rootPtr)->right
@@ -20,8 +11,18 @@
 #define leftRightGrandChild (*rootPtr)->left->right
 #define rightLeftGrandChild (*rootPtr)->right->left
 
-void genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareList)(Node **rootPtr,Node *newNode)){
-    _genericAddRedBlackTreeForList(rootPtr,newNode,compareList);    
+/*********************************************************************
+* This function will add a linkedlist into the red black tree
+*
+*	Input: 	rootPtr			the root of the tree
+*			newNode			the new member of the tree
+			compare			pointer to a function to decide the rules to add record
+*
+*	Destroy: none
+*	
+**********************************************************************/
+void genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareLinkedListSize)(Node **rootPtr,Node *newNode)){
+    _genericAddRedBlackTreeForList(rootPtr,newNode,compareLinkedListSize);    
     (*rootPtr)->color='b';
 }
 
@@ -36,9 +37,7 @@ void _genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareFi
 			handleColor(rootPtr,newNode);
 		}
 		compare = compareFileList(rootPtr,newNode);
-		//printf("root: %s\n",((FileInfo*)((LinkedList*)((Node*)*rootPtr)->data)->tail->data)->fileName);
 		if(compare == 1){
-			//printf("come in here\n");
 			_genericAddRedBlackTreeForList(&(*rootPtr)->left,newNode,compareFileList);
 		}else if(compare == -1){
 			_genericAddRedBlackTreeForList(&(*rootPtr)->right,newNode,compareFileList);
@@ -71,7 +70,6 @@ void _genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareFi
 				(*rootPtr)->right->right->color = 'r';
 			}
 		}
-		
 	}
 }
 
@@ -85,7 +83,6 @@ void _genericAddRedBlackTreeForList(Node **rootPtr,Node *newNode, int(*compareFi
 *	Destroy: none
 *	
 **********************************************************************/
-
 void genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareFileSize)(Node **rootPtr,Node *newNode)){
     _genericAddRedBlackTree(rootPtr,newNode,compareFileSize);    
     (*rootPtr)->color='b';

@@ -1,8 +1,6 @@
 #ifndef LinkedList_H
 #define LinkedList_H
 
-#include "Node.h"
-
 #define getEleName(ele) (((FileInfo*)((Element*)(ele))->data))->fileName
 #define getEleSize(ele) (((FileInfo*)((Element*)(ele))->data))->fileSize
 #define getEleCRC(ele) (((FileInfo*)((Element*)(ele))->data))->fileCRC32Value
@@ -25,7 +23,5 @@ Element *createElement(void *fileInfo);
 LinkedList *createLinkedList();
 void *listAddFirst(Element *newElement, LinkedList *list);
 Element *listRemoveFirst(LinkedList *list);
-Element *listAddLast(Element *newElement, LinkedList *list);
-Element *listRemoveLast(LinkedList *list);
 
 #endif // LinkedList_H

@@ -1,11 +1,11 @@
 #include "unity.h"
 #include <string.h>
 #include <malloc.h>
+#include "fileInfo.h"
+#include "generateCRC32Value.h"
 #include "jansson.h"
 #include "JSON.h"
 #include "fileHandling.h"
-#include "generateCRC32Value.h"
-#include "fileInfo.h"
 #include "CustomAssertions.h"
 #include "Node.h"
 
@@ -37,6 +37,6 @@ void test_createNode_should_create_a_node_to_store_file_information(void){
 	TEST_ASSERT_EQUAL(289821883,getCRCFromNode(nodePtr));
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',nodePtr);
 	
-	free(info);
 	free(nodePtr);
+	free(info);
 }

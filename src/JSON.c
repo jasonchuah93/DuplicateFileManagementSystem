@@ -1,12 +1,14 @@
+#include <string.h>
+/*
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 #include <malloc.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <time.h>
-#include "JSON.h"
+#include "fileHandling.h"
 #include "generateCRC32Value.h"
 #include "Node.h"
 #include "errorNode.h"
@@ -15,9 +17,21 @@
 #include "RestructureNode.h"
 #include "RedBlackTree.h"
 #include "CException.h"
+*/
+#include "JSON.h"
 
 struct dirent *dir = NULL;
 
+int checkJsonTypeFile(const char *jsonFilePath){
+	const char ext = '.';
+	char *jsonExt = strrchr(jsonFilePath,ext);
+	if(strcmp(jsonExt,".json") == 0)
+		return 1;
+	else
+		return 0;
+}
+
+/*
 json_t *createJsonObjectFrmFolder(const char *folderPath){
 	unsigned long long int fileSize = 0;
 	unsigned long int fileCRC32Value = 0, fileEpochSec = 0;
@@ -99,7 +113,7 @@ json_t *getJsonArrayFrmFolderObj(json_t *folderObject){
 	return fileArray;
 }
 
-/*
+
 json_t *updateJson(const char *folderPath, const char *jsonFile){
 	int countArray = 0,i = 0;
 	char jsonPath[100] = {0}, filePath[100] = {0}, subFolderPath[100] = {0}, filePath2[100] = {0};
@@ -157,10 +171,6 @@ json_t *updateJson(const char *folderPath, const char *jsonFile){
 	//return fileObj;
 }
 
-
-
-
-
 void writeJsonIntoFile(const char *jsonFile,json_t *jsonObject){
 	FILE *fptr = NULL;
 	fptr = fopen(jsonFile,"w");
@@ -207,21 +217,11 @@ int checkFileLaterThanJson(const char *folder,char *jsonFile){
 	closedir(dPtr);
 }
 
-int checkJSON(const char* path){
-	int cmp = 0;
-	char *jsonExt = NULL;
-	const char ext = '.';
-	jsonExt = strrchr(path,ext);
-	cmp = strcmp(jsonExt,".json");
-	if(cmp == 0)
-		return 1;
-	else
-		return 0;
-}
+
 
 int delJSONFile(const char *JSONfile){
 	int check =0,ret = 0;
-	check = checkJSON(JSONfile);
+	check = checkJsonTypeFile(JSONfile);
 	if(check){
 		ret = remove(JSONfile);
 		if(ret == 0){

@@ -27,6 +27,5 @@ struct Error{
 };
 
 Error *createErr(char *stringMsg,void *duplicatedNode);
-void freeErr(Error *e);
 
 #endif // errorNode_H

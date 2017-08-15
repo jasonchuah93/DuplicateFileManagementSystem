@@ -1,6 +1,8 @@
 #ifndef Rotation_H
 #define Rotation_H
 
+#include "Node.h"
+
 //Use for add node function
 void leftRotate(Node **nodePtr); //pivot point
 void rightRotate(Node **nodePtr);

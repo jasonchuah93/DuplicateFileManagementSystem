@@ -1,10 +1,11 @@
 #include "unity.h"
+#include <string.h>
+/*
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 #include <malloc.h>
 #include "jansson.h"
-#include "JSON.h"
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
 #include "Node.h"
@@ -14,24 +15,22 @@
 #include "RestructureNode.h"
 #include "RedBlackTree.h"
 #include "LinkedList.h"
-#include "main.h"
 #include "CException.h"
+*/
+#include "JSON.h"
 
 void setUp(void){}
 void tearDown(void){}
 
-void test_checkJSON_should_return_1_if_the_file_type_is_json(void){
-	int check = 0;
-	check = checkJSON("forTesting/J.json");
-	TEST_ASSERT_EQUAL(check,1);
+void test_checkJsonTypeFile_should_return_1_if_the_file_type_is_json(void){
+	TEST_ASSERT_EQUAL(checkJsonTypeFile("forTesting/J.json"),1);
 }
+
 
 void test_checkJSON_should_return_0_if_the_file_type_is_not_json(void){
-	int check = 0;
-	check = checkJSON("forTesting/test p.point.pptx");
-	TEST_ASSERT_EQUAL(check,0);
+	TEST_ASSERT_EQUAL(checkJsonTypeFile("forTesting/J.docx"),0);
 }
-
+/*
 void test_getJsonArrayFrmFolderObj_should_throw_error_if_input_is_not_an_json_object(void){
 	Error *e = NULL;
 	json_t *folderObj = json_array();
@@ -73,7 +72,7 @@ void test_checkJsonFile_should_return_0_if_folder_contain_json_file(void){
 	check = checkJsonFile("forTesting","fileInformation.json");
 	TEST_ASSERT_EQUAL(0,check);
 }
-/*
+
 void test_checkFileLaterThanJson_should_return_0_if_json_file_is_latest_inside_folder(void){
 	int check = 1;
 	check = checkFileLaterThanJson("TestJSON","fileInformation.json");
@@ -85,7 +84,7 @@ void test_checkFileLaterThanJson_should_return_1_if_json_file_is_not_latest_insi
 	check = checkFileLaterThanJson("forTesting/test folder","fileInformation.json");
 	TEST_ASSERT_EQUAL(1,check);
 }
-*/
+
 void test_load_existing_json_file_to_read_the_object_inside(void){
 	json_t *folderObj = NULL;
 	json_t *fileArray = NULL;
@@ -111,7 +110,7 @@ void test_updateJson_should_check_file_date_time_compare_to_json_file(void){
 	//TEST_ASSERT_NOT_NULL(removedNode);
 }
 
-/*
+
 void test_updateJson_should_check_file_number_compare_to_json_file_array_size(void){
 	json_t *obj = NULL;
 	Node *dupRoot = NULL;

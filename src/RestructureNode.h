@@ -1,6 +1,8 @@
 #ifndef RestructureNode_H
 #define RestructureNode_H
 
+#include "Node.h"
+
 int isNodeBlack(Node **node);
 int isNodeRed(Node **node);
 int isDoubleNodeBlack(Node *node,Node *removeNode);

@@ -1,21 +1,19 @@
 #include "unity.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <malloc.h>
-#include "JSON.h"
-#include "jansson.h"
-#include "fileHandling.h"
+#include "fileInfo.h"
 #include "generateCRC32Value.h"
+#include "fileHandling.h"
+#include "jansson.h"
+#include "JSON.h"
 #include "Node.h"
+#include "compareFileInfo.h"
 #include "errorNode.h"
-#include "compareJSON.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
-#include "RedBlackTree.h"
 #include "LinkedList.h"
-#include "CustomAssertions.h"
 #include "CException.h"
+#include "CustomAssertions.h"
+#include "RedBlackTree.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -23,7 +21,7 @@ void tearDown(void){}
 void test_addFileNode_should_add_fileNode_into_empty_root(void){
 	Error *e = NULL;
 	Node *nodePtr = NULL;
-	FileInfo *info = createInfo();
+	FileInfo *info = initInfo();
 	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
 	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
 	getFileInfoFrmJson(fileArry,info,2);
@@ -35,8 +33,8 @@ void test_addFileNode_should_add_fileNode_into_empty_root(void){
 		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',fileNode);
 	}
 	
-	free(info);
 	free(fileNode);
+	free(info);
 }
 
 void test_addFileNode_should_add_n100_into_n200(void){
@@ -56,8 +54,8 @@ void test_addFileNode_should_add_n100_into_n200(void){
 		TEST_ASSERT_EQUAL_NODE(fileNode2,NULL,'b',nodePtr);
 	}
 	
-	free(fileNode1);
 	free(fileNode2);
+	free(fileNode1);
 }
 
 void test_addFile_test_3_node_with_same_size_but_different_crc(void){
@@ -79,9 +77,9 @@ void test_addFile_test_3_node_with_same_size_but_different_crc(void){
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode2);
 	TEST_ASSERT_EQUAL_NODE(fileNode2,fileNode1,'b',fileNode3);
 
-	free(fileNode1);
-	free(fileNode2);
 	free(fileNode3);
+	free(fileNode2);
+	free(fileNode1);
 }
 
 void test_addFile_test_5_node_with_same_size_but_different_crc(void){
@@ -110,11 +108,11 @@ void test_addFile_test_5_node_with_same_size_but_different_crc(void){
 	TEST_ASSERT_EQUAL_NODE(fileNode2,fileNode1,'r',fileNode3);
 	TEST_ASSERT_EQUAL_NODE(fileNode3,fileNode5,'b',fileNode4);
 
-	free(fileNode1);
-	free(fileNode2);
-	free(fileNode3);
-	free(fileNode4);
 	free(fileNode5);
+	free(fileNode4);
+	free(fileNode3);
+	free(fileNode2);
+	free(fileNode1);
 }
 
 void test_addFile_test_4_node_with_same_size_and_same_crc(void){
@@ -145,10 +143,10 @@ void test_addFile_test_4_node_with_same_size_and_same_crc(void){
 		TEST_ASSERT_EQUAL(e->errCode,ERR_EQUIVALENT_NODE);
 	}
 	
-	free(fileNode1);
-	free(fileNode2);
-	free(fileNode3);
 	free(fileNode4);
+	free(fileNode3);
+	free(fileNode2);
+	free(fileNode1);
 }
 
 void test_addFileNodeForList_should_add_node_into_RBT(void){
@@ -177,10 +175,23 @@ void test_addFileNodeForList_should_add_node_into_RBT(void){
 	Node *node1 = createNode(list1);
 	Node *node2 = createNode(list2);
 	Node *node3 = createNode(list3);
-	addFileNodeForList(&testRoot,node1);
-	addFileNodeForList(&testRoot,node2);
-	addFileNodeForList(&testRoot,node3);
+	addListNode(&testRoot,node1);
+	addListNode(&testRoot,node2);
+	addListNode(&testRoot,node3);
 	
 	TEST_ASSERT_EQUAL_PTR(node2,testRoot);
 	TEST_ASSERT_EQUAL_NODE(node1,node3,'b',testRoot);
+	
+	free(node3);
+	free(node2);
+	free(node1);
+	free(list3);
+	free(list2);
+	free(list1);
+	free(ele6);
+	free(ele5);
+	free(ele4);
+	free(ele3);
+	free(ele2);
+	free(ele1);
 }

@@ -12,7 +12,7 @@
 void setUp(void){}
 void tearDown(void){}
 
-void test_compareList_should_compare_2_element_size_from_linkedlist_and_return_1(void){
+void test_compareLinkedListSize_should_compare_2_element_size_from_linkedlist_and_return_1(void){
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 3016};
 	FileInfo info2 = {.fileSize = 1016};
@@ -25,7 +25,8 @@ void test_compareList_should_compare_2_element_size_from_linkedlist_and_return_1
 	Node *node1 = createNode(list1);
 	Node *node2 = createNode(list2);
 	
-	compare = compareList(&node1,node2);
+	compare = compareLinkedListSize(&node1,node2);
+	
 	TEST_ASSERT_EQUAL(1,compare);
 	
 	free(node1);
@@ -36,7 +37,7 @@ void test_compareList_should_compare_2_element_size_from_linkedlist_and_return_1
 	free(ele2);
 }
 
-void test_compareList_should_compare_2_element_size_from_linkedlist_return_negative_1(void){
+void test_compareLinkedListSize_should_compare_2_element_size_from_linkedlist_return_negative_1(void){
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 3016};
 	FileInfo info2 = {.fileSize = 9016};
@@ -49,7 +50,7 @@ void test_compareList_should_compare_2_element_size_from_linkedlist_return_negat
 	Node *node1 = createNode(list1);
 	Node *node2 = createNode(list2);
 	
-	compare = compareList(&node1,node2);
+	compare = compareLinkedListSize(&node1,node2);
 	 
 	TEST_ASSERT_EQUAL(-1,compare);
 	 
@@ -150,7 +151,7 @@ void test_compareFileByte_should_compare_2_info_byte_by_byte_and_return_1_if_bot
 	
 	TEST_ASSERT_EQUAL(1,compare);
 	
-	freeErr(errNode);
+	free(errNode);
 	free(node1);
 	free(node2);
 }
@@ -171,7 +172,7 @@ void test_compareFileByte_should_compare_2_different_files_byte_by_byte_and_retu
 	
 	TEST_ASSERT_EQUAL(-1,compare);
 	
-	freeErr(errNode);
+	free(errNode);
 	free(node1);
 	free(node2);
 	
@@ -193,7 +194,7 @@ void test_compareFileByte_should_compare_image_and_song_files_byte_by_byte_and_r
 	
 	TEST_ASSERT_EQUAL(-1,compare);
 	
-	freeErr(errNode);
+	free(errNode);
 	free(node1);
 	free(node2);
 }
@@ -214,7 +215,7 @@ void test_compareFileByte_should_compare_words_and_powerpoint_files_byte_by_byte
 	
 	TEST_ASSERT_EQUAL(-1,compare);
 	
-	freeErr(errNode);
+	free(errNode);
 	free(node1);
 	free(node2);
 }

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "Node.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
 
