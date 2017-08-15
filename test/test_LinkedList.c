@@ -16,12 +16,7 @@
 #include "LinkedList.h"
 #include "CustomAssertions.h"
 
-#define getEleName(ele) (((FileInfo*)((Element*)(ele))->data))->fileName
-#define getEleSize(ele) (((FileInfo*)((Element*)(ele))->data))->fileSize
-#define getEleCRC(ele) (((FileInfo*)((Element*)(ele))->data))->fileCRC32Value
-#define getListName(list) ((FileInfo*)(list->head->data))->fileName  
-#define getListSize(list) ((FileInfo*)(list->head->data))->fileSize
-#define getListCRC(list) ((FileInfo*)(list->head->data))->fileCRC32Value
+
 
 void setUp(void){}
 void tearDown(void){}

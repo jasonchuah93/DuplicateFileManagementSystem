@@ -16,6 +16,15 @@
 #define FALSE 0
 #define MaxFile 10000
 
+typedef struct FileInfo FileInfo;
+struct FileInfo{
+	const char *fileName;
+	unsigned long long int fileSize;
+	unsigned long int fileCRC32Value; 
+};
+
+FileInfo *createInfo();
+void summariseFolder();
 void deleteAllContentInFolder(char *folderPath);
 void deleteFile(char *filePathToDelete);
 char *duplicateFileForTesting(char *fileToDuplicate, char *newName);

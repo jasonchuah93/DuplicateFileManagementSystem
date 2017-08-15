@@ -154,8 +154,8 @@ void _genericAddRedBlackTree(Node **rootPtr,Node *newNode, int(*compareFile)(Nod
 *	Destroy: none
 *	
 **********************************************************************/
-Node *genericDelRedBlackTree(Node **rootPtr,Node *delNode, int(*compareFileSize)(Node **rootPtr,Node *delNode)){
-    Node *node = _genericDelRedBlackTree(rootPtr,delNode,compareFileSize);
+Node *genericDelRedBlackTree(Node **rootPtr,Node *delNode, int(*compareList)(Node **rootPtr,Node *delNode)){
+    Node *node = _genericDelRedBlackTree(rootPtr,delNode,compareList);
     if(*rootPtr!=NULL)
         (*rootPtr)->color='b';
     return node;

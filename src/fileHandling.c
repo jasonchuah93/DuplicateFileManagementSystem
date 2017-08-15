@@ -16,6 +16,22 @@ struct tm t;
 static char* lastFile[MaxFile] = {0};
 static int lastFileCount;
 
+/*
+void summariseFolder(Node **dupRoot){
+	int i = 0;
+	Node *removedNode = NULL;
+	Element *removedEle = NULL;
+	removedNode = removeFileNode(dupRoot,*dupRoot);
+	if(removedNode != NULL){
+		printf("The following files are duplicated\n");
+		for(i=0;i<=((LinkedList*)removedNode->data)->length;i++){
+			removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
+			printf("%s\n",getEleName(removedEle));
+		}
+		printf("--------------------------------------\n");
+	}
+}
+
 void deleteAllContentInFolder(char *folderPath){
 	int i=0,check = 0;
 	char filePath[100] = {0}, subPath[100] = {0};
@@ -34,7 +50,6 @@ void deleteAllContentInFolder(char *folderPath){
 }
 
 void deleteFile(char *filePathToDelete){
-	
 	if(filePathToDelete == NULL)
 		Throw((Error*)ERR_FILE_NO_EXIST);
 	else
@@ -118,7 +133,7 @@ char *createFileForTesting(char *filePath,int size){
 	closedir(dPtr);
 	return filePath;
 }
-
+*/
 /*************************************************************
 *   Scan the folder, traverse all content inside
 *
@@ -128,6 +143,7 @@ char *createFileForTesting(char *filePath,int size){
 *			
 *	Destroy: none
 **************************************************************/
+/*
 void traverseFolder(Node **duplicatedFileRoot,const char *folderPath){
 	Node *root = NULL;
 	_traverseFolder(&root,duplicatedFileRoot,folderPath);
@@ -135,16 +151,14 @@ void traverseFolder(Node **duplicatedFileRoot,const char *folderPath){
 
 void _traverseFolder(Node **root,Node **duplicatedRoot,const char *folderPath){
 	char subFolderPath[500] = {0};
+	scanFolder(root,duplicatedRoot,folderPath);
 	DIR *d = getFolderPtr(folderPath);
 	while((dir = readdir(d)) != NULL){
-		if(dir->d_type == DT_REG){
-			break;
-		}else if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
 			sprintf(subFolderPath,"%s/%s",folderPath,dir->d_name);
 			_traverseFolder(root,duplicatedRoot,subFolderPath);
 		}
 	}
-	scanFolder(root,duplicatedRoot,folderPath);
 	closedir(d);
 }
 
@@ -175,7 +189,7 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 			errNodeFilePath = addFolderPathToFilePath(folderName,getNameInErr(errNode));
 			targetNodeFilePath = addFolderPathToFilePath(folderName,getName(fileNode));
 			cmpFileByte = compareFileByte(errNodeFilePath,targetNodeFilePath);
-			if(cmpFileByte == 0){
+			if(cmpFileByte == 0){ // 0 means content of 2 files is the same
 				fileElementFromErr = createElement(((Node*)errNode->data)->data);
 				//printf("current: %s\n",((FileInfo*)fileElementFromErr->data)->fileName);
 				if(fileElementFromErr!=NULL && previousEleFromErr == NULL){
@@ -217,16 +231,13 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 	}
 	jsonPath = createJSONFilePath(folderName);
 	if(checkJsonFile(folderName,"fileInformation.json")==0){
-		printf("2nd in here\n");
 		updateJson(folderName,"fileInformation.json");
 		//writeJsonIntoFile(jsonPath,updateObj);
 	}else{
-		printf("first in here\n");
 		writeJsonIntoFile(jsonPath,folderObj);
 	}
+	
 	free(duplicatedList);
-	free(fileElementFromErr);
-	free(duplicatedFileEle);
 	free(fileNode);
 	free(information);
 }
@@ -248,7 +259,7 @@ char *createJSONFilePath(const char *folderPath){
 	strcat(jsonPath,jsonFileName);
 	return jsonPath;
 }
-
+*/
 /*************************************************************
 * 	Check if the parameter is any type of file 
 *
@@ -259,6 +270,7 @@ char *createJSONFilePath(const char *folderPath){
 *	
 *	Destroy: none
 **************************************************************/
+/*
 int checkFile(const char *path) {
     FILE *f = fopen(path,"r");
 	if(f!=NULL)
@@ -266,7 +278,7 @@ int checkFile(const char *path) {
 	else
 		return 0;
 }
-
+*/
 /*************************************************************
 * 	Get file pointer  
 *
@@ -277,6 +289,7 @@ int checkFile(const char *path) {
 *	
 *	Destroy: none
 **************************************************************/
+/*
 FILE *getFilePtr(const char *path){
 	int c = 0;
 	c = checkFile(path);
@@ -285,7 +298,7 @@ FILE *getFilePtr(const char *path){
 		return f;
 	}
 }
-
+*/
 /*************************************************************
 * Check if the parameter is folder
 *
@@ -296,6 +309,7 @@ FILE *getFilePtr(const char *path){
 *	
 *	Destroy: none
 **************************************************************/
+/*
 int checkFolder(const char *path) {
     DIR *d = opendir(path);
 	if(d!=NULL)
@@ -303,7 +317,7 @@ int checkFolder(const char *path) {
 	else 
 		return 0;
 }
-
+*/
 /*************************************************************
 * 	Get folder pointer  
 *
@@ -314,6 +328,7 @@ int checkFolder(const char *path) {
 *	
 *	Destroy: none
 **************************************************************/
+/*
 DIR *getFolderPtr(const char *path){
 	int c = 0;
 	c = checkFolder(path);
@@ -324,7 +339,7 @@ DIR *getFolderPtr(const char *path){
 		Throw((Error*)ERR_FILE_NOT_OPEN);
 	}
 }
-
+*/
 /*************************************************************
 * Check the size of a given file
 *
@@ -334,6 +349,7 @@ DIR *getFolderPtr(const char *path){
 *			
 *	Destroy: none
 **************************************************************/
+/*
 int getFileSize(const char *path){
 	int size = 0;
 	FILE *f = getFilePtr(path);
@@ -341,7 +357,7 @@ int getFileSize(const char *path){
 	size = ftell(f);   
     return size;
 }
-
+*/
 /*************************************************************
 * Check the total number of file in folder 
 *
@@ -351,6 +367,7 @@ int getFileSize(const char *path){
 *			
 *	Destroy: none
 **************************************************************/
+/*
 int checkFileNumber(const char *path){
 	int count = 0;
 	DIR *folder = getFolderPtr(path);
@@ -362,7 +379,7 @@ int checkFileNumber(const char *path){
 	}
 	return count;
 }
-
+*/
 /*************************************************************
 * Check the total number of sub folders in folder 
 *
@@ -372,6 +389,7 @@ int checkFileNumber(const char *path){
 *			
 *	Destroy: none
 **************************************************************/
+/*
 int listSubFolderNumber(const char *path){
 	int count = 0;
 	DIR *folder = getFolderPtr(path);
@@ -382,7 +400,7 @@ int listSubFolderNumber(const char *path){
 	}
 	return count;
 }
-
+*/
 /****************************************************************************
 *   This function add subfolder path name into existing folder path name
 *
@@ -392,6 +410,7 @@ int listSubFolderNumber(const char *path){
 *			
 *	Destroy: none
 ****************************************************************************/
+/*
 char *getSubFolderPath(const char *path){
 	static char newPath[500];
 	strcpy(newPath,path);//Copy the path to a new path 
@@ -399,7 +418,7 @@ char *getSubFolderPath(const char *path){
 	strcat(newPath,dir->d_name);//Add the sub folder path name right after the main folder path name		
 	return newPath;
 }
-
+*/
 /*************************************************************
 * Compare the last modified date & time between 2 files 
 *
@@ -411,6 +430,7 @@ char *getSubFolderPath(const char *path){
  
 *	Destroy: none
 **************************************************************/
+/*
 int compareDateTime(char *dateTime,const char *path){
 	unsigned long int epoch1 = 0;
 	unsigned long int epoch2 = 0;
@@ -425,7 +445,7 @@ int compareDateTime(char *dateTime,const char *path){
 	else if(epoch1 == epoch2)
 		return 0;
 }
-
+*/
 /*************************************************************
 * Call getFileDateTime & convertEpoch into this function
 *
@@ -436,6 +456,7 @@ int compareDateTime(char *dateTime,const char *path){
 *			
 *	Destroy: none
 **************************************************************/
+/*
 int getFileEpoch(const char *filePath){
 	unsigned long int epochSecs = 0;
 	char dateTime[50] = {0};
@@ -443,7 +464,7 @@ int getFileEpoch(const char *filePath){
 	epochSecs = convertEpoch(dateTime);
 	return epochSecs;
 }
-
+*/
 /*************************************************************
 * Check the last modified date & time of the file 
 *
@@ -454,6 +475,7 @@ int getFileEpoch(const char *filePath){
 *			
 *	Destroy: none
 **************************************************************/
+/*
 int getFileDateTime(char *dateTime,const char *path){
 	char times[50]={0};
 	time_t t = time(NULL);
@@ -461,7 +483,7 @@ int getFileDateTime(char *dateTime,const char *path){
 	strftime(times,20,"%Y/%m/%d %H:%M:%S",localtime(&(attr.st_mtime)));
 	strcpy(dateTime,times);
 }
-
+*/
 /*************************************************************
 * Convert date and time of given file to epoch format
 *
@@ -471,6 +493,7 @@ int getFileDateTime(char *dateTime,const char *path){
 *			
 *	Destroy: none
 **************************************************************/
+/*
 int convertEpoch(char *fileDateTime){
 	unsigned long int epochSecs = 0;
 	time_t epoch = 0;
@@ -493,3 +516,4 @@ int convertEpoch(char *fileDateTime){
 	epochSecs = (unsigned long int)epoch;
 	return epochSecs;
 }
+*/

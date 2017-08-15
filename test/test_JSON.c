@@ -14,6 +14,7 @@
 #include "RestructureNode.h"
 #include "RedBlackTree.h"
 #include "LinkedList.h"
+#include "main.h"
 #include "CException.h"
 
 void setUp(void){}
@@ -101,13 +102,15 @@ void test_load_existing_json_file_to_read_the_object_inside(void){
 
 void test_updateJson_should_check_file_date_time_compare_to_json_file(void){
 	Node *dupRoot = NULL;
-	json_t *updatedObj = NULL;
 	//char *testFile1 = createFileForTesting("FolderForTesting/TestFileP.txt",5000);
 	//duplicateFileForTesting(testFile1,"5");
 	traverseFolder(&dupRoot,"FolderForTesting");
-	//updatedObj = updateJson("FolderForTesting","fileInformation.json");	
-	//deleteAllContentInFolder("FolderForTesting");
+	summariseFolder(&dupRoot);
+	
+	//TEST_ASSERT_NOT_NULL(removedEle);
+	//TEST_ASSERT_NOT_NULL(removedNode);
 }
+
 /*
 void test_updateJson_should_check_file_number_compare_to_json_file_array_size(void){
 	json_t *obj = NULL;

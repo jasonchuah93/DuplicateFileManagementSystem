@@ -20,10 +20,12 @@
 #include "main.h"
 #include "CException.h"
 
-void mainProgram(){
+void mainProgram(const char *folderPath){
 	Node *duplicatedFileRoot = NULL;
 	//Call traverseAllFolder(duplicatedFileRoot,mainFolder); This function scan all folder
+	traverseFolder(&duplicatedFileRoot,folderPath);
 	//Call summariesMainFolder(duplicatedFileRoot); This function printf all the duplicated file from root
+	summariseFolder(&duplicatedFileRoot);
 }
 
 

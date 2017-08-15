@@ -7,7 +7,6 @@
 #include <dirent.h>
 #include <time.h>
 #include "JSON.h"
-#include "fileHandling.h"
 #include "generateCRC32Value.h"
 #include "Node.h"
 #include "errorNode.h"
@@ -18,7 +17,7 @@
 #include "CException.h"
 
 struct dirent *dir = NULL;
-
+/*
 FileInfo *createInfo(){
 	FileInfo *info = malloc(sizeof(FileInfo));
 	info->fileName = NULL;
@@ -239,3 +238,4 @@ int delJSONFile(const char *JSONfile){
 		return 0;
 	}
 }
+*/
