@@ -5,7 +5,7 @@
 #include "errorNode.h"
 #include "LinkedList.h"
 #include "fileHandling.h"
-#include "compareJSON.h"
+#include "compareFileInfo.h"
 
 /******************************************************************
 * 	Compare the size of 2 input parameters

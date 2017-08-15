@@ -3,7 +3,7 @@
 #include "fileHandling.h"
 #include "generateCRC32Value.h"
 #include "errorNode.h"
-#include "compareJSON.h"
+#include "compareFileInfo.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
 #include "RedBlackTree.h"

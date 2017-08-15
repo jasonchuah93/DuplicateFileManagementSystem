@@ -7,7 +7,7 @@
 #include "errorNode.h"
 #include "LinkedList.h"
 #include "fileHandling.h"
-#include "compareJSON.h"
+#include "compareFileInfo.h"
 
 void setUp(void){}
 void tearDown(void){}
