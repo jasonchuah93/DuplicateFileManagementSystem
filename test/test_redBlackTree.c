@@ -22,9 +22,9 @@ void test_addFileNode_should_add_fileNode_into_empty_root(void){
 	Error *e = NULL;
 	Node *nodePtr = NULL;
 	FileInfo *info = initInfo();
-	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
-	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,2);
+	json_t *folderObj = createJsonFolderObject("TestJSON");
+	json_t *fileArry = goIntoJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFromJsonObject(fileArry,info,2);
 	Node *fileNode = createNode(info);
 	Try{
 		addFileNode(&nodePtr,fileNode);

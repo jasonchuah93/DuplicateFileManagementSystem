@@ -24,9 +24,9 @@ void test_createElement_should_create_element_contain_mock_file_infomation(void)
 
 void test_createElement_should_create_element_with_real_file_infomation(void){
 	FileInfo *info = initInfo();
-	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
-	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,1);
+	json_t *folderObj = createJsonFolderObject("TestJSON");
+	json_t *fileArry = goIntoJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFromJsonObject(fileArry,info,1);
 	Element *ele = createElement(info);
 	
 	TEST_ASSERT_EQUAL_STRING("Testing 3.xlsx",getEleName(ele));
@@ -51,9 +51,9 @@ void test_createLinkedList_should_create_empty_link_list(void){
 void test_listAddFirst_should_add_element_into_linkedList(void){
 	FileInfo *info = initInfo();
 	LinkedList *list = createLinkedList();
-	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
-	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,3);
+	json_t *folderObj = createJsonFolderObject("TestJSON");
+	json_t *fileArry = goIntoJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFromJsonObject(fileArry,info,3);
 	Element *ele = createElement(info);
     listAddFirst(ele,list);
 	
@@ -70,10 +70,10 @@ void test_listAddFirst_should_add_2_element_into_linkedList(void){
 	FileInfo *info = initInfo();
 	FileInfo *info2 = initInfo();
 	LinkedList *list = createLinkedList();
-	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
-	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,0);
-	getFileInfoFrmJson(fileArry,info2,1);
+	json_t *folderObj = createJsonFolderObject("TestJSON");
+	json_t *fileArry = goIntoJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFromJsonObject(fileArry,info,0);
+	getFileInfoFromJsonObject(fileArry,info2,1);
 	Element *ele = createElement(info);
 	Element *ele2 = createElement(info2);
 	listAddFirst(ele,list);
@@ -97,10 +97,10 @@ void test_listRemoveFirst_should_remove_2_element_from_linkedList(void){
 	FileInfo *info = initInfo();
 	FileInfo *info2 = initInfo();
 	LinkedList *list = createLinkedList();
-	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
-	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,0);
-	getFileInfoFrmJson(fileArry,info2,1);
+	json_t *folderObj = createJsonFolderObject("TestJSON");
+	json_t *fileArry = goIntoJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFromJsonObject(fileArry,info,0);
+	getFileInfoFromJsonObject(fileArry,info2,1);
 	Element *ele = createElement(info);
 	Element *ele2 = createElement(info2);
 	listAddFirst(ele,list);

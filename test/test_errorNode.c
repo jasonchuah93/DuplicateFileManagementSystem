@@ -15,9 +15,9 @@ void tearDown(void){}
 
 void test_createErr_should_create_errorPtr_store_nodePtr(void){
 	FileInfo *info = initInfo();
-	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
-	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,3);
+	json_t *folderObj = createJsonFolderObject("TestJSON");
+	json_t *fileArry = goIntoJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFromJsonObject(fileArry,info,3);
 	Node *nodePtr = createNode(info);
 	Error *errPtr = createErr("Try add node inside",nodePtr);
 	

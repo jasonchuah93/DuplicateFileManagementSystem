@@ -32,13 +32,6 @@ void test_hashCRC_should_not_be_equal_if_type_of_files_is_different(void){
 	TEST_ASSERT_NOT_EQUAL(checksum1,checksum2);
 }
 
-void test_hashCRC_should_be_equal_if_type_of_file_is_same_but_in_different_folder(void){
-	int checksum1=0,checksum2=0;
-	checksum1=hashCRC("forTesting/Testing 11.pptx");
-	checksum2=hashCRC("forTesting/test folder/test p.point2.pptx");
-	TEST_ASSERT_EQUAL(checksum1,checksum2);
-}
-
 void test_hashCRC_should_be_equal_for_two_file_with_same_content_but_different_name_in_excel_format(void){
 	int checksum1=0,checksum2=0;
 	checksum1=hashCRC("forTesting/Testing 2.xlsx");

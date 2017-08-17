@@ -27,9 +27,9 @@ void test_createNode_should_create_empty_node(void){
 
 void test_createNode_should_create_a_node_to_store_file_information(void){
     FileInfo *info = initInfo();
-	json_t *folderObj = createJsonObjectFrmFolder("TestJSON");
-	json_t *fileArry = getJsonArrayFrmFolderObj(folderObj);
-	getFileInfoFrmJson(fileArry,info,3); //3 indicate the index inside the array
+	json_t *folderObj = createJsonFolderObject("TestJSON");
+	json_t *fileArry = goIntoJsonArrayFrmFolderObj(folderObj);
+	getFileInfoFromJsonObject(fileArry,info,3); //3 indicate the index inside the array
 	Node *nodePtr = createNode(info);
 	
 	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getNameFromNode(nodePtr));
