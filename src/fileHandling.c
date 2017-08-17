@@ -29,9 +29,10 @@ static int lastFileCount;
 
 int getFileSize(const char *path){
 	int size = 0;
-	FILE *f = getFilePtr(path);
-	fseek(f,0,SEEK_END);    
-	size = ftell(f);   
+	FILE *fPtr = fopen(path,"r");
+	fseek(fPtr,0,SEEK_END);    
+	size = ftell(fPtr);   
+	fclose(fPtr);
     return size;
 }
 
@@ -300,26 +301,6 @@ int checkFile(const char *path) {
 }
 
 /*************************************************************
-* 	Get file pointer  
-*
-*	Input: 	path		the path of the file we want to check  
-*			
-*	Output: f					pointer of the file
-*			Throw error			indicate is not a file
-*	
-*	Destroy: none
-**************************************************************/
-
-FILE *getFilePtr(const char *path){
-	int c = 0;
-	c = checkFile(path);
-	if(c == 1){
-		FILE *f = fopen(path,"r");
-		return f;
-	}
-}
-
-/*************************************************************
 * Check if the parameter is folder
 *
 *	Input: 	path		the path of the folder we want to check  
@@ -338,28 +319,6 @@ int checkFolder(const char *path) {
 		return 0;
 }
 
-/*************************************************************
-* 	Get folder pointer  
-*
-*	Input: 	path		the path of the file we want to check  
-*			
-*	Output: d					pointer of the folder
-*			Throw error			indicate is not a folder
-*	
-*	Destroy: none
-************************************************************/
-/*
-DIR *getFolderPtr(const char *path){
-	int c = 0;
-	c = checkFolder(path);
-	if(c == 1){
-		DIR *d = opendir(path);
-		return d;
-	}else if(c == 0){
-		Throw((Error*)ERR_FILE_NOT_OPEN);
-	}
-}
-*/
 /*************************************************************
 * Check the total number of file in folder 
 *
@@ -458,15 +417,15 @@ int compareDateTime(char *dateTime,const char *path){
 *			
 *	Destroy: none
 **************************************************************/
-/*
-int getFileEpoch(const char *filePath){
+
+int getFileEpoch(char *filePath){
 	unsigned long int epochSecs = 0;
 	char dateTime[50] = {0};
 	getFileDateTime(dateTime,filePath);
 	epochSecs = convertEpoch(dateTime);
 	return epochSecs;
 }
-*/
+
 /*************************************************************
 * Check the last modified date & time of the file 
 *
@@ -478,7 +437,7 @@ int getFileEpoch(const char *filePath){
 *	Destroy: none
 **************************************************************/
 
-int getFileDateTime(char *dateTime,const char *path){
+int getFileDateTime(char *dateTime,char *path){
 	char times[50]={0};
 	time_t t = time(NULL);
 	stat(path, &attr);

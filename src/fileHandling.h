@@ -36,8 +36,8 @@ int checkFileNumber(const char *path);
 int listSubFolderNumber(const char *path);
 char *getSubFolderPath(const char *path);
 int compareDateTime(char *dateTime,const char *path);
-int getFileEpoch(const char *filePath);
-int getFileDateTime(char *dateTime,const char *path);
+int getFileEpoch(char *filePath);
+int getFileDateTime(char *dateTime,char *path);
 int convertEpoch(char *fileDateTime);
 
 #endif // fileHandling_H
