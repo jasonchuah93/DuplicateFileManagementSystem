@@ -1,94 +1,88 @@
 {
     "File Info":[
         {
+            "size":2888,
             "name":"sysmem.c",
-            "size":2888,
             "crc":1695663528,
-            "epoch seconds":1501433860
+            "epoch":1501433860
         },
         {
+            "size":2888,
             "name":"sysmem2.c",
-            "size":2888,
             "crc":1695663528,
-            "epoch seconds":1501433870
+            "epoch":1501433870
         },
         {
-            "name":"Testing 1.mp3",
+            "size":82858,
+            "name":"test p.point2.pptx",
+            "crc":3403213022,
+            "epoch":1500185350
+        },
+        {
             "size":3965661,
+            "name":"Testing 1.mp3",
             "crc":2580887755,
-            "epoch seconds":1500185350
+            "epoch":1500185350
         },
         {
-            "name":"Testing 10.jpg",
-            "size":3270784,
-            "crc":1012057614,
-            "epoch seconds":1500185350
-        },
-        {
+            "size":82859,
             "name":"Testing 11.pptx",
-            "size":82858,
-            "crc":3403213022,
-            "epoch seconds":1500185350
+            "crc":3522072587,
+            "epoch":1502895943
         },
         {
-            "name":"Testing 12.jpg",
             "size":3270784,
+            "name":"Testing 12.jpg",
             "crc":1012057614,
-            "epoch seconds":1500185350
+            "epoch":1500185350
         },
         {
+            "size":82855,
             "name":"Testing 13.pptx",
-            "size":82858,
-            "crc":3403213022,
-            "epoch seconds":1500185350
+            "crc":2199508,
+            "epoch":1502945284
         },
         {
+            "size":10038,
             "name":"Testing 2.xlsx",
-            "size":10038,
             "crc":305591788,
-            "epoch seconds":1500185350
+            "epoch":1500185350
         },
         {
+            "size":10038,
             "name":"Testing 3.xlsx",
-            "size":10038,
             "crc":305591788,
-            "epoch seconds":1500185350
+            "epoch":1500185350
         },
         {
+            "size":15437,
             "name":"Testing 4.docx",
-            "size":15400,
-            "crc":2015438943,
-            "epoch seconds":1500185350
+            "crc":3329378287,
+            "epoch":1502954207
         },
         {
+            "size":33,
             "name":"Testing 5.txt",
-            "size":33,
             "crc":3775936421,
-            "epoch seconds":1500185350
+            "epoch":1502954158
         },
         {
+            "size":33,
             "name":"Testing 6.txt",
-            "size":33,
             "crc":3775936421,
-            "epoch seconds":1500185350
+            "epoch":1500185350
         },
         {
+            "size":249159,
             "name":"Testing 7.pdf",
-            "size":249159,
             "crc":289821883,
-            "epoch seconds":1500185350
+            "epoch":1500185350
         },
         {
-            "name":"Testing 8.pdf",
-            "size":249159,
-            "crc":289821883,
-            "epoch seconds":1500185350
-        },
-        {
+            "size":1886286,
             "name":"Testing 9.jpg",
-            "size":1563175,
-            "crc":2618875302,
-            "epoch seconds":1500185350
+            "crc":2481457205,
+            "epoch":1502896019
         }
     ]
 }

@@ -1,33 +1,61 @@
 #include <string.h>
 #include <malloc.h>
-//#include <stdio.h>
-//#include <stdlib.h>
 #include <dirent.h>
-//#include <time.h>
 #include "fileInfo.h"
 #include "generateCRC32Value.h"
 #include "fileHandling.h"
-/*
-
-
-
-
-#include <sys/stat.h>
-#include <sys/types.h>
-
-
-
-#include "compareFileInfo.h"
-#include "Rotation.h"
-#include "RestructureNode.h"
-#include "RedBlackTree.h"
-
-*/
 #include "errorNode.h"
 #include "CException.h"
 #include "JSON.h"
 
 struct dirent *dir = NULL;
+
+json_t *updateJsonFolderObject(const char *folderName, const char *jsonFile){
+	int countArraySize = 0, numOfFileInFolder = 0;
+	unsigned long long int fileSize = 0;
+	unsigned long int jsonFileEpoch = 0, otherFileEpoch = 0, fileCRC =0;
+	char jsonFilePath[100] = {0}, otherFilePath[100] = {0}, fileToUpdate[100] = {0};
+	json_error_t objError;
+	json_t *loadedObj = NULL, *loadedArray = NULL, *fileObj = NULL;
+	json_t *objName = NULL, *objSize = NULL, *objCRC = NULL, *objEpoch = NULL;
+	json_t *updatedObj = json_object();
+	numOfFileInFolder = checkFileNumberInFolder(folderName);
+	DIR *dPtr = opendir(folderName);
+	sprintf(jsonFilePath,"%s/%s",folderName,jsonFile);
+	loadedObj = json_load_file(jsonFilePath,0,&objError);
+	loadedArray = goIntoJsonArrayFrmFolderObj(loadedObj);
+	size_t arraySize = json_array_size(loadedArray);
+	while((dir = readdir(dPtr))!=NULL){
+		if(dir->d_type == DT_REG){
+			if(strcmp("fileInformation.json",dir->d_name) != 0){
+				sprintf(otherFilePath,"%s/%s",folderName,dir->d_name);
+				otherFileEpoch = getFileEpoch(otherFilePath);
+				fileObj = json_array_get(loadedArray,countArraySize);
+				if(json_is_object(fileObj)){
+					objName = json_object_get(fileObj,"name");
+					objEpoch = json_object_get(fileObj,"epoch");
+					countArraySize++;						
+				}
+				if(numOfFileInFolder == arraySize){
+					if(otherFileEpoch > json_integer_value(objEpoch)){
+						printf("file: %s\n",dir->d_name);
+						fileSize = getFileSize(otherFilePath);
+						fileCRC = hashCRC(otherFilePath);
+						json_object_set_new(updatedObj,"name",json_string(dir->d_name));
+						json_object_set_new(updatedObj,"size",json_integer(fileSize));
+						json_object_set_new(updatedObj,"crc",json_integer(fileCRC));
+						json_object_set_new(updatedObj,"epoch",json_integer(otherFileEpoch));
+						json_object_update_existing(fileObj,updatedObj);
+					}
+				}else{
+					loadedObj = createJsonFolderObject(folderName);
+				}
+			}
+		}
+	}
+	closedir(dPtr);		
+	return loadedObj;
+}
 
 int checkFilesLatestThanJson(const char *folderName,char *jsonFile){
 	unsigned long int currentTime = 0, previousTime = 0;
@@ -156,71 +184,3 @@ int checkJsonTypeFile(const char *jsonFilePath){
 	else
 		return 0;
 }
-/*
-
-
-json_t *updateJson(const char *folderPath, const char *jsonFile){
-	int countArray = 0,i = 0;
-	char jsonPath[100] = {0}, filePath[100] = {0}, subFolderPath[100] = {0}, filePath2[100] = {0};
-	size_t arraySize = 0;
-	unsigned long int fileEpochSec = 0, fileCRC32Value =0;
-	unsigned long long int fileSize = 0;
-	char *updatedJsonPath = NULL;
-	json_t *loadObj = NULL, *loadArray = NULL, *fileObj = NULL;
-	json_t *objName = NULL, *objEpoch = NULL;
-	json_t *newObj = json_object();
-	json_t *updateObj = json_object();
-	json_error_t objError;
-	DIR *dPtr = getFolderPtr(folderPath);
-	int fileNum = checkFileNumber(folderPath);
-	sprintf(jsonPath,"%s/%s",folderPath,jsonFile);
-	loadObj = json_load_file(jsonPath,0,&objError);
-	loadArray = getJsonArrayFrmFolderObj(loadObj);
-	arraySize = json_array_size(loadArray);
-	while((dir = readdir(dPtr))!=NULL){
-		if(dir->d_type == DT_REG){
-			if(strcmp(dir->d_name,"fileInformation.json")!=0){
-				sprintf(filePath,"%s/%s",folderPath,dir->d_name);
-				//fileSize = getFileSize(filePath);
-				//fileCRC32Value = hashCRC(filePath);
-				//fileEpochSec = getFileEpoch(filePath);		
-				fileObj = json_array_get(loadArray,countArray);
-				if(json_is_object(fileObj)){
-					objName = json_object_get(fileObj,"name");
-					if(strcmp(json_string_value(objName),dir->d_name) == 0){
-						fileEpochSec = getFileEpoch(filePath);
-						objEpoch = json_object_get(fileObj,"epoch seconds");
-						if(fileEpochSec > json_integer_value(objEpoch)){
-							fileSize = getFileSize(filePath);
-							fileCRC32Value = hashCRC(filePath);
-							json_object_set_new(fileObj,"size",json_integer(fileSize));
-							json_object_set_new(fileObj,"crc",json_integer(fileCRC32Value));
-							json_object_set_new(fileObj,"epoch seconds",json_integer(fileEpochSec));
-							writeJsonIntoFile(jsonPath,loadObj);
-						}
-						
-					}		
-				}
-				countArray++;
-			}
-		}else if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
-			sprintf(subFolderPath,"%s/%s",folderPath,dir->d_name);
-			updateJson(subFolderPath,jsonFile);
-		}
-	}
-	if(countArray != arraySize){
-		fileObj = createJsonObjectFrmFolder(folderPath);
-		writeJsonIntoFile(jsonPath,fileObj);
-	}
-	closedir(dPtr);		
-	//return fileObj;
-}
-
-
-
-
-
-
-
-
-*/

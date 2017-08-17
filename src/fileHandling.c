@@ -328,19 +328,20 @@ int checkFolder(const char *path) {
 *			
 *	Destroy: none
 **************************************************************/
-/*
-int checkFileNumber(const char *path){
+
+int checkFileNumberInFolder(const char *folderName){
 	int count = 0;
-	DIR *folder = getFolderPtr(path);
-	while((dir=readdir(folder))!=NULL){
+	DIR *dPtr = opendir(folderName);
+	while((dir=readdir(dPtr))!=NULL){
 		if(dir->d_type == DT_REG){
 			if(strcmp(dir->d_name,"fileInformation.json")!=0)
 				count++;
 		}
 	}
+	closedir(dPtr);
 	return count;
 }
-*/
+
 /*************************************************************
 * Check the total number of sub folders in folder 
 *

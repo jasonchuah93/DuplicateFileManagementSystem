@@ -1,27 +1,8 @@
 #include "unity.h"
-//#include <string.h>
-//#include <stdio.h>
 #include <stdlib.h>
 #include "fileInfo.h"
 #include "generateCRC32Value.h"
 #include "fileHandling.h"
-/*
-
-
-
-#include <malloc.h>
-#include "jansson.h"
-
-
-#include "Node.h"
-
-#include "compareJSON.h"
-#include "Rotation.h"
-#include "RestructureNode.h"
-#include "RedBlackTree.h"
-#include "LinkedList.h"
-
-*/
 #include "errorNode.h"
 #include "CException.h"
 #include "JSON.h"
@@ -29,9 +10,16 @@
 void setUp(void){}
 void tearDown(void){}
 
+void test_updateJsonFolderObject_should_return_updated_object_if_json_file_is_not_latest_update(void){
+	json_t *obj = NULL;
+	obj = updateJsonFolderObject("forTesting","fileInformation.json");
+	if(checkJsonFileExistInFolder("forTesting","fileInformation.json")==-1){
+		writeJsonObjectIntoFile("forTesting/fileInformation.json",obj);
+	}
+}
+
 void test_checkFilesLatestThanJson_should_return_negative_1_if_json_file_is_not_latest_inside_folder(void){
-	TEST_ASSERT_EQUAL(-1,checkFilesLatestThanJson("forTesting","fileInformation.json"));
-	
+	TEST_ASSERT_EQUAL(-1,checkFilesLatestThanJson("forTesting/test folder","jsonInfo.json"));
 }
 
 void test_checkFilesLatestThanJson_should_return_1_if_json_file_is_latest_inside_folder(void){
@@ -184,56 +172,4 @@ void test_test_checkJsonTypeFile_should_return_1_if_the_file_type_is_json_should
 	TEST_ASSERT_EQUAL(checkJsonTypeFile("forTesting/J.docx"),0);
 }
 
-
-
-/*
-
-
-void test_checkFileLaterThanJson_should_return_0_if_json_file_is_latest_inside_folder(void){
-	int check = 1;
-	check = checkFileLaterThanJson("TestJSON","fileInformation.json");
-	TEST_ASSERT_EQUAL(0,check);
-}
-
-void test_checkFileLaterThanJson_should_return_1_if_json_file_is_not_latest_inside_folder(void){
-	int check = 0;
-	check = checkFileLaterThanJson("forTesting/test folder","fileInformation.json");
-	TEST_ASSERT_EQUAL(1,check);
-}
-
-void test_load_existing_json_file_to_read_the_object_inside(void){
-	json_t *folderObj = NULL;
-	json_t *fileArray = NULL;
-	size_t arraySize = 0;
-	json_error_t jError;
-	folderObj = json_load_file("TestJSON/fileInformation.json",0,&jError);
-	
-	if(json_is_object(folderObj)){
-		fileArray = getJsonArrayFrmFolderObj(folderObj);
-		arraySize = json_array_size(fileArray);
-		//printf("array size:%d\n",arraySize);
-	}
-}
-
-void test_updateJson_should_check_file_date_time_compare_to_json_file(void){
-	Node *dupRoot = NULL;
-	//char *testFile1 = createFileForTesting("FolderForTesting/TestFileP.txt",5000);
-	//duplicateFileForTesting(testFile1,"5");
-	traverseFolder(&dupRoot,"FolderForTesting");
-	summariseFolder(&dupRoot);
-	
-	//TEST_ASSERT_NOT_NULL(removedEle);
-	//TEST_ASSERT_NOT_NULL(removedNode);
-}
-
-
-void test_updateJson_should_check_file_number_compare_to_json_file_array_size(void){
-	json_t *obj = NULL;
-	Node *dupRoot = NULL;
-	
-	//traverseFolder(&dupRoot,"FolderForTesting");
-	//obj = updateJson("FolderForTesting","fileInformation.json");
-	//TEST_ASSERT_NOT_NULL(obj);
-}
-*/
 

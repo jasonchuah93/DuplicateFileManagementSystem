@@ -32,7 +32,7 @@ int checkFolder(const char *path);
 FILE *getFilePtr(const char *path);
 DIR *getFolderPtr(const char *path);
 int getFileSize(const char *path);
-int checkFileNumber(const char *path);
+int checkFileNumberInFolder(const char *folderName);
 int listSubFolderNumber(const char *path);
 char *getSubFolderPath(const char *path);
 int compareDateTime(char *dateTime,const char *path);
