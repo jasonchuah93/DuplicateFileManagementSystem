@@ -1,16 +1,16 @@
 {
     "File Info":[
         {
-            "size":2888,
-            "name":"sysmem.c",
+            "epoch":1501433860,
             "crc":1695663528,
-            "epoch seconds":1501433860
+            "size":2888,
+            "name":"sysmem.c"
         },
         {
-            "size":2888,
-            "name":"sysmem2.c",
+            "epoch":1501433870,
             "crc":1695663528,
-            "epoch seconds":1501433870
+            "size":2888,
+            "name":"sysmem2.c"
         }
     ]
 }

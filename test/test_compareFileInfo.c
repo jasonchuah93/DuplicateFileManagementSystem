@@ -92,7 +92,7 @@ void test_compareFileSize_should_compare_2_info_size_and_return_negative_1(void)
 	free(node2);
 }
 
-void test_ompareFileCRC_should_compare_2_info_crc_and_return_1(void){
+void test_compareFileCRC_should_compare_2_info_crc_and_return_1(void){
 	int compare = 0;
 	FileInfo info1 = {.fileSize = 3016, .fileCRC32Value = 852147963};
 	FileInfo info2 = {.fileSize = 3016, .fileCRC32Value = 352147963};

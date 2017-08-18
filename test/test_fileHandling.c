@@ -1,30 +1,73 @@
 #include "unity.h"
 #include <dirent.h>
 #include <malloc.h>
-#include "fileHandling.h"
-
-/*
-#include <unistd.h>
-#include <sys/types.h>
+#include "generateCRC32Value.h"
+#include "fileInfo.h"
 #include "jansson.h"
 #include "JSON.h"
-#include "generateCRC32Value.h"
 #include "Node.h"
-#include "errorNode.h"
-#include "compareJSON.h"
+#include "compareFileInfo.h"
+#include "LinkedList.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
-#include "LinkedList.h"
 #include "RedBlackTree.h"
+#include "errorNode.h"
 #include "CException.h"
-*/
+#include "fileHandling.h"
 
 void setUp(void){}
 void tearDown(void){}
 
+void test_summariseFolder_should_summarise_the_folder_and_send_message_if_have_duplicate_file_in_folder(void){
+	Node *dupRoot = NULL;
+	traverseFolder(&dupRoot,"TestJSON");
+	summariseFolder(&dupRoot);
+	free(dupRoot);
+}
+
+void test_traverseFolder_should_scan_for_duplicate_file_in_two_folder(void){
+	Node *dupRoot = NULL;
+	traverseFolder(&dupRoot,"TestJSON");
+	TEST_ASSERT_NOT_NULL(dupRoot);
+	free(dupRoot);
+}
+
+void test_scanFolder_should_scan_for_duplicate_file_in_one_folder(void){
+	Node *root = NULL;
+	Node *dupRoot = NULL;
+	scanFolder(&root,&dupRoot,"TestJSON");
+	free(root);
+	free(dupRoot);
+}
+
+void test_deleteFile_should_delete_the_input_file_from_folder(void){
+	char *testFile = createFileForTesting("FolderForTesting","TestFileZ.txt",520);
+	deleteFile(testFile);
+}
+
+void test_duplicateFileForTesting_should_duplicate_file_when_pass_in_the_original_file_pointer(void){
+	char *testFile = createFileForTesting("FolderForTesting","TestFileA.txt",50);
+	char *duplicateFile = duplicateFileForTesting(testFile,"2");
+	
+	TEST_ASSERT_NOT_NULL(testFile);
+	TEST_ASSERT_NOT_NULL(duplicateFile);
+	
+	free(testFile);
+	free(duplicateFile);
+}
+
+void test_duplicateFileForTesting_should_throw_error_if_file_to_duplicate_not_exist(void){
+	Error *e = NULL;
+	char *fileToDuplicate = NULL;
+	Try{
+		duplicateFileForTesting(fileToDuplicate,"1");
+		TEST_FAIL_MESSAGE("File to duplicate not exist\n");
+	}Catch(e)
+		TEST_ASSERT_EQUAL(e,ERR_FILE_NOT_OPEN);
+}
+
 void test_createFileForTesting_should_create_a_txt_file_with_random_generator_number(void){
 	char *testFile = createFileForTesting("FolderForTesting","TestFileA.txt",50);
-	
 	TEST_ASSERT_NOT_NULL(testFile);
 	TEST_ASSERT_EQUAL_STRING(testFile,"FolderForTesting/TestFileA.txt");
 	free(testFile);
@@ -60,17 +103,6 @@ void test_checkFileSize_should_get_the_size_of_mp3(void){
 	TEST_ASSERT_EQUAL(3965661,getFileSize("forTesting/Testing 1.mp3"));
 }
 
-/*
-
-void test_traverseFolder_should_scan_through_the_content_of_the_folder(void){
-	traverseFolder("forTesting");
-}
-
-void test_createJSONFilePath_should_create_a_json_file_path(void){
-	char *test = createJSONFilePath("TestJSON");
-	TEST_ASSERT_EQUAL_STRING("TestJSON/fileInformation.json",test);
-}
-*/
 /************************************************************
     1st RBT                    2nd RBT
        |                          |
@@ -98,9 +130,7 @@ void test_createJSONFilePath_should_create_a_json_file_path(void){
 }
 
 void test_scanFolder_scan_folder_forTesting(void){
-	Node *root = NULL;
-	Node *dupRoot = NULL;
-	scanFolder(&root,&dupRoot,"forTesting");
+	
 }
 
 void xtest_traverseFolder_with_3_argument_should_traverse_main_folder(void){
@@ -122,25 +152,6 @@ void xtest_traverseFolder_with_3_argument_should_traverse_main_folder(void){
 void xtest_traverseFolder_with_2_argument_should_traverse_main_folder(void){
 	Node *root = NULL;
 	Node *dupRoot = NULL;
-}
-
-
-
-void test_duplicateFileForTesting_should_throw_error_if_file_to_duplicate_not_exist(void){
-	Error *e = NULL;
-	char *fileToDuplicate = NULL;
-	Try{
-		duplicateFileForTesting(fileToDuplicate,"1");
-		TEST_FAIL_MESSAGE("File to duplicate not exist\n");
-	}Catch(e)
-		TEST_ASSERT_EQUAL(e,ERR_FILE_NOT_OPEN);
-}
-	
-void test_duplicateFileForTesting_should_copy_the_content_of_input_file(void){
-	char *testFile = createFileForTesting("FolderForTesting/TestFileB.txt",100);
-	char *dupFile = duplicateFileForTesting(testFile,"1");
-	TEST_ASSERT_NOT_NULL(testFile);
-	TEST_ASSERT_NOT_NULL(dupFile);
 }
 
 void test_deleteFile_should_throw_error_if_file_to_delete_not_exist(void){

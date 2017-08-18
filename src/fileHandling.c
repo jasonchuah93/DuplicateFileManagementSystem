@@ -1,17 +1,3 @@
-/*
-#include "jansson.h"
-#include "JSON.h"
-#include "fileInfo.h"
-#include "generateCRC32Value.h"
-#include "errorNode.h"
-#include "compareFileInfo.h"
-#include "Rotation.h"
-#include "RestructureNode.h"
-#include "RedBlackTree.h"
-#include "LinkedList.h"
-#include "CException.h"
-#include <unistd.h>
-*/
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,13 +5,173 @@
 #include <time.h>
 #include <dirent.h>
 #include <malloc.h>
+#include "generateCRC32Value.h"
+#include "fileInfo.h"
+#include "jansson.h"
+#include "JSON.h"
+#include "compareFileInfo.h"
+#include "LinkedList.h"
+#include "Rotation.h"
+#include "RestructureNode.h"
+#include "RedBlackTree.h"
+#include "errorNode.h"
+#include "CException.h"
 #include "fileHandling.h"
 
 struct stat attr;
 struct dirent *dir;
 struct tm t;
-//static char* lastFile[MaxFile] = {0};
-//static int lastFileCount;
+
+void summariseFolder(Node **dupRoot){
+	int i = 0;
+	Node *removedNode = NULL;
+	Element *removedEle = NULL;
+	if((*dupRoot)!=NULL){
+		while((*dupRoot)!=NULL){
+			removedNode = removeFileNode(dupRoot,*dupRoot);
+			printf("file name: %s\n",((FileInfo*)((LinkedList*)((Node*)removedNode)->data)->head->data)->fileName);
+
+		}
+	}
+	/*
+	if(*dupRoot == NULL){
+		if(removedNode != NULL){
+			for(i=0;i<=getLinkedListLength(removedNode);i++){
+				printf("%d\n",i);
+				//removedEle = listRemoveFirst(((LinkedList*)removedNode->data)); //marco at Node.h
+				//printf("%s\n",getEleName(removedEle));
+			}
+			printf("--------------------------------------\n");
+		}
+	}
+	
+	removedNode = removeFileNode(dupRoot,*dupRoot);
+	if(removedNode != NULL){
+		printf("The following files are duplicated\n");
+		for(i=0;i<=((LinkedList*)removedNode->data)->length;i++){
+			removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
+			printf("%s\n",getEleName(removedEle));
+		}
+		//printf("--------------------------------------\n");
+			
+	}
+	*/
+	
+}
+
+void traverseFolder(Node **duplicatedFileRoot,const char *folderName){
+	Node *root = NULL;
+	_traverseFolder(&root,duplicatedFileRoot,folderName);
+}
+
+void _traverseFolder(Node **root,Node **duplicatedRoot,const char *folderName){
+	char subFolderPath[100] = {0};
+	DIR *d = opendir(folderName);
+	while((dir = readdir(d)) != NULL){
+		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
+			sprintf(subFolderPath,"%s/%s",folderName,dir->d_name);
+			_traverseFolder(root,duplicatedRoot,subFolderPath);
+		}
+	}
+	scanFolder(root,duplicatedRoot,folderName);
+	closedir(d);
+}
+
+void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderName){
+	int arrayCounter = 0;
+	size_t arraySize = 0;
+	char jsonFilePath[100] = {0}, getErrorFilePath[100] = {0}, getDuplicateFilePath[100] = {0};
+	json_t *folderObj = NULL, *folderArray = NULL;
+	FileInfo *info = NULL;
+	Node *fileNode = NULL, *linkedListNode = NULL;
+	Error *errNode = NULL;
+	Element *errElement = NULL, *duplicatedFileElement = NULL, *similarErrElement = NULL;
+	LinkedList *duplicatedFileList = NULL;
+	sprintf(jsonFilePath,"%s/%s",folderName,"fileInformation.json");
+	if(checkJsonFileExistInFolder(folderName,"fileInformation.json") == 1){
+		folderObj = updateJsonFolderObject(folderName,"fileInformation.json");
+		deleteFile(jsonFilePath);
+	}else{
+		folderObj = createJsonFolderObject(folderName);
+	}
+	folderArray = goIntoJsonArrayFrmFolderObj(folderObj);
+	arraySize = json_array_size(folderArray);
+	for(arrayCounter=0;arrayCounter<arraySize;arrayCounter++){
+		info = initInfo();
+		getFileInfoFromJsonObject(folderArray,info,arrayCounter);
+		fileNode = createNode(info);
+		Try{
+			addFileNode(nodeRoot,fileNode);
+		}Catch(errNode){ //Error Node is the node copy from 1st RBT which is similar with the node trying to add to the 1st RBT
+			sprintf(getErrorFilePath,"%s/%s",folderName,getNameInErr(errNode));
+			sprintf(getDuplicateFilePath,"%s/%s",folderName,getNameFromNode(fileNode));
+			if(compareFileByte(getErrorFilePath,getDuplicateFilePath) == 1){
+				errElement = createElement(fileInfoFromErrorNode);
+				duplicatedFileElement = createElement(fileNode->data);
+				if(similarErrElement == NULL){
+					duplicatedFileList = createLinkedList();
+					similarErrElement = errElement;
+					if(duplicatedFileList->head == NULL){
+						listAddFirst(errElement,duplicatedFileList);
+						listAddFirst(duplicatedFileElement,duplicatedFileList);
+						linkedListNode = createNode(duplicatedFileList);
+						addListNode(duplicatedFileRoot,linkedListNode);
+					}
+				}else{
+					if(strcmp(getEleName(similarErrElement),getEleName(errElement)) == 0){
+						listAddFirst(duplicatedFileElement,duplicatedFileList);
+						linkedListNode = createNode(duplicatedFileList);
+						addListNode(duplicatedFileRoot,linkedListNode);		
+					}else{
+						duplicatedFileList = createLinkedList();
+						if(duplicatedFileList->head == NULL){
+							listAddFirst(errElement,duplicatedFileList);
+							listAddFirst(duplicatedFileElement,duplicatedFileList);
+							linkedListNode = createNode(duplicatedFileList);
+							addListNode(duplicatedFileRoot,linkedListNode);
+						}
+					}
+				}
+			}
+		}
+	}
+	writeJsonObjectIntoFile(jsonFilePath,folderObj);	
+}
+
+char *duplicateFileForTesting(char *fileToDuplicate, char *number){
+	int ch = 0;
+	char tempNum[10] = {0}, tempDot[10] = {0}, tempDuplicateFileName[100] = {0};
+	char folderName[100] = {0};
+	char *lookForDot = NULL, *getFolderName = NULL, *getFileName = NULL, *duplicateFileName = NULL;
+	FILE *fPtr = fopen(fileToDuplicate,"r+"); 
+	FILE *duplicatePtr = NULL;
+	if(fPtr == NULL)
+		Throw((Error*)ERR_FILE_NOT_OPEN);
+	else{
+		strcpy(folderName,fileToDuplicate);
+		lookForDot = strrchr(fileToDuplicate,'.');
+		strcpy(tempNum,number);
+		strcpy(tempDot,lookForDot);
+		strcat(tempNum,tempDot);
+		strncpy(tempDuplicateFileName,fileToDuplicate,26);
+		strcat(tempDuplicateFileName,tempNum);
+		duplicateFileName = (char*)malloc(strlen(tempDuplicateFileName)+1);
+		strcpy(duplicateFileName,tempDuplicateFileName);
+		duplicatePtr = fopen(duplicateFileName,"w+");
+		while((ch = fgetc(fPtr))!=EOF)
+			fputc(ch,duplicatePtr);
+	}
+	fclose(duplicatePtr);
+	fclose(fPtr);
+	return duplicateFileName;
+}
+
+void deleteFile(char *filePathToDelete){
+	if(filePathToDelete == NULL)
+		Throw((Error*)ERR_FILE_NO_EXIST);
+	else
+		remove(filePathToDelete);
+}
 
 char *createFileForTesting(char *folderName,char *fileName,int size){
 	int counter = 0;
@@ -169,20 +315,7 @@ int getFileSize(const char *path){
 
 
 /*
-void summariseFolder(Node **dupRoot){
-	int i = 0;
-	Node *removedNode = NULL;
-	Element *removedEle = NULL;
-	removedNode = removeFileNode(dupRoot,*dupRoot);
-	if(removedNode != NULL){
-		printf("The following files are duplicated\n");
-		for(i=0;i<=((LinkedList*)removedNode->data)->length;i++){
-			removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
-			printf("%s\n",getEleName(removedEle));
-		}
-		printf("--------------------------------------\n");
-	}
-}
+
 
 void deleteAllContentInFolder(char *folderPath){
 	int i=0,check = 0;
@@ -200,153 +333,6 @@ void deleteAllContentInFolder(char *folderPath){
 	}
 	closedir(dPtr);
 }
-
-void deleteFile(char *filePathToDelete){
-	if(filePathToDelete == NULL)
-		Throw((Error*)ERR_FILE_NO_EXIST);
-	else
-		remove(filePathToDelete);
-}
-
-char *duplicateFileForTesting(char *fileToDuplicate, char *number){
-	char duplicateFileArray[100] = {0}, numArray[50] = {0}, tempNameArray[50] = {0}, ch;
-	char *tempName = NULL, *duplicateFilePath = NULL;
-	int bytes = 0;
-	FILE *fPtr = fopen(fileToDuplicate,"r+");
-	FILE *dupFPtr = NULL;
-	if(fPtr == NULL)
-		Throw((Error*)ERR_FILE_NOT_OPEN);
-	else{
-		tempName = strrchr(fileToDuplicate,'.');
-		strcpy(numArray,number);
-		strcpy(tempNameArray,tempName);
-		strcat(numArray,tempNameArray);
-		strncpy(duplicateFileArray,fileToDuplicate,26);
-		strcat(duplicateFileArray,numArray);
-		duplicateFilePath = (char *)malloc(strlen(duplicateFileArray)+1);
-		strcpy(duplicateFilePath,duplicateFileArray);
-		dupFPtr = fopen(duplicateFilePath,"w+");
-		while((ch = fgetc(fPtr))!=EOF)
-			fputc(ch,dupFPtr);
-	}
-	free(duplicateFilePath);
-	fclose(fPtr);
-	fclose(dupFPtr);
-	return duplicateFilePath;
-}
-
-
-*/
-/*************************************************************
-*   Scan the folder, traverse all content inside
-*
-*	Input: 	path		the path of the folder we want to scan  
-*			
-*	Output: size		size of the file 
-*			
-*	Destroy: none
-**************************************************************/
-/*
-void traverseFolder(Node **duplicatedFileRoot,const char *folderPath){
-	Node *root = NULL;
-	_traverseFolder(&root,duplicatedFileRoot,folderPath);
-}
-
-void _traverseFolder(Node **root,Node **duplicatedRoot,const char *folderPath){
-	char subFolderPath[500] = {0};
-	scanFolder(root,duplicatedRoot,folderPath);
-	DIR *d = getFolderPtr(folderPath);
-	while((dir = readdir(d)) != NULL){
-		if(dir->d_type == DT_DIR && strcmp(dir->d_name,".")!=0 && strcmp(dir->d_name,"..")!=0){
-			sprintf(subFolderPath,"%s/%s",folderPath,dir->d_name);
-			_traverseFolder(root,duplicatedRoot,subFolderPath);
-		}
-	}
-	closedir(d);
-}
-
-void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderName){
-	int cmpFileByte = 0, i = 0, numOfFiles = 0;
-	size_t arraySize = 0;
-	char *jsonPath = NULL, *errNodeFilePath = NULL, *targetNodeFilePath = NULL;
-	const char *fullJsonPath = NULL;
-	json_t *folderObj = NULL, *existingFolderObj = NULL, *updateObj = NULL;
-	json_t *fileArray = NULL;
-	json_error_t jError;
-	Element *fileElementFromErr = NULL, *duplicatedFileEle = NULL, *previousEleFromErr = NULL;
-	Node *fileNode = NULL, *listNode = NULL;
-	Error *errNode = NULL;
-	FileInfo *information = NULL;
-	LinkedList *duplicatedList = NULL; 
-	folderObj = createJsonObjectFrmFolder(folderName);
-	fileArray = getJsonArrayFrmFolderObj(folderObj);
-	arraySize = json_array_size(fileArray);
-	for(i=0;i<arraySize;i=i+1){
-		information = createInfo();
-		getFileInfoFrmJson(fileArray,information,i);
-		fileNode = createNode(information);
-		Try{
-			addFileNode(nodeRoot,fileNode);
-			//printf("fileNode: %s\n",getName(nodeRoot));
-		}Catch(errNode){
-			errNodeFilePath = addFolderPathToFilePath(folderName,getNameInErr(errNode));
-			targetNodeFilePath = addFolderPathToFilePath(folderName,getName(fileNode));
-			cmpFileByte = compareFileByte(errNodeFilePath,targetNodeFilePath);
-			if(cmpFileByte == 0){ // 0 means content of 2 files is the same
-				fileElementFromErr = createElement(((Node*)errNode->data)->data);
-				//printf("current: %s\n",((FileInfo*)fileElementFromErr->data)->fileName);
-				if(fileElementFromErr!=NULL && previousEleFromErr == NULL){
-					previousEleFromErr = fileElementFromErr;
-					duplicatedFileEle = createElement(fileNode->data);
-					duplicatedList = createLinkedList();
-					if(duplicatedList->head == NULL){
-						listAddFirst(fileElementFromErr,duplicatedList);
-						listAddFirst(duplicatedFileEle,duplicatedList);
-						listNode = createNode(duplicatedList);
-						//if(*duplicatedFileRoot == NULL){
-							addFileNodeForList(duplicatedFileRoot,listNode);
-						//}
-					}
-				}else if(previousEleFromErr != NULL){
-					if(((FileInfo*)previousEleFromErr->data)->fileName == ((FileInfo*)fileElementFromErr->data)->fileName){
-						duplicatedFileEle = createElement(fileNode->data);
-						listAddFirst(duplicatedFileEle,duplicatedList);
-						listNode = createNode(duplicatedList);
-						//printf("list data:%s\n",((FileInfo*)duplicatedList->head->data)->fileName);
-						//printf("list len: %d\n",duplicatedList->length);
-						//printf("next: %s\n",((FileInfo*)duplicatedFileEle->data)->fileName);
-					}else{
-						duplicatedFileEle = createElement(fileNode->data);
-						//printf("current: %s\n",((FileInfo*)duplicatedFileEle->data)->fileName);
-						duplicatedList = createLinkedList();
-						if(duplicatedList->head == NULL){
-							listAddFirst(fileElementFromErr,duplicatedList);
-							listAddFirst(duplicatedFileEle,duplicatedList);
-							listNode = createNode(duplicatedList);
-							addFileNodeForList(duplicatedFileRoot,listNode);
-							//printf("list len 2: %d\n",duplicatedList->length);
-							//printf("list data:%s\n",((FileInfo*)duplicatedList->head->data)->fileName);
-						}
-					}
-				}
-			}
-		}
-	}
-	jsonPath = createJSONFilePath(folderName);
-	if(checkJsonFile(folderName,"fileInformation.json")==0){
-		updateJson(folderName,"fileInformation.json");
-		//writeJsonIntoFile(jsonPath,updateObj);
-	}else{
-		writeJsonIntoFile(jsonPath,folderObj);
-	}
-	
-	free(duplicatedList);
-	free(fileNode);
-	free(information);
-}
-
-
-
 
 */
 

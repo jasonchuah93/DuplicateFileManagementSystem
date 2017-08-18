@@ -18,6 +18,49 @@
 void setUp(void){}
 void tearDown(void){}
 
+void test_removeFileNode_should_remove_all_fileNode_from_RBT(void){
+	Error *e = NULL;
+	Node *nodePtr = NULL;
+	Node *removeNode = NULL;
+	FileInfo *info = initInfo();
+	FileInfo info1 = {.fileSize = 200};
+	FileInfo info2 = {.fileSize = 100};
+	Node *fileNode1 = createNode(&info1);
+	Node *fileNode2 = createNode(&info2);
+	addFileNode(&nodePtr,fileNode1);
+	addFileNode(&nodePtr,fileNode2);
+	
+	while(nodePtr!=NULL){
+		removeNode = removeFileNode(&nodePtr,nodePtr);
+		printf("node: %d\n",getSizeFromNode(removeNode));
+	}
+	if(nodePtr == NULL){
+		TEST_ASSERT_EQUAL(nodePtr,NULL);
+	}
+	free(fileNode2);
+	free(fileNode1);
+}
+
+void test_removeFileNode_should_remove_fileNode_from_RBT(void){
+	Error *e = NULL;
+	Node *nodePtr = NULL;
+	FileInfo *info = initInfo();
+	FileInfo info1 = {.fileSize = 200};
+	FileInfo info2 = {.fileSize = 100};
+	Node *fileNode1 = createNode(&info1);
+	Node *fileNode2 = createNode(&info2);
+	addFileNode(&nodePtr,fileNode1);
+	addFileNode(&nodePtr,fileNode2);
+	
+	Node *removeNode = removeFileNode(&nodePtr,nodePtr);
+	
+	TEST_ASSERT_EQUAL(nodePtr,fileNode2);
+	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',fileNode2);
+	
+	free(fileNode2);
+	free(fileNode1);
+}
+
 void test_addFileNode_should_add_fileNode_into_empty_root(void){
 	Error *e = NULL;
 	Node *nodePtr = NULL;
@@ -115,6 +158,29 @@ void test_addFile_test_5_node_with_same_size_but_different_crc(void){
 	free(fileNode1);
 }
 
+void test_addFile_test_2_node_with_same_size_and_same_crc(void){
+	Error *e = NULL;
+	Node *nodePtr = NULL;
+	FileInfo info1 = {.fileSize = 200, .fileCRC32Value = 111111111};
+	FileInfo info2 = {.fileSize = 200, .fileCRC32Value = 111111111};
+	Node *fileNode1 = createNode(&info1);
+	Node *fileNode2 = createNode(&info2);
+	Try{
+		addFileNode(&nodePtr,fileNode1);
+		addFileNode(&nodePtr,fileNode2);
+		TEST_FAIL_MESSAGE("Same Size, same CRC");
+	}Catch(e){
+		TEST_ASSERT_EQUAL_PTR(nodePtr,fileNode1);
+		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',fileNode2);
+		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',fileNode1);
+		TEST_ASSERT_EQUAL_NODE(NULL,NULL,'b',nodePtr);
+		TEST_ASSERT_EQUAL_PTR(e->data,fileNode1);
+		TEST_ASSERT_EQUAL(e->errCode,ERR_EQUIVALENT_NODE);
+	}
+	free(fileNode2);
+	free(fileNode1);
+}
+
 void test_addFile_test_4_node_with_same_size_and_same_crc(void){
 	Error *e = NULL;
 	Node *nodePtr = NULL;
@@ -127,10 +193,10 @@ void test_addFile_test_4_node_with_same_size_and_same_crc(void){
 	Node *fileNode3 = createNode(&info3);
 	Node *fileNode4 = createNode(&info4);
 	
-	addFileNode(&nodePtr,fileNode1);
-	addFileNode(&nodePtr,fileNode2);
-	addFileNode(&nodePtr,fileNode3);
 	Try{
+		addFileNode(&nodePtr,fileNode1);
+		addFileNode(&nodePtr,fileNode2);
+		addFileNode(&nodePtr,fileNode3);
 		addFileNode(&nodePtr,fileNode4);
 		TEST_FAIL_MESSAGE("Same Size, same CRC");
 	}Catch(e){
