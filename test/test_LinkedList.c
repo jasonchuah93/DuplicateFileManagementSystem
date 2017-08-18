@@ -1,11 +1,20 @@
 #include "unity.h"
+#include <dirent.h>
 #include <malloc.h>
-#include "fileInfo.h"
 #include "generateCRC32Value.h"
-#include "fileHandling.h"
+#include "fileInfo.h"
 #include "jansson.h"
 #include "JSON.h"
+#include "Node.h"
+#include "compareFileInfo.h"
 #include "LinkedList.h"
+#include "Rotation.h"
+#include "RestructureNode.h"
+#include "RedBlackTree.h"
+#include "errorNode.h"
+#include "CException.h"
+#include "fileHandling.h"
+#include "CustomAssertions.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -91,32 +100,51 @@ void test_listAddFirst_should_add_2_element_into_linkedList(void){
 	free(info);
 }
 
-void test_listRemoveFirst_should_remove_2_element_from_linkedList(void){
+void test_listRemoveFirst_should_remove_5_element_from_linkedList(void){
 	int len = 0;
 	Element *removedEle = NULL;
 	FileInfo *info = initInfo();
 	FileInfo *info2 = initInfo();
+	FileInfo *info3 = initInfo();
+	FileInfo *info4 = initInfo();
+	FileInfo *info5 = initInfo();
 	LinkedList *list = createLinkedList();
 	json_t *folderObj = createJsonFolderObject("TestJSON");
 	json_t *fileArry = goIntoJsonArrayFrmFolderObj(folderObj);
 	getFileInfoFromJsonObject(fileArry,info,0);
 	getFileInfoFromJsonObject(fileArry,info2,1);
+	getFileInfoFromJsonObject(fileArry,info3,2);
+	getFileInfoFromJsonObject(fileArry,info4,3);
+	getFileInfoFromJsonObject(fileArry,info5,4);
 	Element *ele = createElement(info);
 	Element *ele2 = createElement(info2);
+	Element *ele3 = createElement(info3);
+	Element *ele4 = createElement(info4);
+	Element *ele5 = createElement(info5);
 	listAddFirst(ele,list);
 	listAddFirst(ele2,list);
-	
-	for(len = 0; len <= list->length; len = len+1){
+	listAddFirst(ele3,list);
+	listAddFirst(ele4,list);
+	listAddFirst(ele5,list);
+	for(len = 0; len < list->length; len = len){
 		removedEle = listRemoveFirst(list);
 		printf("%s\n",((FileInfo*)removedEle->data)->fileName);
+		
 	}
 	
 	TEST_ASSERT_NULL(list->head);
 	TEST_ASSERT_EQUAL(0,list->length);
 	
+	free(ele5);
+	free(ele4);
+	free(ele3);
 	free(ele2);
 	free(ele);
 	free(list);
+	free(info5);
+	free(info4);
+	free(info3);
 	free(info2);
 	free(info);
+	
 }

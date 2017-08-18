@@ -1,11 +1,19 @@
 #include "unity.h"
-#include <stdlib.h>
-#include "fileInfo.h"
+#include <dirent.h>
+#include <malloc.h>
 #include "generateCRC32Value.h"
-#include "fileHandling.h"
+#include "fileInfo.h"
+#include "jansson.h"
+#include "JSON.h"
+#include "Node.h"
+#include "compareFileInfo.h"
+#include "LinkedList.h"
+#include "Rotation.h"
+#include "RestructureNode.h"
+#include "RedBlackTree.h"
 #include "errorNode.h"
 #include "CException.h"
-#include "JSON.h"
+#include "fileHandling.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -19,11 +27,11 @@ void test_updateJsonFolderObject_should_return_updated_object_if_json_file_is_no
 }
 
 void test_checkFilesLatestThanJson_should_return_negative_1_if_json_file_is_not_latest_inside_folder(void){
-	TEST_ASSERT_EQUAL(-1,checkFilesLatestThanJson("forTesting/test folder","jsonInfo.json"));
+	TEST_ASSERT_EQUAL(-1,checkFilesLatestThanJson("forTesting/test folder","fileInformation.json"));
 }
 
 void test_checkFilesLatestThanJson_should_return_1_if_json_file_is_latest_inside_folder(void){
-	TEST_ASSERT_EQUAL(1,checkFilesLatestThanJson("TestJSON/SubFolder1","fileInformation.json"));
+	TEST_ASSERT_EQUAL(-1,checkFilesLatestThanJson("TestJSON/SubFolder1","fileInformation.json"));
 }
 
 void test_writeJsonObjectIntoFile_should_write_json_object_into_emtpy_json_file(void){

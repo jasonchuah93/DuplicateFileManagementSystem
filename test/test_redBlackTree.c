@@ -1,19 +1,20 @@
 #include "unity.h"
+#include <dirent.h>
 #include <malloc.h>
-#include "fileInfo.h"
 #include "generateCRC32Value.h"
-#include "fileHandling.h"
+#include "fileInfo.h"
 #include "jansson.h"
 #include "JSON.h"
 #include "Node.h"
 #include "compareFileInfo.h"
-#include "errorNode.h"
+#include "LinkedList.h"
 #include "Rotation.h"
 #include "RestructureNode.h"
-#include "LinkedList.h"
-#include "CException.h"
-#include "CustomAssertions.h"
 #include "RedBlackTree.h"
+#include "errorNode.h"
+#include "CException.h"
+#include "fileHandling.h"
+#include "CustomAssertions.h"
 
 void setUp(void){}
 void tearDown(void){}
@@ -25,18 +26,29 @@ void test_removeFileNode_should_remove_all_fileNode_from_RBT(void){
 	FileInfo *info = initInfo();
 	FileInfo info1 = {.fileSize = 200};
 	FileInfo info2 = {.fileSize = 100};
+	FileInfo info3 = {.fileSize = 300};
+	FileInfo info4 = {.fileSize = 50};
+	FileInfo info5 = {.fileSize = 10};
 	Node *fileNode1 = createNode(&info1);
 	Node *fileNode2 = createNode(&info2);
+	Node *fileNode3 = createNode(&info3);
+	Node *fileNode4 = createNode(&info4);
+	Node *fileNode5 = createNode(&info5);
 	addFileNode(&nodePtr,fileNode1);
 	addFileNode(&nodePtr,fileNode2);
-	
+	addFileNode(&nodePtr,fileNode3);
+	addFileNode(&nodePtr,fileNode4);
+	addFileNode(&nodePtr,fileNode5);
 	while(nodePtr!=NULL){
 		removeNode = removeFileNode(&nodePtr,nodePtr);
 		printf("node: %d\n",getSizeFromNode(removeNode));
 	}
-	if(nodePtr == NULL){
-		TEST_ASSERT_EQUAL(nodePtr,NULL);
-	}
+	
+	TEST_ASSERT_EQUAL(nodePtr,NULL);
+	
+	free(fileNode5);
+	free(fileNode4);
+	free(fileNode3);
 	free(fileNode2);
 	free(fileNode1);
 }

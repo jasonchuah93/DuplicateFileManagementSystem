@@ -21,23 +21,25 @@ void tearDown(void){}
 void test_summariseFolder_should_summarise_the_folder_and_send_message_if_have_duplicate_file_in_folder(void){
 	Node *dupRoot = NULL;
 	traverseFolder(&dupRoot,"TestJSON");
-	summariseFolder(&dupRoot);
-	//free(dupRoot);
+	summariseFolder(&dupRoot,"TestJSON");
+	free(dupRoot);
 }
 
-void xtest_traverseFolder_should_scan_for_duplicate_file_in_two_folder(void){
+void test_traverseFolder_should_scan_for_duplicate_file_in_two_folder(void){
+	Node *root = NULL;
 	Node *dupRoot = NULL;
-	traverseFolder(&dupRoot,"TestJSON");
+	_traverseFolder(&root,&dupRoot,"TestJSON");
 	TEST_ASSERT_NOT_NULL(dupRoot);
-	//free(dupRoot);
+	free(root);
+	free(dupRoot);
 }
 
-void xtest_scanFolder_should_scan_for_duplicate_file_in_one_folder(void){
+void test_scanFolder_should_scan_for_duplicate_file_in_one_folder(void){
 	Node *root = NULL;
 	Node *dupRoot = NULL;
 	scanFolder(&root,&dupRoot,"TestJSON");
-	//free(root);
-	//free(dupRoot);
+	free(root);
+	free(dupRoot);
 }
 
 void test_deleteFile_should_delete_the_input_file_from_folder(void){

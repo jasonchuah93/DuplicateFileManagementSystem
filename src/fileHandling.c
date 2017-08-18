@@ -22,34 +22,27 @@ struct stat attr;
 struct dirent *dir;
 struct tm t;
 
-void summariseFolder(Node **dupRoot){
+void summariseFolder(Node **dupRoot,const char *folderName){
 	int i = 0;
 	Node *removedNode = NULL;
 	Element *removedEle = NULL;
+	if(*dupRoot !=NULL){
+		printf("The following files are duplicated\n");
+		while(*dupRoot!=NULL){
 			removedNode = removeFileNode(dupRoot,*dupRoot);
-			printf("The following files are duplicated\n");
-			for(i=0;i<=((LinkedList*)removedNode->data)->length;i++){
+			for(i=0;i<((LinkedList*)removedNode->data)->length;i=i){
 				removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
 				printf("%s\n",getEleName(removedEle));
-				
 			}
-			printf("--------------------------------------\n");
-			
-			removedNode = removeFileNode(dupRoot,*dupRoot);
-			printf("The following files are duplicated\n");
-			for(i=0;i<=((LinkedList*)removedNode->data)->length;i++){
-				removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
-				printf("%s\n",getEleName(removedEle));
-				
-			}
-			printf("--------------------------------------\n");
-	//free(removedEle);
-	//free(removedNode);
+			printf("---------------------------------------\n");
+		}
+	}
 }
 
 void traverseFolder(Node **duplicatedFileRoot,const char *folderName){
 	Node *root = NULL;
 	_traverseFolder(&root,duplicatedFileRoot,folderName);
+	
 }
 
 void _traverseFolder(Node **root,Node **duplicatedRoot,const char *folderName){
@@ -97,33 +90,29 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 				errElement = createElement(fileInfoFromErrorNode);
 				duplicatedFileElement = createElement(fileNode->data);
 				if(similarErrElement == NULL){
-					duplicatedFileList = createLinkedList();
 					similarErrElement = errElement;
+					duplicatedFileList = createLinkedList();
 					if(duplicatedFileList->head == NULL){
 						listAddFirst(errElement,duplicatedFileList);
 						listAddFirst(duplicatedFileElement,duplicatedFileList);
-						linkedListNode = createNode(duplicatedFileList);
-						addListNode(duplicatedFileRoot,linkedListNode);
 					}
 				}else{
 					if(strcmp(getEleName(similarErrElement),getEleName(errElement)) == 0){
 						listAddFirst(duplicatedFileElement,duplicatedFileList);
-						linkedListNode = createNode(duplicatedFileList);
-						addListNode(duplicatedFileRoot,linkedListNode);		
 					}else{
 						duplicatedFileList = createLinkedList();
 						if(duplicatedFileList->head == NULL){
 							listAddFirst(errElement,duplicatedFileList);
 							listAddFirst(duplicatedFileElement,duplicatedFileList);
-							linkedListNode = createNode(duplicatedFileList);
-							addListNode(duplicatedFileRoot,linkedListNode);
 						}
 					}
 				}
+				linkedListNode = createNode(duplicatedFileList);
+				addListNode(duplicatedFileRoot,linkedListNode);	
 			}
 		}
 	}
-	writeJsonObjectIntoFile(jsonFilePath,folderObj);	
+	//writeJsonObjectIntoFile(jsonFilePath,folderObj);
 }
 
 char *duplicateFileForTesting(char *fileToDuplicate, char *number){

@@ -1,14 +1,20 @@
 #include "unity.h"
-#include <stdlib.h>
-#include <string.h>
+#include <dirent.h>
 #include <malloc.h>
-#include "fileInfo.h"
-#include "fileHandling.h"
 #include "generateCRC32Value.h"
-#include "Node.h"
+#include "fileInfo.h"
 #include "jansson.h"
 #include "JSON.h"
+#include "Node.h"
+#include "compareFileInfo.h"
+#include "LinkedList.h"
+#include "Rotation.h"
+#include "RestructureNode.h"
+#include "RedBlackTree.h"
 #include "errorNode.h"
+#include "CException.h"
+#include "fileHandling.h"
+#include "CustomAssertions.h"
 
 void setUp(void){}
 void tearDown(void){}
