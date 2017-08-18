@@ -26,37 +26,25 @@ void summariseFolder(Node **dupRoot){
 	int i = 0;
 	Node *removedNode = NULL;
 	Element *removedEle = NULL;
-	if((*dupRoot)!=NULL){
-		while((*dupRoot)!=NULL){
 			removedNode = removeFileNode(dupRoot,*dupRoot);
-			printf("file name: %s\n",((FileInfo*)((LinkedList*)((Node*)removedNode)->data)->head->data)->fileName);
-
-		}
-	}
-	/*
-	if(*dupRoot == NULL){
-		if(removedNode != NULL){
-			for(i=0;i<=getLinkedListLength(removedNode);i++){
-				printf("%d\n",i);
-				//removedEle = listRemoveFirst(((LinkedList*)removedNode->data)); //marco at Node.h
-				//printf("%s\n",getEleName(removedEle));
+			printf("The following files are duplicated\n");
+			for(i=0;i<=((LinkedList*)removedNode->data)->length;i++){
+				removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
+				printf("%s\n",getEleName(removedEle));
+				
 			}
 			printf("--------------------------------------\n");
-		}
-	}
-	
-	removedNode = removeFileNode(dupRoot,*dupRoot);
-	if(removedNode != NULL){
-		printf("The following files are duplicated\n");
-		for(i=0;i<=((LinkedList*)removedNode->data)->length;i++){
-			removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
-			printf("%s\n",getEleName(removedEle));
-		}
-		//printf("--------------------------------------\n");
 			
-	}
-	*/
-	
+			removedNode = removeFileNode(dupRoot,*dupRoot);
+			printf("The following files are duplicated\n");
+			for(i=0;i<=((LinkedList*)removedNode->data)->length;i++){
+				removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
+				printf("%s\n",getEleName(removedEle));
+				
+			}
+			printf("--------------------------------------\n");
+	//free(removedEle);
+	//free(removedNode);
 }
 
 void traverseFolder(Node **duplicatedFileRoot,const char *folderName){
