@@ -86,7 +86,6 @@ int checkFilesLatestThanJson(const char *folderName,char *jsonFile){
 void writeJsonObjectIntoFile(const char *jsonFile,json_t *jsonObject){
 	FILE *fptr = fopen(jsonFile,"w");
 	json_dumpf(jsonObject,fptr,100);
-	json_decref(jsonObject);
 	fclose(fptr);
 }
 

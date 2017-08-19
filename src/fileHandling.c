@@ -112,7 +112,7 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 			}
 		}
 	}
-	//writeJsonObjectIntoFile(jsonFilePath,folderObj);
+	writeJsonObjectIntoFile(jsonFilePath,folderObj);
 }
 
 char *duplicateFileForTesting(char *fileToDuplicate, char *number){
