@@ -38,7 +38,7 @@ void test_createElement_should_create_element_with_real_file_infomation(void){
 	getFileInfoFromJsonObject(fileArry,info,1);
 	Element *ele = createElement(info);
 	
-	TEST_ASSERT_EQUAL_STRING("Testing 3.xlsx",getEleName(ele));
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 3.xlsx",getEleName(ele));
 	TEST_ASSERT_EQUAL(10038,getEleSize(ele));
 	TEST_ASSERT_EQUAL(305591788,getEleCRC(ele));
 	
@@ -66,7 +66,7 @@ void test_listAddFirst_should_add_element_into_linkedList(void){
 	Element *ele = createElement(info);
     listAddFirst(ele,list);
 	
-	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getListName(list));
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 8.pdf",getListName(list));
 	TEST_ASSERT_EQUAL(249159,getListSize(list));
 	TEST_ASSERT_EQUAL(289821883,getListCRC(list));
 	
@@ -88,9 +88,9 @@ void test_listAddFirst_should_add_2_element_into_linkedList(void){
 	listAddFirst(ele,list);
 	listAddFirst(ele2,list);
 	
-	TEST_ASSERT_EQUAL_STRING("Testing 3.xlsx",getListName(list));
-	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",((FileInfo*)(list->head->next->data))->fileName );
-	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",((FileInfo*)(list->tail->data))->fileName );
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 3.xlsx",getListName(list));
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 2.xlsx",((FileInfo*)(list->head->next->data))->fileName );
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 2.xlsx",((FileInfo*)(list->tail->data))->fileName );
 	TEST_ASSERT_NULL(list->tail->next);
 	
 	free(ele2);

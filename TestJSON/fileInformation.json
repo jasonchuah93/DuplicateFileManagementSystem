@@ -1,45 +1,45 @@
 {
     "File Info":[
         {
-            "epoch":1500185350,
+            "size":10038,
             "name":"Testing 2.xlsx",
-            "size":10038,
+            "epoch":1500185350,
             "crc":305591788
         },
         {
-            "epoch":1500185350,
+            "size":10038,
             "name":"Testing 3.xlsx",
-            "size":10038,
+            "epoch":1500185350,
             "crc":305591788
         },
         {
-            "epoch":1500185350,
+            "size":10038,
             "name":"Testing 4.xlsx",
-            "size":10038,
+            "epoch":1500185350,
             "crc":305591788
         },
         {
-            "epoch":1500185350,
+            "size":249159,
             "name":"Testing 8.pdf",
-            "size":249159,
+            "epoch":1500185350,
             "crc":289821883
         },
         {
-            "epoch":1500185350,
+            "size":249159,
             "name":"Testing 88.pdf",
-            "size":249159,
+            "epoch":1500185350,
             "crc":289821883
         },
         {
-            "epoch":1500185350,
-            "name":"Testing 9.jpg",
             "size":1563175,
+            "name":"Testing 9.jpg",
+            "epoch":1500185350,
             "crc":2618875302
         },
         {
-            "epoch":1500185350,
-            "name":"Testing 99.jpg",
             "size":1563175,
+            "name":"Testing 99.jpg",
+            "epoch":1500185350,
             "crc":2618875302
         }
     ]

@@ -22,7 +22,7 @@
 void mainProgram(const char *folderName){
 	Node *duplicatedFileRoot = NULL;
 	traverseFolder(&duplicatedFileRoot,folderName);
-	summariseFolder(&duplicatedFileRoot,folderName);
+	summariseFolder(&duplicatedFileRoot);
 }
 
 

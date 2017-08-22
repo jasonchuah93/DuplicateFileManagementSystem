@@ -23,18 +23,21 @@ struct dirent *dir;
 struct tm t;
 
 void summariseFolder(Node **dupRoot){
-	int i = 0;
+	int i = 0, separator;
 	Node *removedNode = NULL;
 	Element *removedEle = NULL;
 	if(*dupRoot !=NULL){
 		printf("The following files are duplicated\n");
 		while(*dupRoot!=NULL){
+			separator = 0;
 			removedNode = removeFileNode(dupRoot,*dupRoot);
 			for(i=0;i<((LinkedList*)removedNode->data)->length;i=i){
 				removedEle = listRemoveFirst(((LinkedList*)removedNode->data));
 				printf("%s\n",getEleName(removedEle));
+				separator = 1;
 			}
-			printf("---------------------------------------\n");
+			if(separator)
+				printf("---------------------------------------\n");
 		}
 	}
 }
@@ -65,7 +68,7 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 	json_t *folderObj = NULL, *folderArray = NULL;
 	FileInfo *info = NULL;
 	Node *fileNode = NULL, *linkedListNode = NULL;
-	Error *errNode = NULL;
+	Error *errNode = NULL, *jsonErr = NULL;
 	Element *errElement = NULL, *duplicatedFileElement = NULL, *similarErrElement = NULL;
 	LinkedList *duplicatedFileList = NULL;
 	sprintf(jsonFilePath,"%s/%s",folderName,"fileInformation.json");

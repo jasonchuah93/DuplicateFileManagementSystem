@@ -39,7 +39,7 @@ void test_createNode_should_create_a_node_to_store_file_information(void){
 	getFileInfoFromJsonObject(fileArry,info,3); //3 indicate the index inside the array
 	Node *nodePtr = createNode(info);
 	
-	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getNameFromNode(nodePtr));
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 8.pdf",getNameFromNode(nodePtr));
 	TEST_ASSERT_EQUAL(249159,getSizeFromNode(nodePtr));
 	TEST_ASSERT_EQUAL(289821883,getCRCFromNode(nodePtr));
 	TEST_ASSERT_EQUAL_NODE(NULL,NULL,'r',nodePtr);

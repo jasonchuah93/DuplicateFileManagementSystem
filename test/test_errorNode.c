@@ -28,7 +28,7 @@ void test_createErr_should_create_errorPtr_store_nodePtr(void){
 	Error *errPtr = createErr("Try add node inside",nodePtr);
 	
 	TEST_ASSERT_EQUAL(nodePtr,errPtr->data);
-	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getNameInErr(errPtr));
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 8.pdf",getNameInErr(errPtr));
 	TEST_ASSERT_EQUAL(249159,getSizeInErr(errPtr));
 	TEST_ASSERT_EQUAL(289821883,getCRCInErr(errPtr));
 	TEST_ASSERT_EQUAL(errPtr->errCode,ERR_EQUIVALENT_NODE);

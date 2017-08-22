@@ -158,8 +158,9 @@ json_t *goIntoJsonArrayFrmFolderObj(json_t *folderObject){
 	if(json_is_object(folderObject)){
 		void *iter = json_object_iter(folderObject);
 		folderArray = json_object_iter_value(iter);
-	}else
+	}else{
 		Throw((Error*)ERR_NOT_JSON_OBJECT);
+	}
 	return folderArray;
 }
 

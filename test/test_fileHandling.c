@@ -21,7 +21,7 @@ void tearDown(void){}
 void test_summariseFolder_should_summarise_the_folder_and_send_message_if_have_duplicate_file_in_folder(void){
 	Node *dupRoot = NULL;
 	traverseFolder(&dupRoot,"TestJSON");
-	summariseFolder(&dupRoot,"TestJSON");
+	summariseFolder(&dupRoot);
 	free(dupRoot);
 }
 
@@ -76,7 +76,7 @@ void test_createFileForTesting_should_create_a_txt_file_with_random_generator_nu
 }
 
 void test_checkFileNumber_should_list_the_total_number_of_file_in_folder(void){
-	TEST_ASSERT_EQUAL(14,checkFileNumberInFolder("forTesting"));
+	TEST_ASSERT_EQUAL(15,checkFileNumberInFolder("forTesting"));
 }
 
 void test_getFileEpoch_should_get_the_file_time_in_epoch_format(void){
@@ -105,69 +105,3 @@ void test_checkFileSize_should_get_the_size_of_mp3(void){
 	TEST_ASSERT_EQUAL(3965661,getFileSize("forTesting/Testing 1.mp3"));
 }
 
-/************************************************************
-    1st RBT                    2nd RBT
-       |                          |
-	 Test 8                    Test 88--->Test 8   Test->
-     /     \                    /    \
-  Test 2 Test 9	             Test 4  Test 99
- *************************************************************/	  
-/*
- void xtest_scanFolder_scan_folder_TestJSON(void){
-	Node *root = NULL;
-	Node *dupRoot = NULL;
-	printf("test this\n");
-	scanFolder(&root,&dupRoot,"TestJSON");
-	
-	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(dupRoot);
-	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getName(root));
-	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",getName(root->left));
-	TEST_ASSERT_EQUAL_STRING("Testing 9.jpg",getName(root->right));
-	TEST_ASSERT_EQUAL_STRING("Testing 88.pdf",getNamefromList(dupRoot));
-	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",((FileInfo*)((LinkedList*)((Node*)dupRoot)->data)->head->next->data)->fileName);
-	TEST_ASSERT_EQUAL_STRING("Testing 4.xlsx",getNamefromList(dupRoot->left));
-	TEST_ASSERT_EQUAL_STRING("Testing 99.jpg",getNamefromList(dupRoot->right));
-	
-}
-
-void test_scanFolder_scan_folder_forTesting(void){
-	
-}
-
-void xtest_traverseFolder_with_3_argument_should_traverse_main_folder(void){
-	Node *root = NULL;
-	Node *dupRoot = NULL;
-	_traverseFolder(&root,&dupRoot,"TestJSON");
-	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(dupRoot);
-	TEST_ASSERT_EQUAL_STRING("Testing 8.pdf",getName(root));
-	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",getName(root->left));
-	TEST_ASSERT_EQUAL_STRING("Testing 9.jpg",getName(root->right));
-	TEST_ASSERT_EQUAL_STRING("sysmem.c",getName(root->left->left));
-	TEST_ASSERT_EQUAL_STRING("Testing 88.pdf",getNamefromList(dupRoot));
-	TEST_ASSERT_EQUAL_STRING("Testing 4.xlsx",getNamefromList(dupRoot->left));
-	TEST_ASSERT_EQUAL_STRING("Testing 99.jpg",getNamefromList(dupRoot->right));
-	TEST_ASSERT_EQUAL_STRING("sysmem2.c",getNamefromList(dupRoot->left->left));
-}
-
-void xtest_traverseFolder_with_2_argument_should_traverse_main_folder(void){
-	Node *root = NULL;
-	Node *dupRoot = NULL;
-}
-
-void test_deleteFile_should_throw_error_if_file_to_delete_not_exist(void){
-	Error *e = NULL;
-	char *fileToDelete = NULL;
-	Try{
-		deleteFile(fileToDelete);
-		TEST_FAIL_MESSAGE("File to delete not exist\n");
-	}Catch(e)
-		TEST_ASSERT_EQUAL(e,ERR_FILE_NO_EXIST);
-}
-
-void test_deleteFile_should_delete_1_file_inside_folder(void){
-	char *testFile = createFileForTesting("FolderForTesting/TestFileC.txt",110);
-	deleteFile(testFile);
-}
-*/

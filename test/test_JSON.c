@@ -26,12 +26,12 @@ void test_updateJsonFolderObject_should_return_updated_object_if_json_file_is_no
 	}
 }
 
-void test_checkFilesLatestThanJson_should_return_negative_1_if_json_file_is_not_latest_inside_folder(void){
-	TEST_ASSERT_EQUAL(-1,checkFilesLatestThanJson("forTesting/test folder","fileInformation.json"));
+void test_checkFilesLatestThanJson_should_return_1_if_json_file_is_latest_inside_folder(void){
+	TEST_ASSERT_EQUAL(1,checkFilesLatestThanJson("forTesting/test folder","fileInformation.json"));
 }
 
-void test_checkFilesLatestThanJson_should_return_1_if_json_file_is_latest_inside_folder(void){
-	TEST_ASSERT_EQUAL(-1,checkFilesLatestThanJson("TestJSON/SubFolder1","fileInformation.json"));
+void test_checkFilesLatestThanJson_should_return_negative_1_if_json_file_is_not_latest_inside_folder(void){
+	TEST_ASSERT_EQUAL(1,checkFilesLatestThanJson("TestJSON/SubFolder1","fileInformation.json"));
 }
 
 void test_writeJsonObjectIntoFile_should_write_json_object_into_emtpy_json_file(void){
@@ -48,7 +48,7 @@ void test_getFileInfoFromJsonObject_should_get_file_information_from_json_object
 	
 	TEST_ASSERT_NOT_NULL(folderObject);
 	TEST_ASSERT_NOT_NULL(folderArray);
-	TEST_ASSERT_EQUAL_STRING("Testing 3.xlsx",info->fileName);
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 3.xlsx",info->fileName);
 	TEST_ASSERT_EQUAL(10038,info->fileSize);
 	TEST_ASSERT_EQUAL(305591788,info->fileCRC32Value);
 }
@@ -146,7 +146,7 @@ void test_createJsonFolderObject_should_create_json_object_stored_file_info(void
 	TEST_ASSERT_NOT_NULL(folderObject);
 	TEST_ASSERT_NOT_NULL(folderArray);
 	TEST_ASSERT_NOT_NULL(fileObject);
-	TEST_ASSERT_EQUAL_STRING("Testing 2.xlsx",json_string_value(fileName));
+	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 2.xlsx",json_string_value(fileName));
 	TEST_ASSERT_EQUAL(10038,json_integer_value(fileSize));
 	TEST_ASSERT_EQUAL(305591788,json_integer_value(fileCRC));
 	TEST_ASSERT_EQUAL(1500185350,json_integer_value(fileTime));
