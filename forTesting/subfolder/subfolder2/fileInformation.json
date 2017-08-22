@@ -3,14 +3,14 @@
         {
             "crc":2015438943,
             "size":15400,
-            "name":"forTesting/subfolder/subfolder2/TEST Words - Copy.docx",
-            "epoch":1503400670
+            "epoch":1503400999,
+            "name":"forTesting/subfolder/subfolder2/TEST Words - Copy.docx"
         },
         {
             "crc":2015438943,
             "size":15400,
-            "name":"forTesting/subfolder/subfolder2/TEST Words.docx",
-            "epoch":1503400670
+            "epoch":1503400999,
+            "name":"forTesting/subfolder/subfolder2/TEST Words.docx"
         }
     ]
 }

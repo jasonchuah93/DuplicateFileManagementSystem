@@ -2,21 +2,21 @@
     "File Info":[
         {
             "size":13282,
+            "epoch":1503400999,
             "name":"forTesting/test folder/Assignment #1.docx",
-            "crc":453932893,
-            "epoch":1503400670
+            "crc":453932893
         },
         {
             "size":82858,
+            "epoch":1503400999,
             "name":"forTesting/test folder/test p.point2.pptx",
-            "crc":3403213022,
-            "epoch":1503400670
+            "crc":3403213022
         },
         {
             "size":82859,
+            "epoch":1503400999,
             "name":"forTesting/test folder/Testing 11.pptx",
-            "crc":3522072587,
-            "epoch":1503400670
+            "crc":3522072587
         }
     ]
 }

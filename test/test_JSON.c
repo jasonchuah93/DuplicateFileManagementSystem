@@ -26,7 +26,7 @@ void test_updateJsonFolderObject_should_return_updated_object_if_json_file_is_no
 	}
 }
 
-void test_checkFilesLatestThanJson_should_return_1_if_json_file_is_latest_inside_folder(void){
+void xtest_checkFilesLatestThanJson_should_return_1_if_json_file_is_latest_inside_folder(void){
 	TEST_ASSERT_EQUAL(1,checkFilesLatestThanJson("forTesting/test folder","fileInformation.json"));
 }
 
