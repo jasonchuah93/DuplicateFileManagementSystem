@@ -19,6 +19,14 @@
 #include "fileHandling.h"
 #include "main.h"
 
+int main1(){
+	char folderName[100];
+	printf("Enter folder path: ");
+	scanf("%s", folderName);
+	
+	return(0);
+}
+
 void mainProgram(const char *folderName){
 	Node *duplicatedFileRoot = NULL;
 	traverseFolder(&duplicatedFileRoot,folderName);

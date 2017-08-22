@@ -159,7 +159,7 @@ void test_goIntoJsonArrayFrmFolderObj_should_throw_error_if_input_is_not_an_json
 		goIntoJsonArrayFrmFolderObj(folderObj);
 		TEST_FAIL_MESSAGE("Expected ERR_NOT_JSON_OBJECT to be thrown.");
 	}Catch(e){
-		TEST_ASSERT_EQUAL(e,ERR_NOT_JSON_OBJECT);
+		TEST_ASSERT_EQUAL_STRING(e->data,"Warning! fileInformation.json is corrupted");
 	}	
 }
 

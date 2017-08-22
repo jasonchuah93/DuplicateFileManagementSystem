@@ -2,44 +2,44 @@
     "File Info":[
         {
             "epoch":1503401536,
-            "crc":305591788,
             "size":10038,
+            "crc":305591788,
             "name":"TestJSON/Testing 2.xlsx"
         },
         {
             "epoch":1503401536,
-            "crc":305591788,
             "size":10038,
+            "crc":305591788,
             "name":"TestJSON/Testing 3.xlsx"
         },
         {
             "epoch":1503401536,
-            "crc":305591788,
             "size":10038,
+            "crc":305591788,
             "name":"TestJSON/Testing 4.xlsx"
         },
         {
             "epoch":1503401536,
-            "crc":289821883,
             "size":249159,
+            "crc":289821883,
             "name":"TestJSON/Testing 8.pdf"
         },
         {
             "epoch":1503401536,
-            "crc":289821883,
             "size":249159,
+            "crc":289821883,
             "name":"TestJSON/Testing 88.pdf"
         },
         {
             "epoch":1503401536,
-            "crc":2618875302,
             "size":1563175,
+            "crc":2618875302,
             "name":"TestJSON/Testing 9.jpg"
         },
         {
             "epoch":1503401536,
-            "crc":2618875302,
             "size":1563175,
+            "crc":2618875302,
             "name":"TestJSON/Testing 99.jpg"
         }
     ]
