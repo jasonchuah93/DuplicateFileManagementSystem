@@ -78,7 +78,12 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 	}else{
 		folderObj = createJsonFolderObject(folderName);
 	}
-	folderArray = goIntoJsonArrayFrmFolderObj(folderObj);
+	Try{
+		folderArray = goIntoJsonArrayFrmFolderObj(folderObj);
+	}Catch(jsonErr){
+		printf("The corrupted json file will be deleted.\n");
+	}
+	if(jsonErr==NULL){
 	arraySize = json_array_size(folderArray);
 	for(arrayCounter=0;arrayCounter<arraySize;arrayCounter++){
 		info = initInfo();
@@ -117,6 +122,7 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 	}
 	if(checkFileNumberInFolder(folderName) != 0){
 		writeJsonObjectIntoFile(jsonFilePath,folderObj);
+	}
 	}
 }
 
@@ -297,8 +303,6 @@ int getFileSize(const char *path){
 
 
 /*
-
-
 void deleteAllContentInFolder(char *folderPath){
 	int i=0,check = 0;
 	char filePath[100] = {0}, subPath[100] = {0};

@@ -15,6 +15,7 @@ json_t *updateJsonFolderObject(const char *folderName, const char *jsonFile){
 	unsigned long long int fileSize = 0;
 	unsigned long int jsonFileEpoch = 0, otherFileEpoch = 0, fileCRC =0;
 	char jsonFilePath[100] = {0}, otherFilePath[100] = {0}, fileToUpdate[100] = {0};
+	Error *jsonErr = NULL;
 	json_error_t objError;
 	json_t *loadedObj = NULL, *loadedArray = NULL, *fileObj = NULL;
 	json_t *objName = NULL, *objSize = NULL, *objCRC = NULL, *objEpoch = NULL;
@@ -23,7 +24,12 @@ json_t *updateJsonFolderObject(const char *folderName, const char *jsonFile){
 	DIR *dPtr = opendir(folderName);
 	sprintf(jsonFilePath,"%s/%s",folderName,jsonFile);
 	loadedObj = json_load_file(jsonFilePath,0,&objError);
-	loadedArray = goIntoJsonArrayFrmFolderObj(loadedObj);
+	Try{
+		loadedArray = goIntoJsonArrayFrmFolderObj(loadedObj);
+	}Catch(jsonErr){
+		printf("%s at %s. \n",jsonErr->data,folderName);
+	}
+	if(jsonErr==NULL){
 	size_t arraySize = json_array_size(loadedArray);
 	while((dir = readdir(dPtr))!=NULL){
 		if(dir->d_type == DT_REG){
@@ -38,7 +44,6 @@ json_t *updateJsonFolderObject(const char *folderName, const char *jsonFile){
 				}
 				if(numOfFileInFolder == arraySize){
 					if(otherFileEpoch > json_integer_value(objEpoch)){
-						printf("file: %s\n",dir->d_name);
 						fileSize = getFileSize(otherFilePath);
 						fileCRC = hashCRC(otherFilePath);
 						json_object_set_new(updatedObj,"name",json_string(otherFilePath));
@@ -52,6 +57,7 @@ json_t *updateJsonFolderObject(const char *folderName, const char *jsonFile){
 				}
 			}
 		}
+	}
 	}
 	closedir(dPtr);		
 	return loadedObj;
@@ -154,12 +160,16 @@ json_t *createJsonFolderObject(const char *folderPath){
 }
 
 json_t *goIntoJsonArrayFrmFolderObj(json_t *folderObject){
+	char * checkJsonFileCorrupted = "Warning! fileInformation.json is corrupted";
+	Error *jsonErr = NULL;
 	json_t *folderArray = NULL;
 	if(json_is_object(folderObject)){
 		void *iter = json_object_iter(folderObject);
 		folderArray = json_object_iter_value(iter);
 	}else{
-		Throw((Error*)ERR_NOT_JSON_OBJECT);
+		jsonErr = createErr("corrupted file",checkJsonFileCorrupted);
+		Throw(jsonErr);
+		//Throw((Error*)ERR_NOT_JSON_OBJECT);
 	}
 	return folderArray;
 }

@@ -1,10 +1,10 @@
 {
     "File Info":[
         {
+            "name":"forTesting/subfolder/sysmem2.c",
             "crc":1695663528,
-            "size":2888,
-            "epoch":1503400999,
-            "name":"forTesting/subfolder/sysmem2.c"
+            "epoch":1503401536,
+            "size":2888
         }
     ]
 }
