@@ -1,87 +1,93 @@
 {
     "File Info":[
         {
-            "size":2888,
-            "name":"sysmem.c",
             "crc":1695663528,
+            "name":"forTesting/sysmem.c",
+            "size":2888,
             "epoch":1501433860
         },
         {
-            "size":2888,
-            "name":"sysmem2.c",
             "crc":1695663528,
+            "name":"forTesting/sysmem2.c",
+            "size":2888,
             "epoch":1501433870
         },
         {
-            "size":82858,
-            "name":"test p.point2.pptx",
             "crc":3403213022,
+            "name":"forTesting/test p.point2.pptx",
+            "size":82858,
             "epoch":1500185350
         },
         {
-            "size":3965661,
-            "name":"Testing 1.mp3",
+            "crc":2015438943,
+            "name":"forTesting/TEST Words.docx",
+            "size":15400,
+            "epoch":1500185350
+        },
+        {
             "crc":2580887755,
+            "name":"forTesting/Testing 1.mp3",
+            "size":3965661,
             "epoch":1500185350
         },
         {
-            "size":82859,
-            "name":"Testing 11.pptx",
             "crc":3522072587,
+            "name":"forTesting/Testing 11.pptx",
+            "size":82859,
             "epoch":1502895943
         },
         {
-            "size":3270784,
-            "name":"Testing 12.jpg",
             "crc":1012057614,
+            "name":"forTesting/Testing 12.jpg",
+            "size":3270784,
             "epoch":1500185350
         },
         {
-            "size":82855,
-            "name":"Testing 13.pptx",
             "crc":2199508,
+            "name":"forTesting/Testing 13.pptx",
+            "size":82855,
             "epoch":1502945284
         },
         {
-            "size":10038,
-            "name":"Testing 2.xlsx",
             "crc":305591788,
+            "name":"forTesting/Testing 2.xlsx",
+            "size":10038,
             "epoch":1500185350
         },
         {
-            "size":10038,
-            "name":"Testing 3.xlsx",
             "crc":305591788,
+            "name":"forTesting/Testing 3.xlsx",
+            "size":10038,
             "epoch":1500185350
         },
         {
-            "size":15437,
-            "name":"Testing 4.docx",
             "crc":3329378287,
+            "name":"forTesting/Testing 4.docx",
+            "size":15437,
             "epoch":1502954207
         },
         {
-            "size":33,
-            "name":"Testing 5.txt",
             "crc":3775936421,
+            "name":"forTesting/Testing 5.txt",
+            "size":33,
             "epoch":1502954158
         },
         {
-            "size":33,
-            "name":"Testing 6.txt",
             "crc":3775936421,
+            "name":"forTesting/Testing 6.txt",
+            "size":33,
             "epoch":1500185350
         },
         {
-            "size":249159,
-            "name":"Testing 7.pdf",
             "crc":289821883,
+            "name":"forTesting/Testing 7.pdf",
+            "size":249159,
             "epoch":1500185350
         },
         {
-            "size":1886286,
-            "name":"Testing 9.jpg",
             "crc":2481457205,
+            "name":"forTesting/Testing 9.jpg",
+            "size":1886286,
             "epoch":1502896019
         }
     ]

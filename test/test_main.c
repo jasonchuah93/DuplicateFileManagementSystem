@@ -20,6 +20,6 @@ void setUp(void){}
 void tearDown(void){}
 
 void test_mainProgram(void){
-	mainProgram("TestJSON");
+	mainProgram("forTesting");
 }
 

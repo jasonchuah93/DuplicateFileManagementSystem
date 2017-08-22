@@ -41,7 +41,7 @@ json_t *updateJsonFolderObject(const char *folderName, const char *jsonFile){
 						printf("file: %s\n",dir->d_name);
 						fileSize = getFileSize(otherFilePath);
 						fileCRC = hashCRC(otherFilePath);
-						json_object_set_new(updatedObj,"name",json_string(dir->d_name));
+						json_object_set_new(updatedObj,"name",json_string(otherFilePath));
 						json_object_set_new(updatedObj,"size",json_integer(fileSize));
 						json_object_set_new(updatedObj,"crc",json_integer(fileCRC));
 						json_object_set_new(updatedObj,"epoch",json_integer(otherFileEpoch));
@@ -135,7 +135,7 @@ json_t *createJsonFolderObject(const char *folderPath){
 		if(dir->d_type == DT_REG){
 			if(strcmp(dir->d_name,"fileInformation.json")!=0){
 				//Set File Name
-				json_object_set_new(fileObject,"name",json_string(dir->d_name));
+				json_object_set_new(fileObject,"name",json_string(fileName));
 				//Set File Size
 				fileSize = getFileSize(fileName);
 				json_object_set_new(fileObject,"size",json_integer(fileSize));

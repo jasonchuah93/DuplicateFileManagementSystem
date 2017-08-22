@@ -22,7 +22,7 @@ struct stat attr;
 struct dirent *dir;
 struct tm t;
 
-void summariseFolder(Node **dupRoot,const char *folderName){
+void summariseFolder(Node **dupRoot){
 	int i = 0;
 	Node *removedNode = NULL;
 	Element *removedEle = NULL;
@@ -112,7 +112,9 @@ void scanFolder(Node **nodeRoot, Node **duplicatedFileRoot,const char *folderNam
 			}
 		}
 	}
-	writeJsonObjectIntoFile(jsonFilePath,folderObj);
+	if(checkFileNumberInFolder(folderName) != 0){
+		writeJsonObjectIntoFile(jsonFilePath,folderObj);
+	}
 }
 
 char *duplicateFileForTesting(char *fileToDuplicate, char *number){

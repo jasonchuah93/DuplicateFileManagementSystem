@@ -5,7 +5,7 @@
 
 #define MaxFile 10000
 
-void summariseFolder(Node **dupRoot,const char *folderName);
+void summariseFolder(Node **dupRoot);
 void traverseFolder(Node **duplicatedFileRoot,const char *folderName);
 void _traverseFolder(Node **root,Node **duplicatedRoot,const char *folderName);
 void scanFolder(Node **root, Node **duplicatedRoot,const char *folderName);
