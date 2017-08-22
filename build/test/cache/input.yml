@@ -58,10 +58,10 @@
   :testfail: ".fail"
   :dependencies: ".d"
 :unity:
-  :vendor_path: D:/Jason/Github/DuplicateFileManagementSystem/vendor/ceedling/vendor
+  :vendor_path: D:/ChromeDownloads/DuplicateFileManagementSystem/vendor/ceedling/vendor
   :defines: []
 :cmock:
-  :vendor_path: D:/Jason/Github/DuplicateFileManagementSystem/vendor/ceedling/vendor
+  :vendor_path: D:/ChromeDownloads/DuplicateFileManagementSystem/vendor/ceedling/vendor
   :defines: []
   :mock_prefix: mock_
   :when_no_prototypes: :warn
@@ -80,7 +80,7 @@
   :verbosity: 3
   :unity_helper: false
 :cexception:
-  :vendor_path: D:/Jason/Github/DuplicateFileManagementSystem/vendor/ceedling/vendor
+  :vendor_path: D:/ChromeDownloads/DuplicateFileManagementSystem/vendor/ceedling/vendor
   :defines: []
 :test_runner:
   :includes: []

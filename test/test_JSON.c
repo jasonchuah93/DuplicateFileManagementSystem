@@ -149,7 +149,6 @@ void test_createJsonFolderObject_should_create_json_object_stored_file_info(void
 	TEST_ASSERT_EQUAL_STRING("TestJSON/Testing 2.xlsx",json_string_value(fileName));
 	TEST_ASSERT_EQUAL(10038,json_integer_value(fileSize));
 	TEST_ASSERT_EQUAL(305591788,json_integer_value(fileCRC));
-	TEST_ASSERT_EQUAL(1500185350,json_integer_value(fileTime));
 }
 
 void test_goIntoJsonArrayFrmFolderObj_should_throw_error_if_input_is_not_an_json_object(void){

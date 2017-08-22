@@ -1,16 +1,16 @@
 {
     "File Info":[
         {
-            "name":"forTesting/subfolder/subfolder2/TEST Words - Copy.docx",
+            "crc":2015438943,
             "size":15400,
-            "epoch":1500185350,
-            "crc":2015438943
+            "name":"forTesting/subfolder/subfolder2/TEST Words - Copy.docx",
+            "epoch":1503400670
         },
         {
-            "name":"forTesting/subfolder/subfolder2/TEST Words.docx",
+            "crc":2015438943,
             "size":15400,
-            "epoch":1500185350,
-            "crc":2015438943
+            "name":"forTesting/subfolder/subfolder2/TEST Words.docx",
+            "epoch":1503400670
         }
     ]
 }

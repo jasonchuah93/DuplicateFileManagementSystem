@@ -1,14 +1,14 @@
 {
     "File Info":[
         {
-            "name":"sysmem.c",
-            "epoch":1501433860,
+            "name":"TestJSON/SubFolder1/sysmem.c",
+            "epoch":1503400670,
             "size":2888,
             "crc":1695663528
         },
         {
-            "name":"sysmem2.c",
-            "epoch":1501433870,
+            "name":"TestJSON/SubFolder1/sysmem2.c",
+            "epoch":1503400670,
             "size":2888,
             "crc":1695663528
         }
