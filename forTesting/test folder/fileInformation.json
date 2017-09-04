@@ -1,22 +1,22 @@
 {
     "File Info":[
         {
+            "epoch":1503401536,
             "name":"forTesting/test folder/Assignment #1.docx",
-            "size":13282,
-            "epoch":1503401536,
-            "crc":453932893
+            "crc":453932893,
+            "size":13282
         },
         {
+            "epoch":1503401536,
             "name":"forTesting/test folder/test p.point2.pptx",
-            "size":82858,
-            "epoch":1503401536,
-            "crc":3403213022
+            "crc":3403213022,
+            "size":82858
         },
         {
-            "name":"forTesting/test folder/Testing 11.pptx",
-            "size":82859,
             "epoch":1503401536,
-            "crc":3522072587
+            "name":"forTesting/test folder/Testing 11.pptx",
+            "crc":3522072587,
+            "size":82859
         }
     ]
 }
